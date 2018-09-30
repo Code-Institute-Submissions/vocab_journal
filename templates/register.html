@@ -1,0 +1,59 @@
+{% extends 'base.html'%} {% block title %}Register{% endblock %} {% block content %}
+
+<h1 class="center-align">Registration form</h1>
+
+<div class="row">
+
+    <div class="row">
+        <form action="{{ url_for('register') }}" method="POST" class="col s6 offset-s3">
+            <div class="row">
+                <div class="input-field">
+                    <input id="first_name" name="first_name" type="text" class="validate">
+                    <label for="first_name">First Name</label>
+                </div>
+                <div class="input-field">
+                    <input id="last_name" name="last_name" type="text" class="validate">
+                    <label for="last_name">Last Name</label>
+                </div>
+                <div class="input-field">
+                    <input id="username" name="username" type="text" class="validate">
+                    <label for="username">Username</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <button class="btn waves-effect waves-light" type="submit">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+
+            <div>
+                {% with messages = get_flashed_messages() %} 
+                    {% if messages %}
+                        <ul>
+                            {% for message in messages %}
+                                <li> {{ message }}  Click 
+                                <a href="{{ url_for('index') }}"> here</a> to login.</li>
+                                {% endfor %}
+                        </ul>
+                    {% endif %} 
+                {% endwith %}
+
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+
+{% block additional_scripts %}
+<script>
+    /* global $ */
+    $(document).ready(function() {
+        $('.collapsible').collapsible();
+        $('select').material_select();
+        $('.button-collapse').sideNav();
+    });
+</script>
+{% endblock %} {% endblock %}

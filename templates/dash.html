@@ -1,0 +1,12 @@
+{% extends 'base.html'%} {% block title %}Dashboard{% endblock %} {% block content %}
+
+<div class="row">
+    <h2>Welcome, {{ logged_in_user.name.title() }}</h2>
+    {% for user in users %}
+    <p>{{ user.name.title() }}</p>
+    {% endfor %}
+</div>
+<div class="row">
+    <a href="{{ url_for('logout') }}" class="waves-effect waves-light btn-large"><i class="material-icons left">group_add</i>Log out</a>
+</div>
+{% endblock %}
