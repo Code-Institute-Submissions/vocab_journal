@@ -36,10 +36,10 @@ def get_users_count():
 
 def get_user_info(username, setup_count=False, name=False, userId=False):
     """ 
-        get given user's:
-            - name ................. set name to True
-            - setup count .......... set setup_count to True 
-            - id ................... set userId to True 
+    get given user's:
+        - name ................. set name to True
+        - setup count .......... set setup_count to True 
+        - id ................... set userId to True 
     """
     
     # get user
@@ -58,35 +58,42 @@ def get_user_info(username, setup_count=False, name=False, userId=False):
     return output
 
 
-def create_user(insert=False, input_dict=False):
-    """ create a new user
-        - insert ............ set to True to add directly into to the database
-        - input_dict ........ for testing purposes - insert a predefined user into the database
+def create_user(insert=False, predefined_user=False):
+    """ 
+    create a new user
+        - insert ............ True:   insert new user into db 
+                                      - returns err_msg (duplication error message to be used with flash) 
+                                      - if err_msg != "", then user already exists in the db
+                              False:  return the created user 
+                              
+        - predefined_user.... True:   for testing purposes - insert a predefined user into db
+                                      - returns err_msg (duplication error message to be used with flash) 
+                                      - if err_msg != "", then user already exists in the db
     """
     
-    users = mongo.db.users  # fetch collection
-    new_user = dict()       # blank dictionary to be populated 
+    duplication_status = ""     # existing user/duplication error message
+    users = mongo.db.users      # fetch user collection
+    new_user = dict()           # blank dictionary to be populated with new user details
     
-    if input_dict is not False:
-        insert = True   # if the predefined user is given, go ahead and insert to db
-        new_user = input_dict
+    if predefined_user is not False:
+        insert = True   # if a predefined user is given, go ahead and insert to db
+        new_user = predefined_user
     else: 
         new_user["name"] = request.form["first_name"].lower() + " " + request.form["last_name"].lower()
         new_user["username"] = request.form["username"].lower()
         new_user["setup_count"] = 0 # setup_counts as integer
-        new_user["password"] = request.form["username"]
     
     if insert:
         # to avoid duplicate entries
         if users.find_one({"username": new_user["username"]}) is None:
             users.insert_one(new_user)
         else:
-            print("create_user():   user '{}' already exists!".format(new_user["name"]))
+            duplication_status = "username '{}' already exists!".format(new_user["username"])
+        return duplication_status
+        
     else:
         return new_user
-        
-create_user(input_dict={"username": "beny1976", "setup_count": 0, "name": "beny rood" }) 
- 
+    
 # ====================================== views ===============================================
 
 @app.route("/")
@@ -129,9 +136,7 @@ def logout():
 def dash():
     """ the first page the user sees after logging in. 
     shows all setup/users"""
-    
-    users = mongo.db.users.find()
-    
+
     # DEFENSIVE redirecting
     try:
         # identify the logged in user 
@@ -141,7 +146,7 @@ def dash():
         return redirect( url_for("index"))
     
     # user identified
-    return render_template("dash.html", users = users, logged_in_user=current_user)
+    return render_template("dash.html", users = mongo.db.users.find(), logged_in_user=current_user)
 
 
 
@@ -153,22 +158,15 @@ def register():
     
     if request.method == "POST":
         
-        # fetch the entered username
-        registered_user = users.find_one({"username": request.form["username"].lower()})
+        # create new user and insert into db
+        flash_msg = create_user(insert=True)
         
-        # add to database if the username doesnt already exist - to prevent duplicates 
-        if registered_user is None:
-            newUser = dict()
-            newUser["name"] = request.form["first_name"].lower() + " " + request.form["last_name"].lower()
-            newUser["username"] = request.form["username"].lower()
-            newUser["setup_count"] = 0 # setup_counts as integer
-            newUser["password"] = request.form["username"]
-            users.insert_one(newUser)
-            return redirect(url_for('index'))
-        
-        # username is already registered!
-        flash("Username '{}' already exists!".format(registered_user["username"]))
-
+        if flash_msg == "":
+            # Log the new user in upon successfull registration!
+            session['username'] = request.form['username'].lower()
+            return redirect(url_for('dash'))
+        else:
+            flash(flash_msg)
         
     return render_template("register.html" )
 

@@ -8,7 +8,6 @@ class testRun(unittest.TestCase):
     run application tests
     """
     
-    
     def test_check_connection(self):
         """ test connection to the database """
         self.assertIsNotNone(app.check_connection())
@@ -19,7 +18,7 @@ class testRun(unittest.TestCase):
 
 
     def test_get_user_info(self):
-        """ test for getting the user's full name """
+        """ test for getting the user's full name, setup_count and userId  """
         
         name = app.get_user_info("skullphish", name=True)
         setup_count = app.get_user_info("skullphish", setup_count=True)
@@ -30,10 +29,14 @@ class testRun(unittest.TestCase):
         self.assertTrue(userId ==  ObjectId("5bb02b0e1572a1581e73fbda"))
 
     
-    # def test_create_user(self):
+    def test_create_user(self):
+        """ test for duplicate user prevention  """
         
-    #     new_user = {"username": "beny1976", "setup_count": 0, "name": "beny rood" }
-        
+        new_user = {"username": "beny1976", "setup_count": 0, "name": "beny rood" }
+        msg = app.create_user(predefined_user=new_user)
+        self.assertTrue(msg != "")
+    
+    
     
     
     if __name__ == "__main__":
