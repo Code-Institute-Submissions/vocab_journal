@@ -117,7 +117,7 @@ def login():
     
     if user:
         # user found! - log user in
-        session['username'] = request.form['username']
+        session['username'] = request.form['username'].lower()
         return redirect(url_for("dash"))
     else:
         # user not found! -  Not registered/typo
