@@ -1,7 +1,7 @@
 {% extends 'base.html'%} {% block title %}Welcome{% endblock %} {% block content %}
 <h1 class="center-align">Login</h1>
 <div class="row">
-    <form action="{{ url_for('login') }}" method="POST" class="col s4 offset-s4">
+    <form action="{{ url_for('login') }}" method="POST" class="col s6 offset-s3">
         <div class="row">
             <div class="input-field">
                 <input id="username" name="username" type="text" class="validate">
@@ -23,7 +23,7 @@
                 <i class="material-icons right">send</i>
             </button>
         </div>
-        <div>
+        <div  class="right-align">
             Don't have an account? <a href="{{ url_for('register') }}">Sign up here</a>.
         </div>
     </form>

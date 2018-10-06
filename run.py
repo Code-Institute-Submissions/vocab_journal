@@ -1,5 +1,6 @@
 
 import os
+from dbconfig import db_name, db_uri
 from bson.objectid import ObjectId
 from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
@@ -9,7 +10,7 @@ from flask_pymongo import PyMongo
 
 app = Flask(__name__) # initiate Flask
 app.secret_key = os.urandom(24) # generate secret key randomly and safely
-app.config['MONGO_DBNAME'] = 'rigsdb' # select db
+app.config['MONGO_DBNAME'] = db_name # 'vocabdb' # select db
 #app.config['MONGO_URI'] = 'mongodb://root:patriot1@ds115613.mlab.com:15613/rigsdb' 
 #app.config['MONGO_URI'] = os.getenv('MONGO_URI') # RETURNS "None 
 # PROBLEM:
@@ -18,7 +19,8 @@ app.config['MONGO_DBNAME'] = 'rigsdb' # select db
 #   even though "export MONGO_URI='mongodb://root:patriot1@ds115613.mlab.com:15613/rigsdb'" was set
 
 #mongo = PyMongo(app)
-mongo = PyMongo(app, uri='mongodb://root:patriot1@ds115613.mlab.com:15613/rigsdb')
+mongo = PyMongo(app, uri=db_uri)
+# mongo = PyMongo(app, uri='mongodb://root:patriot1@ds223063.mlab.com:23063/vocabdb')
 
 # ================================== helper functions ========================================
 
@@ -29,27 +31,27 @@ def check_connection():
 
 def get_users_count():
     """ count the number of users """
-    users = mongo.db.users.find()
-    count = len(list(users))
+    users = mongo.db.users.find() # .count()
+    count = len(list(users)) 
     return count
 
 
-def get_user_info(username, setup_count=False, name=False, userId=False):
+def get_user_info(username, vocab_count=False, name=False, userId=False):
     """ 
     get given user's:
         - name ................. set name to True
-        - setup count .......... set setup_count to True 
+        - vocab count .......... set setup_count to True 
         - id ................... set userId to True 
     """
     
-    # get user
+    # get user - should work with userId instead to get username, name and so on!
     user = mongo.db.users.find_one({"username": username})
     
-    if name and (not setup_count) and (not userId):
+    if name and (not vocab_count) and (not userId):
         output = user["name"]
-    elif setup_count and (not name) and (not userId):
-        output = user["setup_count"]
-    elif userId and (not name) and (not setup_count):
+    elif vocab_count and (not name) and (not userId):
+        output = user["vocab_count"]
+    elif userId and (not name) and (not vocab_count):
         output = user["_id"]
     else:
         print("get_user_info(): ONLY ONE parameter should be True")
@@ -81,7 +83,9 @@ def create_user(insert=False, predefined_user=False):
     else: 
         new_user["name"] = request.form["first_name"].lower() + " " + request.form["last_name"].lower()
         new_user["username"] = request.form["username"].lower()
-        new_user["setup_count"] = 0 # setup_counts as integer
+        new_user["vocab_count"] = 0 # setup_counts as integer
+        new_user["dob"] = request.form["dob"]
+        new_user["sex"] = request.form["sex"].lower()
     
     if insert:
         # to avoid duplicate entries
@@ -154,10 +158,10 @@ def dash():
 def register():
     """ attempt to register the user if the user is not already registered! """
     
-    users = mongo.db.users
+    # users = mongo.db.users
     
     if request.method == "POST":
-        
+        print("request.form = ", request.form)
         # create new user and insert into db
         flash_msg = create_user(insert=True)
         

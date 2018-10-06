@@ -3,7 +3,7 @@ import run as app
 import unittest
 
 
-class testRun(unittest.TestCase):
+class TestRun(unittest.TestCase):
     """ 
     run application tests
     """
@@ -18,26 +18,26 @@ class testRun(unittest.TestCase):
 
 
     def test_get_user_info(self):
-        """ test for getting the user's full name, setup_count and userId  """
+        """ test for getting the user's full name, vocab_count and userId  """
         
         name = app.get_user_info("skullphish", name=True)
-        setup_count = app.get_user_info("skullphish", setup_count=True)
+        vocab_count = app.get_user_info("skullphish", vocab_count=True)
         userId = app.get_user_info("skullphish", userId=True)
         
         self.assertTrue(name == "damian rodbari")
-        self.assertEqual(setup_count,0)
-        self.assertTrue(userId ==  ObjectId("5bb02b0e1572a1581e73fbda"))
+        self.assertEqual(vocab_count,0)
+        self.assertTrue(userId ==  ObjectId("5bb8a0c006f1f8105bc3bb23"))
 
     
     def test_create_user(self):
         """ test for duplicate user prevention  """
         
-        new_user = {"username": "beny1976", "setup_count": 0, "name": "beny rood" }
+        new_user = {"username": "beny1976", "vocab_count": 0, "name": "beny rood", "sex": "male", "dob": "18/10/1979"}
         msg = app.create_user(predefined_user=new_user)
         self.assertTrue(msg != "")
     
     
     
     
-    if __name__ == "__main__":
-        unittest.main()
+if __name__ == "__main__":
+    unittest.main()

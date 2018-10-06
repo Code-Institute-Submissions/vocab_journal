@@ -15,9 +15,22 @@
                     <input id="last_name" name="last_name" type="text" minlength="2" class="validate" required>
                     <label for="last_name">Last Name</label>
                 </div>
+
                 <div class="input-field">
                     <input id="username" name="username" type="text" minlength="6" class="validate" required>
                     <label for="username">Username</label>
+                </div>
+                <div class="input-field">
+                    <input id="dob" name="dob" type="text" class="datepicker">
+                    <label for="dob">Date of birth</label>
+                </div>
+
+                <div class="input-field">
+                    <select id="sex" name="sex">
+                      <option value="" disabled selected>Choose your sex</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
                 </div>
             </div>
             <div>
@@ -46,12 +59,5 @@
 </div>
 
 {% block additional_scripts %}
-<script>
-    /* global $ */
-    $(document).ready(function() {
-        $('.collapsible').collapsible();
-        $('select').material_select();
-        $('.button-collapse').sideNav();
-    });
-</script>
+<script src="{{ url_for('static', filename='js/datepicker.js') }}"></script>
 {% endblock %} {% endblock %}
