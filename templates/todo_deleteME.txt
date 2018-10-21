@@ -1,0 +1,44 @@
+to ask:
+
+- cant set a value for os.getenv('MONGO_URI')  
+	- need to hide the sensitive uri
+
+- datepicker materialize - NOTHING WORKS!!!!
+	- defaultDate doesnt work!
+	- cant set a default time like sometime in the 80s
+	- yearRange doesnt work!
+	- RESOLVED!!! https://stackoverflow.com/questions/30324552/how-to-set-the-date-in-materialize-datepicker/30324855#30324855
+	
+- how to dynamically change the navbar items - currently done in a chicken shit way which only works with dashboard
+	- change "log in" to "log out" if user in session
+
+- tags input when disabled, doesnt return a response - how to handle it?  RESOLVED!!!!!
+
+- how to manage two submit buttons - RESOLVED!!!!!
+
+- the URI has been moved to another py file. if i add it to my gitingore, will it still work?
+
+- source is left blank will raise a keyError???? why? how to counter?
+
+- how to connect the collections together
+
+- insert_vocab should be smart enough to see if a vocab already exits!
+
+
+
+- resolve the data issue with the new fix
+- add admin boolean to all users ... DONE
+- define two premade account for the examiners
+	- user - basic account   - user
+	- admin - admin account  - username admin
+	    - only Admin users can add source!
+- remove the add button from the API interface in add_vocab caus eu dont need it! GET is enough 
+- navbar
+	- using session["user"], alternate between "login" and "log out" .... DONE!
+	- user's name is now displayed .... DONE!
+	- the layout was changed! .... DONE!
+		- "Welcome Damian Rodbari, Add Vocab, Logout"    - if user is logged in
+		- "Log in, Register"                         - if no user has logged in
+	- if the user is admin, then show add_source link! .... DONE! ONLY ADMINS can add source
+
+- add_source.html page to be added for ADMINS ONLY!

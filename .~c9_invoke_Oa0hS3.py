@@ -196,7 +196,6 @@ def add_vocab():
 
 @app.route("/add_source")
 def add_source():
-    """ render add_source page  """
     print("I GOT CALLED!!!!!!!!!!")
     return render_template("add_source.html", sources = mongo.db.sources.find())
 

@@ -11,6 +11,11 @@
     <!-- JS -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>{% block title %}{% endblock %}</title>
+    <style>
+        .carousel .carousel-item {
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -20,20 +25,22 @@
                 <a href="#" class="brand-logo">VJournal</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('index') }}">Log in</a></li>
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                    {% if session['username'] %}
+                        <li><a href="{{ url_for('dash') }}">Welcome {{ session['name'].title() }}</a></li>
+                        <li><a href="{{ url_for('add_vocab') }}">Add Vocab</a></li>
+                        {% if session['admin'] == True %}
+                            <li><a href="{{ url_for('add_source') }}">Add Source</a></li>
+                        {% endif %}
+                        <li><a href="{{ url_for('logout') }}">Log out</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('index') }}">Log in</a></li>
+                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                    {% endif %}
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
                     <li><a href="{{ url_for('index') }}">Log in</a></li>
                     <li><a href="{{ url_for('register') }}">Register</a></li>
                     <li><a href="{{ url_for('dash') }}">Dashbboard</a></li>
-                    <li><a href="#">Search</a></li>
-                </ul>
-            </div>
-            <div class="nav-content">
-                <ul class="tabs tabs-transparent">
-                    <li class="tab"><a href="{{ url_for('dash') }}">Dashbboard</a></li>
-                    <li class="tab"><a class="active" href="#">Search</a></li>
                 </ul>
             </div>
         </nav>

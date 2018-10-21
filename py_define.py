@@ -6,7 +6,7 @@ app_id = '413b2e3a'
 app_key = '84354fe4c72b838606558498c33f6eb1'
 
 language = 'en'
-word_id = 'fickle'
+word_id = 'condensation'
 
 # url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + word_id.lower() + '/synonyms;antonyms'
 url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + word_id.lower()
@@ -20,15 +20,15 @@ print("code {}\n".format(r.status_code))
 g = r.json()
 
 results = g["results"][0]
-print(type(results), results.keys())
-print("="*30)
+# print(type(results), results.keys())
+
 # for key in results.keys():
 #   print(key, results[key])
-print("="*30)
 
-print(results["lexicalEntries"][0].keys())
-for x in results["lexicalEntries"][0].keys():
-  print("x = ",x,results["lexicalEntries"][0][x])
+# print(results["lexicalEntries"][0].keys())
+
+# for x in results["lexicalEntries"][0].keys():
+#   print("x = ",x,results["lexicalEntries"][0][x])
 
 final = results["lexicalEntries"][0]["entries"][0]
 # print("final = ", type(final))

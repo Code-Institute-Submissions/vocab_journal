@@ -122,7 +122,7 @@ def login():
     if user:
         # user found! - log user in
         session['username'] = request.form['username'].lower()
-        name = user["name"].split(" ")[0]
+        name = 
         session['name'] = name
         session['admin'] = user["admin"]
         return redirect(url_for("dash"))
@@ -196,7 +196,6 @@ def add_vocab():
 
 @app.route("/add_source")
 def add_source():
-    """ render add_source page  """
     print("I GOT CALLED!!!!!!!!!!")
     return render_template("add_source.html", sources = mongo.db.sources.find())
 
