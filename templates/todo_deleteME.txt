@@ -22,23 +22,57 @@ to ask:
 
 - how to connect the collections together
 
-- insert_vocab should be smart enough to see if a vocab already exits!
+- insert_vocab should be smart enough to see if a vocab already exits! ... DONE!
 
 
-
+TO DO:
 - resolve the data issue with the new fix
-- add admin boolean to all users ... DONE
+- add admin boolean to all users    ... DONE
 - define two premade account for the examiners
 	- user - basic account   - user
 	- admin - admin account  - username admin
 	    - only Admin users can add source!
-- remove the add button from the API interface in add_vocab caus eu dont need it! GET is enough 
-- navbar
-	- using session["user"], alternate between "login" and "log out" .... DONE!
-	- user's name is now displayed .... DONE!
-	- the layout was changed! .... DONE!
+- remove the add button from the API interface in add_vocab caus eu dont need it! GET is enough .... DONE!
+- navbar 
+	- using session["user"], alternate between "login" and "log out"  .... DONE!
+	- user's name is now displayed  .... DONE!
+	- the layout was changed!       .... DONE!
 		- "Welcome Damian Rodbari, Add Vocab, Logout"    - if user is logged in
 		- "Log in, Register"                         - if no user has logged in
-	- if the user is admin, then show add_source link! .... DONE! ONLY ADMINS can add source
+	- if the user is admin, then show add_source link! ONLY ADMINS can add source .... DONE! 
 
-- add_source.html page to be added for ADMINS ONLY!
+- add_source.html page to be added for ADMINS ONLY! .... DONE
+- edit vocab
+- delete vocabs
+- if vocab already exists load up the "existing vocab page" - the indivual vocab screen
+- admins will also get to 
+    - see how many users there are
+    - delete users
+    - delete vocabs added by others
+- add "dbconfig.py" to git ignore!
+- dash should show all the vocabs added by the user 
+- users will get to switch between the two modes
+    - show user added vocabs (if a user has logged in)
+    - show all vocabs
+- connect the collections together
+- TOOLTIPS for add_vocab page items 
+
+TO ASK NEW!
+    
+    GIT:
+        - seriously FUCKED UP! 
+        - see the content of git
+        - so much garbage added to the git
+            .~c9_invoke_4U6qw5.py
+            .~c9_invoke_7zoQ9Y.py
+            .~c9_invoke_91X4CA.py
+            .~c9_invoke_9jsJMv.py
+        - templates/addsetup.html still in there!???
+    
+    - user_vocab_only DOESNT WORK!
+        - how do i pass in the modified vocabs?
+    - how to handle upvotes upon click? are they just anchors?
+        - flask ajax upload or fetch()
+    - the first page should be the api
+        - giving the user everything there is to know about the vocab he/she wants to add
+            - after the definition page, get redirected to ad_vocabulary

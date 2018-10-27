@@ -1,6 +1,6 @@
 
 import os
-from dbconfig import db_name, db_uri
+from dbconfig import db_name, db_uri # capitalise
 from bson.objectid import ObjectId
 from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
@@ -85,7 +85,6 @@ def create_user(insert=False, predefined_user=False):
         new_user["username"] = request.form["username"].lower()
         new_user["vocab_count"] = 0 # setup_counts as integer
         new_user["dob"] = request.form["dob"]
-        new_user["sex"] = request.form["sex"].lower()
     
     if insert:
         # to avoid duplicate entries
@@ -153,9 +152,45 @@ def dash():
         return redirect( url_for("index"))
     
     # user identified
-    return render_template("dash.html", users = mongo.db.users.find(), logged_in_user=current_user)
+    return render_template("dash.html", vocabs=mongo.db.vocabs.find(), users = mongo.db.users.find(), current_user=current_user, user_vocabs_only=False)
 
 
+
+
+
+@app.route("/get_filtered/<user_id>", methods=['POST'])
+def get_filtered(user_id):
+    print("i got called!")
+    print("user_id = ", user_id)
+    user_vocabs_only= False
+    # current_user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
+    # DEFENSIVE redirecting
+    try:
+        # identify the logged in user 
+        current_user = mongo.db.users.find_one({"username": session["username"]})
+        # current_user = mongo.db.users.find_one({'_id': ObjectId(user_id)}) # doesnt redirect back to index when session expires!
+    except KeyError:
+        # no session - redirect back to index view
+        return redirect( url_for("index"))
+    
+    if request.form.to_dict("vocab_only"):
+        print "IT WAS ACTIVATED"
+        user_vocabs_only = True
+    
+        vocabs= list(mongo.db.vocabs.find({"user": current_user["username"]}))
+    
+        for x in vocabs:
+            print("vocab = ", x["user"], x["vocab"])
+        
+        return render_template("dash.html", vocabs=vocabs, users = mongo.db.users.find(), current_user=current_user, user_vocabs_only=user_vocabs_only)
+    return redirect( url_for("dash"))
+    
+    
+    
+    
+    
+    
+    
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -177,6 +212,45 @@ def register():
     return render_template("register.html" )
 
 
+@app.route("/add_source")
+def add_source():
+    """ render add_source page  """
+    
+    # only go forward if there's a user logged in 
+    if "username" in session:
+        # if the logged in user is not an admin then bail
+        if session["admin"] != True:
+            # custom flash message
+            flash("Only admins can create new sources")
+            return redirect(url_for("dash"))
+        # if admin
+        return render_template("add_source.html", sources = mongo.db.sources.find())
+    
+    # redirect back to index screen if there sint any users logged in   
+    return redirect(url_for("dash"))
+
+
+@app.route("/insert_source", methods=["POST"])
+def insert_source():
+    """ fetch new source and insert into db """
+    
+    sources = mongo.db.sources
+    data = {}
+    data["name"] = request.form["new_source"].lower()
+    
+    # checks  to see if the source already exists!
+    if sources.find_one({"name": data["name"]}) is None:
+        sources.insert_one(data)
+    else:
+        # should redirect to the full screen description of the vocab
+        flash("Source '{}' already exists!".format(data["name"]))
+        return redirect( url_for("add_source") )
+
+    print("data = ", data)
+    return redirect(url_for('dash'))
+
+
+
 @app.route("/add_vocab")
 def add_vocab():
     """ render add_vocab page """
@@ -194,12 +268,6 @@ def add_vocab():
     return render_template("add_vocab.html", sources = mongo.db.sources.find())
 
 
-@app.route("/add_source")
-def add_source():
-    """ render add_source page  """
-    print("I GOT CALLED!!!!!!!!!!")
-    return render_template("add_source.html", sources = mongo.db.sources.find())
-
 
 @app.route("/insert_vocab", methods=["POST"])
 def insert_vocab():
@@ -208,8 +276,6 @@ def insert_vocab():
     now = datetime.now()
     data = {}
     vocabs = mongo.db.vocabs
-    
-    
     
     print("request.form = ", request.form)
     print("tags", request.form["tags"]) # ?????????????????????
@@ -221,7 +287,7 @@ def insert_vocab():
     data["ref"] = request.form["ref"].lower()
     data["misc"] = request.form["misc"].lower()
     data["source"] = request.form.get("source","") # ATTENTION!
-    data["user_id"] = session['username'] # request.form["user_id"] # ?????????????
+    data["user"] = session['username'] # request.form["user_id"] # ?????????????
     data["lookup_count"] = 0
     data["likes"] = 0
     data["comments"] = []

@@ -1,0 +1,66 @@
+
+// convert rem input to pixel
+@function rem2Pix($args...) {
+    @if length(args)==1 {
+        @return ( nth($args, 1) * $rembase)+px;
+    }
+    @else {
+        @return ( nth($args, 1) * nth($args, 2))+px;
+    }
+};
+
+
+// convert pixel input to rem
+@function pix2Rem($args...) {
+    @if length(args)==1 {
+        @return ( nth($args, 1)/$rembase)+rem;
+    }
+    @else {
+        @return ( nth($args, 1)/nth($args, 2))+rem;
+    }
+};
+
+
+
+// media query min-max width-height
+@mixin mQ($arg...) {
+    @if length($arg)==2 {
+
+        @if nth($arg, 1)=="minW" {
+            @media screen and (min-width: nth($arg, 2)) {
+                @content
+            }
+        }
+        @else if nth($arg, 1)=="maxW" {
+            @media screen and (max-width: nth($arg, 2)) {
+                @content
+            }
+        }
+        @else if nth($arg, 1)=="minH" {
+            @media screen and (min-height: nth($arg, 2)) {
+                @content
+            }
+        }
+        @else if nth($arg, 1)=="maxH" {
+            @media screen and (max-height: nth($arg, 2)) {
+                @content
+            }
+        }
+    }
+    @else {
+        // min and max width 
+        @if nth($arg, 1)=="w" {
+            @media screen and (min-width: nth($arg, 2)) and (max-width: nth($arg, 3)) {
+                @content;
+            }
+        }
+        @else {
+            @media screen and (min-height: nth($arg, 2)) and (max-height: nth($arg, 3)) {
+                @content;
+            }
+        }
+    }
+}
+
+;
+

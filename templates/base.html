@@ -8,6 +8,7 @@
     <!-- CSS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" type="text/css" /> 
     <!-- JS -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>{% block title %}{% endblock %}</title>
@@ -28,7 +29,7 @@
                     {% if session['username'] %}
                         <li><a href="{{ url_for('dash') }}">Welcome {{ session['name'].title() }}</a></li>
                         <li><a href="{{ url_for('add_vocab') }}">Add Vocab</a></li>
-                        {% if session['admin'] == True %}
+                        {% if session['admin'] %}
                             <li><a href="{{ url_for('add_source') }}">Add Source</a></li>
                         {% endif %}
                         <li><a href="{{ url_for('logout') }}">Log out</a></li>
