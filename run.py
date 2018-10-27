@@ -163,24 +163,21 @@ def get_filtered(user_id):
     print("i got called!")
     print("user_id = ", user_id)
     user_vocabs_only= False
+    
     # current_user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
     # DEFENSIVE redirecting
     try:
         # identify the logged in user 
         current_user = mongo.db.users.find_one({"username": session["username"]})
-        # current_user = mongo.db.users.find_one({'_id': ObjectId(user_id)}) # doesnt redirect back to index when session expires!
     except KeyError:
         # no session - redirect back to index view
         return redirect( url_for("index"))
     
     if request.form.to_dict("vocab_only"):
-        print "IT WAS ACTIVATED"
         user_vocabs_only = True
     
         vocabs= list(mongo.db.vocabs.find({"user": current_user["username"]}))
-    
-        for x in vocabs:
-            print("vocab = ", x["user"], x["vocab"])
+
         
         return render_template("dash.html", vocabs=vocabs, users = mongo.db.users.find(), current_user=current_user, user_vocabs_only=user_vocabs_only)
     return redirect( url_for("dash"))

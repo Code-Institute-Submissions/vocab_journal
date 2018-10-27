@@ -17,7 +17,7 @@
 
 <h3>vocabs</h3>
 
-<form action="{{ url_for('get_filtered', user_id=current_user._id) }}"  method="POST">
+<form action="{{ url_for('get_filtered', user_id=current_user._id) }}" method="POST">
     <div class="switch">
         <label>
           Show all vocabs
@@ -29,8 +29,8 @@
           <span class="lever"></span>
           Only show user vocabs
         </label>
-    <!--</div>-->
-    <!--<div class="row">-->
+        <!--</div>-->
+        <!--<div class="row">-->
         <button class="btn waves-effect waves-light" type="submit">Apply filter
             <i class="material-icons right">send</i>
         </button>
@@ -54,6 +54,11 @@
             <div class="collapsible-body">
                 <span>definition: {{ vocab.user_definition }}</span>
                 <p>likes: {{ vocab.likes }}<br> lookup count: {{ vocab.lookup_count }}<br> published date: {{ vocab.pub_date }}</p>
+                <div class="right-align">
+                    <a href="#" class="waves-effect waves-light btn btn_small deep-orange">view</a>
+                    <a href="#" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
+                    <a href="#" class="waves-effect waves-light btn btn_small deep-orange">delete</a>
+                </div>
             </div>
         </li>
 
