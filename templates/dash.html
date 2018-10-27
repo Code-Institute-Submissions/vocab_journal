@@ -29,9 +29,9 @@
           <span class="lever"></span>
           Only show user vocabs
         </label>
-        <!--</div>-->
-        <!--<div class="row">-->
-        <button class="btn waves-effect waves-light" type="submit">Apply filter
+    </div>
+    <div class="row right-align">
+        <button class="btn waves-effect waves-light right-align" type="submit">Apply filter
             <i class="material-icons right">send</i>
         </button>
     </div>
@@ -50,14 +50,16 @@
                 <div class="vocab">"{{ vocab.vocab }}"</div>
                 <div class="user_id"> by {{ vocab.user }} </div>
                 <div><i class="tiny material-icons">favorite</i>{{ vocab.likes }}</div>
+                <div><i class="tiny material-icons">youtube_searched_for</i>{{ vocab.lookup_count }}</div>
             </div>
             <div class="collapsible-body">
                 <span>definition: {{ vocab.user_definition }}</span>
                 <p>likes: {{ vocab.likes }}<br> lookup count: {{ vocab.lookup_count }}<br> published date: {{ vocab.pub_date }}</p>
                 <div class="right-align">
-                    <a href="#" class="waves-effect waves-light btn btn_small deep-orange">view</a>
+                    {% if current_user.username == vocab.user or current_user.admin %}
                     <a href="#" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
-                    <a href="#" class="waves-effect waves-light btn btn_small deep-orange">delete</a>
+                    <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> {% endif %}
+                    <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">view</a> 
                 </div>
             </div>
         </li>

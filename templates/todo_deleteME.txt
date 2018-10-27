@@ -76,3 +76,18 @@ TO ASK NEW!
     - the first page should be the api
         - giving the user everything there is to know about the vocab he/she wants to add
             - after the definition page, get redirected to ad_vocabulary
+            
+            
+            
+            
+notes:
+    dash:
+        users can "view", "edit" and "delete" their own added vocabs. HOWEVER, admins have the power to bypass this.
+        "admins" can "edit" and "delete" all vocabs
+
+    add_vocab:
+        the first page should be definition page where the user gets all the info he needs from the previous page.
+    REMOVE COMMENTS FROM THE VOCAB DATABASE
+    
+    add "last_lookup_date" to the vocab views
+     - if not "" then show, just like reference, context and all that

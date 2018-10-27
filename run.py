@@ -248,6 +248,48 @@ def insert_source():
 
 
 
+
+@app.route("/delete_vocab/<vocab_id>")
+def delete_vocab(vocab_id):
+    # DEFENSIVE redirecting
+    try:
+        # identify the logged in user 
+        current_user = mongo.db.users.find_one({"username": session['username']})
+    except KeyError:
+        # no session - redirect back to index view
+        flash("Your session has Expired!")
+        return redirect( url_for("index"))     
+    
+    mongo.db.vocabs.remove({'_id': ObjectId(vocab_id)})
+    return redirect(url_for('dash'))
+
+
+
+@app.route("/view_vocab/<vocab_id>")
+def view_vocab(vocab_id):
+    
+    
+    # DEFENSIVE redirecting
+    try:
+        # identify the logged in user 
+        current_user = mongo.db.users.find_one({"username": session['username']})
+    except KeyError:
+        # no session - redirect back to index view
+        flash("Your session has Expired!")
+        return redirect( url_for("index"))    
+    
+    now = datetime.now()   
+    mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": now.strftime("%d/%m/%Y")} })
+    vocab = mongo.db.vocabs.find_one({'_id': ObjectId(vocab_id)})
+    
+    
+    print("vocab = ", vocab["vocab"])
+    return render_template("vocab.html", vocab=vocab, current_user=current_user)
+
+
+
+
+
 @app.route("/add_vocab")
 def add_vocab():
     """ render add_vocab page """
@@ -287,18 +329,35 @@ def insert_vocab():
     data["user"] = session['username'] # request.form["user_id"] # ?????????????
     data["lookup_count"] = 0
     data["likes"] = 0
-    data["comments"] = []
     
     if vocabs.find_one({"vocab": data["vocab"]}) is None:
+        # vocab doesnt exist in the db - go ahead and add
         vocabs.insert_one(data)
     else:
-        # EXPAND ON THIS! - page with dates and definition must be loaded
-        # should redurect to the full screen description of the vocab
-        flash("Vocab '{}' already exists!".format(data["vocab"]))
-        return redirect( url_for("add_vocab") )
+        # vocab already exists!
         
-    print("data = ", data)
+        # issue custom flash message
+        flash("Vocab '{}' already exists. Lookup count was updated!".format(data["vocab"]))
+        
+        # fetch the existing vocab out of the db
+        vocab = mongo.db.vocabs.find_one({'vocab': data["vocab"] })
+
+        # get lookup_count of the vocab
+        lookup_count = vocab["lookup_count"]
+
+        # increment the lookup_count 
+        lookup_count += 1
+        
+        # update db
+        mongo.db.vocabs.update({'vocab': data["vocab"]},{ "$set": { "lookup_count": lookup_count, "last_lookup_date": now.strftime("%d/%m/%Y")}})
+        
+        # view the existing vocab by redirecting to view_vocab
+        return redirect( url_for("view_vocab", vocab_id=vocab['_id']) )
+
+
     return redirect(url_for('dash'))
+
+
 
 if __name__ == '__main__':
     port = int( os.getenv("PORT") )
