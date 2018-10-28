@@ -210,18 +210,18 @@ def get_filtered(user_id):
     
 
 
-@app.route("/add_source")
-def add_source():
-    """ render add_source page  """
+@app.route("/manage_sources")
+def manage_sources():
+    """ render manage_sources page  """
     
     # only go forward if there's a user logged in 
     if "username" in session:
         # if the logged in user is not an admin then bail
         if session["admin"] != True:
-            # deny access to "add_source" template if user not an admin
+            # deny access to "manage_sources" template if user not an admin
             return redirect(url_for("dash"))
         # if admin
-        return render_template("add_source.html", sources = mongo.db.sources.find() )
+        return render_template("manage_sources.html", sources = mongo.db.sources.find() )
     
     # redirect back to index screen if there sint any users logged in   
     return redirect(url_for("dash"))
@@ -229,13 +229,13 @@ def add_source():
 
 @app.route("/delete_source/<source_id>")
 def delete_source(source_id):
-    """ render add_source page  """
+    """   """
     
     # only go forward if there's a user logged in 
     if "username" in session:
         # if the logged in user is not an admin then bail
         if session["admin"] != True:
-            # deny access to "add_source" template if user not an admin
+            # deny access to "manage_sources" template if user not an admin
             return redirect(url_for("dash"))
         
         # if admin
@@ -250,14 +250,12 @@ def delete_source(source_id):
         
         # delete source if not in use
         if source_in_use:
-            print("Source {} is in use!!!!!!!!!!!!".format(source["name"]))
-
-            
+            flash("Could NOT delete source '{}' as it is currently in use!".format(source["name"]))
         else:
-            print("Source {} is safe to DELETE!".format(source["name"]))
+            flash("Source '{}' was DELETED!".format(source["name"]))
             mongo.db.sources.remove({'_id': ObjectId(source_id)})
         
-        return render_template("add_source.html", sources = mongo.db.sources.find() )
+        return render_template("manage_sources.html", sources = mongo.db.sources.find() )
 
     
     # redirect back to index screen if there sint any users logged in   
@@ -279,7 +277,7 @@ def insert_source():
         # should redirect to the full screen description of the vocab
         flash("Source '{}' already exists!".format(data["name"]))
     
-    return redirect( url_for("add_source") )
+    return redirect( url_for("manage_sources") )
 
 
 @app.route("/delete_vocab/<vocab_id>")
