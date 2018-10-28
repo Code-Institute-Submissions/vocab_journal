@@ -1,12 +1,5 @@
 {% extends 'base.html'%} {% block title %}Dashboard{% endblock %} {% block content %}
 
-<h3>Users</h3>
-<div class="row">
-    {% for user in users %}
-    <p>{{ user.name.title() }}</p>
-    {% endfor %}
-</div>
-
 <h3>vocabs</h3>
 
 <form action="{{ url_for('get_filtered', user_id=current_user._id) }}" method="POST">
@@ -29,10 +22,6 @@
     </div>
 </form>
 
-
-
-
-
 <div class="row">
     <ul class="collapsible" data-collapsible="Expandable">
         {% with messages = get_flashed_messages() %} {% if messages %}
@@ -48,7 +37,8 @@
         <li>
             <div class="collapsible-header">
                 <div class="vocab">"{{ vocab.vocab }}"</div>
-                <div class="user_id"> by {{ vocab.user }} </div>
+                <!--<div class="user_id"> by {{ vocab.user }} </div>-->
+                <div class="user_id">by <a href="{{ url_for('view_user', username=vocab.user) }}">{{ vocab.user }}  </a></div>
                 <div><i class="tiny material-icons">favorite</i>{{ vocab.likes }}</div>
                 <div><i class="tiny material-icons">youtube_searched_for</i>{{ vocab.lookup_count }}</div>
             </div>
@@ -60,6 +50,7 @@
                     <a href="#" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
                     <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> {% endif %}
                     <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">view</a>
+                    <a href="{{ url_for('view_user', username=vocab.user) }}" class="waves-effect waves-light btn btn_small deep-orange">user</a>
                 </div>
             </div>
         </li>

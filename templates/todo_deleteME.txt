@@ -43,8 +43,8 @@ TO DO:
 
 - add_source.html page to be added for ADMINS ONLY! .... DONE
 - edit vocab
-- delete vocabs
-- if vocab already exists load up the "existing vocab page" - the indivual vocab screen
+- delete vocabs .... DONE
+- if vocab already exists load up the "existing vocab page" - the indivual vocab screen .... DONE
 - admins will also get to 
     - see how many users there are
     - delete users
@@ -54,7 +54,6 @@ TO DO:
 - users will get to switch between the two modes
     - show user added vocabs (if a user has logged in)
     - show all vocabs
-- connect the collections together
 - TOOLTIPS for add_vocab page items 
 
 TO ASK NEW!
@@ -93,13 +92,28 @@ notes:
      - if not "" then show, just like reference, context and all that
      
      edit vocabs
+     fix api (first page)
+     think of the game
+     users page
+     add more filters to dash
+        - sorts(ordering as in older first)
+        - 
      
-     view sources and add sources
+     manage sources
+        - view all existing sources ... DONE!
+        - add more sources within the same page ... DONE!
+        - ability to delete sources within the same page ... DONE!
+        - flash messages centered ... DONE!
      
      cater for "vocab_count" in user documents -- DONE!
         - increment by one everytime they successfully add a vocab
      
-     admin tool:
-        view users as admin, edit users, delete users
-         if username == admin: dont show!
-        add sources, delete sources
+     to be added in the future:
+        users management
+            - view user profile
+                - view user stats
+                    - number of added vocabs
+                    - show vocabs
+                    - dob
+                    - admin boolean
+            

@@ -176,7 +176,7 @@ def dash():
         return redirect( url_for("index"))
     
     # user identified
-    return render_template("dash.html", vocabs=mongo.db.vocabs.find(), users = mongo.db.users.find(), current_user=current_user, user_vocabs_only=False)
+    return render_template("dash.html", vocabs=mongo.db.vocabs.find(), current_user=current_user, user_vocabs_only=False)
 
 
 
@@ -205,7 +205,7 @@ def get_filtered(user_id):
             flash("No vocabs found!")
             flash("'{}' has not added any vocabs.".format( current_user["username"].title()))
         
-        return render_template("dash.html", vocabs=vocabs, users = mongo.db.users.find(), current_user=current_user, user_vocabs_only=user_vocabs_only)
+        return render_template("dash.html", vocabs=vocabs, current_user=current_user, user_vocabs_only=user_vocabs_only)
     return redirect( url_for("dash"))
     
 
@@ -395,6 +395,16 @@ def insert_vocab():
 
 
     return redirect(url_for('dash'))
+
+
+@app.route("/view_user/<username>")
+def view_user(username):
+    print("i got called!")
+
+    user=mongo.db.users.find_one({'username': username}) 
+    vocabs= list(mongo.db.vocabs.find({"user": username}))
+    
+    return render_template("view_user.html", user=user,  vocabs=vocabs )
 
 
 
