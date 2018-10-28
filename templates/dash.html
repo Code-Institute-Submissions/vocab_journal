@@ -12,7 +12,7 @@
               <input type="checkbox" name="vocab_only" >
           {% endif %}
           <span class="lever"></span>
-          Only show user vocabs
+          Only show your own vocabs
         </label>
     </div>
     <div class="row right-align">
@@ -21,19 +21,18 @@
         </button>
     </div>
 </form>
-
+<div>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul class="center-align">
+        {% for message in messages %}
+        <p class="red-text text-darken-2">{{ message }}</p>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+</div>
 <div class="row">
     <ul class="collapsible" data-collapsible="Expandable">
-        {% with messages = get_flashed_messages() %} {% if messages %}
-        <div class="collapsible-header">
-            <div>
-                {% for message in messages %}
-                <p class="red-text text-darken-2">{{ message }}</p>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %} {% endwith %} {% for vocab in vocabs %}
-
+        {% for vocab in vocabs %}
         <li>
             <div class="collapsible-header">
                 <div class="vocab">"{{ vocab.vocab }}"</div>
@@ -50,11 +49,10 @@
                     <a href="#" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
                     <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> {% endif %}
                     <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">view</a>
-                    <a href="{{ url_for('view_user', username=vocab.user) }}" class="waves-effect waves-light btn btn_small deep-orange">user</a>
+                    <!--<a href="{{ url_for('view_user', username=vocab.user) }}" class="waves-effect waves-light btn btn_small deep-orange">user</a>-->
                 </div>
             </div>
         </li>
-
         {% endfor %}
     </ul>
 

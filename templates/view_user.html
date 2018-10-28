@@ -4,7 +4,11 @@
 
 <p>Name: {{ user.name.title() }}</p>
 <p>Date of Birth: {{ user.dob }}</p>
-<p>Admin: {{ user.admin }}</p>
+{% if user.admin %}
+<p>Admin: yes</p>
+{% else %}
+<p>Admin: no</p>
+{% endif %}
 <p>vocab count: {{ user.vocab_count }}</p>
 
 <h3>Added Vocabs</h3>

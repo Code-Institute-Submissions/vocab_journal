@@ -91,10 +91,18 @@ notes:
     add "last_lookup_date" to the vocab views
      - if not "" then show, just like reference, context and all that
      
+     
+     
+     
      edit vocabs
+        def view_vocab(vocab_id)
+            - IMPORTANT!!! the "mod_date" should be moved to the edit or update function on line 334
+            
      fix api (first page)
      think of the game
-     users page
+     upvoting or liking!
+     dash visuals - maybe switch to cards?
+        - handle user profile access 
      add more filters to dash
         - sorts(ordering as in older first)
         - 
@@ -108,12 +116,12 @@ notes:
      cater for "vocab_count" in user documents -- DONE!
         - increment by one everytime they successfully add a vocab
      
-     to be added in the future:
-        users management
-            - view user profile
-                - view user stats
-                    - number of added vocabs
-                    - show vocabs
-                    - dob
-                    - admin boolean
-            
+
+    users management ... DONE!
+        - view user profile... DONE!
+            - view user stats ... DONE!
+                - number of added vocabs ... DONE!
+                - show vocabs ... DONE!
+                - dob ... DONE!
+                - admin boolean ... DONE!
+  

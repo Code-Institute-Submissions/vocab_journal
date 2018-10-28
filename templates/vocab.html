@@ -35,7 +35,8 @@
                 <p>Difficulty: {{ vocab.difficulty }} / 100</p>
                 <p>Published on: {{ vocab.pub_date }}</p>
                 <p>Added by: {{ vocab.user }}</p>
-                <p>Last modified on: {{ vocab.pub_date }}</p>
+                <p>Views: {{ vocab.views }}</p>
+                <p>Last modified on: {{ vocab.mod_date }}</p>
                 <p>Last lookup date: {{ vocab.last_lookup_date }}</p>
             </div>
         </div>
@@ -67,7 +68,7 @@
 <div class="right-align">
     {% if current_user.username == vocab.user or current_user.admin %}
     <a href="#" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
-    <a href="#" class="waves-effect waves-light btn btn_small deep-orange">delete</a> {% endif %}
+    <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> {% endif %}
     <a href="{{ url_for('dash') }}" class="waves-effect waves-light btn btn_small deep-orange">Back to list</a> 
 </div>
 

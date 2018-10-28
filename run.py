@@ -282,6 +282,7 @@ def insert_source():
 
 @app.route("/delete_vocab/<vocab_id>")
 def delete_vocab(vocab_id):
+    
     # DEFENSIVE redirecting
     try:
         # identify the logged in user 
@@ -289,9 +290,17 @@ def delete_vocab(vocab_id):
     except KeyError:
         # no session - redirect back to index view
         flash("Your session has Expired!")
-        return redirect( url_for("index"))     
+        return redirect( url_for("index"))
     
+    # fetch the vocab to be deleted
+    to_del_vocab = mongo.db.vocabs.find_one({'_id': ObjectId(vocab_id)})
+    
+    # remove vocab
     mongo.db.vocabs.remove({'_id': ObjectId(vocab_id)})
+    
+    # custom flash message as confirmation 
+    flash("'{}' was successfully DELETED!".format(to_del_vocab["vocab"]))
+    
     return redirect(url_for('dash'))
 
 
@@ -309,12 +318,21 @@ def view_vocab(vocab_id):
         flash("Your session has Expired!")
         return redirect( url_for("index"))    
     
-    now = datetime.now()   
-    mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": now.strftime("%d/%m/%Y")} })
+    # vocab view counter
+
+    # fetch the existing vocab out of the db
     vocab = mongo.db.vocabs.find_one({'_id': ObjectId(vocab_id)})
+
+    # get total number views for the vocab
+    views = vocab["views"]
+
+    # increment the views 
+    views += 1
     
-    
-    print("vocab = ", vocab["vocab"])
+    # update db
+    mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "views": views }})
+    # mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": now.strftime("%d/%m/%Y")} })
+
     return render_template("vocab.html", vocab=vocab, current_user=current_user)
 
 
@@ -348,20 +366,20 @@ def insert_vocab():
     vocabs = mongo.db.vocabs
     
     
-    print("request.form = ", request.form)
-    print("tags", request.form["tags"]) # ?????????????????????
     data["pub_date"] = now.strftime("%d/%m/%Y")
     data["last_lookup_date"] = now.strftime("%d/%m/%Y")
+    data["mod_date"] = now.strftime("%d/%m/%Y")
     data["vocab"] = request.form["vocab"].lower()
     data["user_definition"] = request.form["user_definition"].lower()
+    data["source"] = request.form.get("source","") # ATTENTION!
     data["context"] = request.form["context"].lower()
+    data["misc"] = request.form["misc"].lower()
     data["difficulty"] = int(request.form["difficulty"])
     data["ref"] = request.form["ref"].lower()
-    data["misc"] = request.form["misc"].lower()
-    data["source"] = request.form.get("source","") # ATTENTION!
     data["user"] = session['username'] # request.form["user_id"] # ?????????????
     data["lookup_count"] = 0
     data["likes"] = 0
+    data["views"] = 0
     
     if vocabs.find_one({"vocab": data["vocab"]}) is None:
         # vocab doesnt exist in the db - go ahead and insert
