@@ -91,3 +91,15 @@ notes:
     
     add "last_lookup_date" to the vocab views
      - if not "" then show, just like reference, context and all that
+     
+     edit vocabs
+     
+     view sources and add sources
+     
+     cater for "vocab_count" in user documents -- DONE!
+        - increment by one everytime they successfully add a vocab
+     
+     admin tool:
+        view users as admin, edit users, delete users
+         if username == admin: dont show!
+        add sources, delete sources

@@ -85,11 +85,15 @@ def create_user(insert=False, predefined_user=False):
         new_user["username"] = request.form["username"].lower()
         new_user["vocab_count"] = 0 # setup_counts as integer
         new_user["dob"] = request.form["dob"]
+        new_user["admin"] = False
     
     if insert:
         # to avoid duplicate entries
         if users.find_one({"username": new_user["username"]}) is None:
             users.insert_one(new_user)
+            # adding username and name to session to be used through out template in navbar of base.html
+            session['username'] = new_user["username"]
+            session['name'] = request.form["first_name"].lower()
         else:
             duplication_status = "username '{}' already exists!".format(new_user["username"])
         return duplication_status
@@ -129,6 +133,26 @@ def login():
         # user not found! -  Not registered/typo
         flash("Username '{}' is invalid. Please sign up!".format(request.form["username"].lower()))
         return redirect(url_for("index"))
+
+
+
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    """ attempt to register the user if the user is not already registered! """
+
+    if request.method == "POST":
+        # create new user and insert into db
+        flash_msg = create_user(insert=True)
+        
+        if flash_msg == "":
+            # Log the new user in upon successfull registration!
+            return redirect(url_for('dash'))
+        else:
+            flash(flash_msg)
+        
+    return render_template("register.html" )
+
 
 
 @app.route('/logout')
@@ -177,36 +201,13 @@ def get_filtered(user_id):
         user_vocabs_only = True
     
         vocabs= list(mongo.db.vocabs.find({"user": current_user["username"]}))
-
+        if len(vocabs) == 0:
+            flash("No vocabs found!")
+            flash("'{}' has not added any vocabs.".format( current_user["username"].title()))
         
         return render_template("dash.html", vocabs=vocabs, users = mongo.db.users.find(), current_user=current_user, user_vocabs_only=user_vocabs_only)
     return redirect( url_for("dash"))
     
-    
-    
-    
-    
-    
-    
-
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    """ attempt to register the user if the user is not already registered! """
-    
-    # users = mongo.db.users
-    
-    if request.method == "POST":
-        # create new user and insert into db
-        flash_msg = create_user(insert=True)
-        
-        if flash_msg == "":
-            # Log the new user in upon successfull registration!
-            session['username'] = request.form['username'].lower()
-            return redirect(url_for('dash'))
-        else:
-            flash(flash_msg)
-        
-    return render_template("register.html" )
 
 
 @app.route("/add_source")
@@ -217,11 +218,47 @@ def add_source():
     if "username" in session:
         # if the logged in user is not an admin then bail
         if session["admin"] != True:
-            # custom flash message
-            flash("Only admins can create new sources")
+            # deny access to "add_source" template if user not an admin
             return redirect(url_for("dash"))
         # if admin
-        return render_template("add_source.html", sources = mongo.db.sources.find())
+        return render_template("add_source.html", sources = mongo.db.sources.find() )
+    
+    # redirect back to index screen if there sint any users logged in   
+    return redirect(url_for("dash"))
+
+
+@app.route("/delete_source/<source_id>")
+def delete_source(source_id):
+    """ render add_source page  """
+    
+    # only go forward if there's a user logged in 
+    if "username" in session:
+        # if the logged in user is not an admin then bail
+        if session["admin"] != True:
+            # deny access to "add_source" template if user not an admin
+            return redirect(url_for("dash"))
+        
+        # if admin
+        # fetch source by its id
+        source = mongo.db.sources.find_one({'_id': ObjectId(source_id)})
+        source_in_use = False
+        # check to see if the source is being used!
+        vocabs = mongo.db.vocabs.find()
+        for vocab in vocabs:
+            if vocab["source"] == source["name"]:
+                source_in_use = True
+        
+        # delete source if not in use
+        if source_in_use:
+            print("Source {} is in use!!!!!!!!!!!!".format(source["name"]))
+
+            
+        else:
+            print("Source {} is safe to DELETE!".format(source["name"]))
+            mongo.db.sources.remove({'_id': ObjectId(source_id)})
+        
+        return render_template("add_source.html", sources = mongo.db.sources.find() )
+
     
     # redirect back to index screen if there sint any users logged in   
     return redirect(url_for("dash"))
@@ -241,12 +278,8 @@ def insert_source():
     else:
         # should redirect to the full screen description of the vocab
         flash("Source '{}' already exists!".format(data["name"]))
-        return redirect( url_for("add_source") )
-
-    print("data = ", data)
-    return redirect(url_for('dash'))
-
-
+    
+    return redirect( url_for("add_source") )
 
 
 @app.route("/delete_vocab/<vocab_id>")
@@ -316,9 +349,11 @@ def insert_vocab():
     data = {}
     vocabs = mongo.db.vocabs
     
+    
     print("request.form = ", request.form)
     print("tags", request.form["tags"]) # ?????????????????????
     data["pub_date"] = now.strftime("%d/%m/%Y")
+    data["last_lookup_date"] = now.strftime("%d/%m/%Y")
     data["vocab"] = request.form["vocab"].lower()
     data["user_definition"] = request.form["user_definition"].lower()
     data["context"] = request.form["context"].lower()
@@ -331,10 +366,16 @@ def insert_vocab():
     data["likes"] = 0
     
     if vocabs.find_one({"vocab": data["vocab"]}) is None:
-        # vocab doesnt exist in the db - go ahead and add
+        # vocab doesnt exist in the db - go ahead and insert
         vocabs.insert_one(data)
+        
+        # keep track of vocabs added by the the user
+        user = mongo.db.users.find_one({"username": data["user"] })  # get user
+        vocab_count = user["vocab_count"] # get vocab_count
+        vocab_count += 1 # increment the vocab_count 
+        user = mongo.db.users.update({"username": data["user"] }, {"$set": {"vocab_count": vocab_count} }) # update db
     else:
-        # vocab already exists!
+        # vocab already exists in the database!
         
         # issue custom flash message
         flash("Vocab '{}' already exists. Lookup count was updated!".format(data["vocab"]))
