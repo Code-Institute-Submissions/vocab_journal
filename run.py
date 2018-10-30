@@ -335,7 +335,7 @@ def view_vocab(vocab_id):
     
     # update db
     mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "views": views }})
-    # mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": now.strftime("%d/%m/%Y")} })
+    # mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": get_today_date()} })
 
     return render_template("vocab.html", vocab=vocab, current_user=current_user)
 
@@ -365,14 +365,13 @@ def add_vocab():
 def insert_vocab():
     """ fetch new vocab and insert into db """
     # initialisations
-    now = datetime.now()
     data = {}
     vocabs = mongo.db.vocabs
     
     
-    data["pub_date"] = get_today_date() # now.strftime("%d/%m/%Y")
-    data["last_lookup_date"] = get_today_date() #now.strftime("%d/%m/%Y")
-    data["mod_date"] = get_today_date() # now.strftime("%d/%m/%Y")
+    data["pub_date"] = get_today_date() 
+    data["last_lookup_date"] = get_today_date() 
+    data["mod_date"] = get_today_date() 
     data["vocab"] = request.form["vocab"].lower()
     data["user_definition"] = request.form["user_definition"].lower()
     data["source"] = request.form.get("source","") # ATTENTION!
@@ -410,7 +409,6 @@ def insert_vocab():
         lookup_count += 1
         
         # update db
-        # mongo.db.vocabs.update({'vocab': data["vocab"]},{ "$set": { "lookup_count": lookup_count, "last_lookup_date": now.strftime("%d/%m/%Y")}})
         mongo.db.vocabs.update({'vocab': data["vocab"]},{ "$set": { "lookup_count": lookup_count, "last_lookup_date": get_today_date()}})
         
         # view the existing vocab by redirecting to view_vocab
