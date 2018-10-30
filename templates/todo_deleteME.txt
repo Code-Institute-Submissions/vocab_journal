@@ -90,14 +90,13 @@ notes:
     
     add "last_lookup_date" to the vocab views
      - if not "" then show, just like reference, context and all that
-     
+      
      
      
      
      edit vocabs
         def view_vocab(vocab_id)
-            - IMPORTANT!!! the "mod_date" should be moved to the edit or update function on line 334
-            
+         - >>>>>>>>>>>>>>>>>>>>>>> IMPORTANT!!! the "mod_date" should be moved to the edit or update function on line 334
      fix api (first page)
      think of the game
      upvoting or liking!
@@ -116,7 +115,10 @@ notes:
      cater for "vocab_count" in user documents -- DONE!
         - increment by one everytime they successfully add a vocab
      
-
+    !!!!!!!!!!!!!! create a function for current date!
+    !!!!!!!!!!!!!! explore models 
+        https://stackoverflow.com/questions/30473647/how-can-i-detect-if-a-user-tries-to-upvote-once-again
+        looks promising ---> https://github.com/whoeverest/NSND-Upvoting/blob/master/upvote-list.py           
     users management ... DONE!
         - view user profile... DONE!
             - view user stats ... DONE!
