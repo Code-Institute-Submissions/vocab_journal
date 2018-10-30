@@ -6,7 +6,7 @@ app_id = '413b2e3a'
 app_key = '84354fe4c72b838606558498c33f6eb1'
 
 language = 'en'
-word_id = 'proletariat'
+word_id = 'myriad'
 
 # url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + word_id.lower() + '/synonyms;antonyms'
 url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + word_id.lower()

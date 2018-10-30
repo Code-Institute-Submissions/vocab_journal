@@ -105,6 +105,7 @@ def get_today_date():
     """ returns the current date in the selectecd format """
     now = datetime.now()
     return now.strftime("%d/%m/%Y")
+    
 # ====================================== views ===============================================
 
 @app.route("/")
@@ -340,10 +341,24 @@ def view_vocab(vocab_id):
     return render_template("vocab.html", vocab=vocab, current_user=current_user)
 
 
+@app.route("/check_vocab")
+def check_vocab():
+    
+    # DEFENSIVE redirecting
+    try:
+        # identify the logged in user 
+        current_user = mongo.db.users.find_one({"username": session['username']})
+    except KeyError:
+        # no session - redirect back to index view
+        flash("Please log in first")
+        return redirect( url_for("index"))
+        
+    return render_template("check_vocab.html")
 
-
-
-@app.route("/add_vocab")
+# methods=["POST"] was added here to test the new layout
+# take it out to return the functionality to it from the nav.
+# 
+@app.route("/add_vocab", methods=["POST"])
 def add_vocab():
     """ render add_vocab page """
     
@@ -356,23 +371,52 @@ def add_vocab():
         flash("Please log in first")
         return redirect( url_for("index"))
     
+    vocab_in = request.form.get("vocab")
+    print("vocab_in = ", vocab_in)
     
-    return render_template("add_vocab.html", sources = mongo.db.sources.find())
+    ###############################  MAKE DEFINITION FUNCTION ################################################
+    # make function to call using api to return definition, synonym and example
+    
+    #definitions, synonyms, xamples =  define_vocab(vocab) # the outcome of which should be passed into "add_vocab"
+    
+    # create the function above (or class?) in another py file and import it in.
+    # the function should use the api in py_deine.py to find definitions, synonyms and examples
+    # then there are passed into the "add_vocab" page into a  div placed at the top of the page, 
+    # user can see the definitions then write his own definition.... and then finally insert by hitting the button!
+    ##########################################################################################################
+    
+    
+    # if the vocab already exists then load its page with maybe the definintion
+    if mongo.db.vocabs.find_one({"vocab": vocab_in}) is not None:    
+        # issue custom flash message
+        flash("Vocab '{}' already exists. Lookup count was updated!".format(vocab_in))
+        
+        vocab = mongo.db.vocabs.find_one({'vocab': vocab_in })  # fetch the existing vocab out of the db
+        lookup_count = vocab["lookup_count"]    # get lookup_count of the vocab
+        lookup_count += 1   # increment the lookup_count 
+        
+        # update db
+        mongo.db.vocabs.update({'vocab': vocab_in},{ "$set": { "lookup_count": lookup_count, "last_lookup_date": get_today_date()}})
+        
+        # view the existing vocab by redirecting to view_vocab
+        return redirect( url_for("view_vocab", vocab_id=vocab['_id']) )
+    
+    return render_template("add_vocab.html", sources = mongo.db.sources.find(), vocab=vocab_in.lower())
 
 
 
-@app.route("/insert_vocab", methods=["POST"])
-def insert_vocab():
+@app.route("/insert_vocab/<vocab>", methods=["POST"])
+def insert_vocab(vocab):
     """ fetch new vocab and insert into db """
     # initialisations
     data = {}
     vocabs = mongo.db.vocabs
-    
+    # print("insert vocab = ", vocab)
     
     data["pub_date"] = get_today_date() 
     data["last_lookup_date"] = get_today_date() 
     data["mod_date"] = get_today_date() 
-    data["vocab"] = request.form["vocab"].lower()
+    data["vocab"] = vocab # request.form["vocab"].lower()
     data["user_definition"] = request.form["user_definition"].lower()
     data["source"] = request.form.get("source","") # ATTENTION!
     data["context"] = request.form["context"].lower()
@@ -384,35 +428,41 @@ def insert_vocab():
     data["likes"] = 0
     data["views"] = 0
     
-    if vocabs.find_one({"vocab": data["vocab"]}) is None:
-        # vocab doesnt exist in the db - go ahead and insert
-        vocabs.insert_one(data)
+    
+    vocabs.insert_one(data)
         
-        # keep track of vocabs added by the the user
-        user = mongo.db.users.find_one({"username": data["user"] })  # get user
-        vocab_count = user["vocab_count"] # get vocab_count
-        vocab_count += 1 # increment the vocab_count 
-        user = mongo.db.users.update({"username": data["user"] }, {"$set": {"vocab_count": vocab_count} }) # update db
-    else:
-        # vocab already exists in the database!
+    # keep track of vocabs added by the the user
+    user = mongo.db.users.find_one({"username": data["user"] })  # get user
+    vocab_count = user["vocab_count"] # get vocab_count
+    vocab_count += 1 # increment the vocab_count 
+    user = mongo.db.users.update({"username": data["user"] }, {"$set": {"vocab_count": vocab_count} }) # update db
+    
+    
+    ################### WAS MOVED TO "add_vocab" FUNCTION #######################################
+    # if vocabs.find_one({"vocab": data["vocab"]}) is None:
+    #     # vocab doesnt exist in the db - go ahead and insert
+    #     vocabs.insert_one(data)
         
-        # issue custom flash message
-        flash("Vocab '{}' already exists. Lookup count was updated!".format(data["vocab"]))
+    #     # keep track of vocabs added by the the user
+    #     user = mongo.db.users.find_one({"username": data["user"] })  # get user
+    #     vocab_count = user["vocab_count"] # get vocab_count
+    #     vocab_count += 1 # increment the vocab_count 
+    #     user = mongo.db.users.update({"username": data["user"] }, {"$set": {"vocab_count": vocab_count} }) # update db
+    # else:
+    #     # vocab already exists in the database!
         
-        # fetch the existing vocab out of the db
-        vocab = mongo.db.vocabs.find_one({'vocab': data["vocab"] })
-
-        # get lookup_count of the vocab
-        lookup_count = vocab["lookup_count"]
-
-        # increment the lookup_count 
-        lookup_count += 1
+    #     # issue custom flash message
+    #     flash("Vocab '{}' already exists. Lookup count was updated!".format(data["vocab"]))
         
-        # update db
-        mongo.db.vocabs.update({'vocab': data["vocab"]},{ "$set": { "lookup_count": lookup_count, "last_lookup_date": get_today_date()}})
+    #     vocab = mongo.db.vocabs.find_one({'vocab': data["vocab"] }) # fetch the existing vocab out of the db
+    #     lookup_count = vocab["lookup_count"]    # get lookup_count of the vocab
+    #     lookup_count += 1   # increment the lookup_count 
         
-        # view the existing vocab by redirecting to view_vocab
-        return redirect( url_for("view_vocab", vocab_id=vocab['_id']) )
+    #     # update db
+    #     mongo.db.vocabs.update({'vocab': data["vocab"]},{ "$set": { "lookup_count": lookup_count, "last_lookup_date": get_today_date()}})
+        
+    #     # view the existing vocab by redirecting to view_vocab
+    #     return redirect( url_for("view_vocab", vocab_id=vocab['_id']) )
 
 
     return redirect(url_for('dash'))

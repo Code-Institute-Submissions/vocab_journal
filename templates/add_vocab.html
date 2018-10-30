@@ -2,64 +2,38 @@
 
 <div class="row">
     <p class="current_date right-align"></p>
-    <form action="{{ url_for('insert_vocab') }}" method="POST" class="col s10 offset-s1 m8 offset-m2">
+    <h2>{{ vocab.title() }}</h2>
+    <form action="{{ url_for('insert_vocab', vocab=vocab) }}" method="POST" class="col s10 offset-s1 m8 offset-m2">
         <div class="row">
 
-
-            <div class="input-field">
-                <i class="material-icons prefix">add_box</i>
-                <input id="vocab" name="vocab" type="text" minlength="2" class="validate" required>
-                <label for="vocab">New Vocab</label>
+            <!--<div class="input-field">-->
+            <!--    <i class="material-icons prefix">add_box</i>-->
+            <!--    <input id="vocab" name="vocab" type="text" minlength="2" class="validate" value="{{ vocab }}" disabled>-->
+            <!--    <label for="vocab">New Vocab</label>-->
+            <!--</div>-->
+            
+            <div class="api_definitions orange darken-4">
+                <p>definitions</p>
+                <p>definitions</p>
+                <p>synonyms</p>
+                <p>maybe have them all in a tab?????</p>
             </div>
+            
             
             {% with messages = get_flashed_messages() %} {% if messages %}
             <ul>
                 {% for message in messages %}
-                <p>{{ message }}.</p> 
+                <p>{{ message }}.</p>
                 {% endfor %}
             </ul>
             {% endif %} {% endwith %}
-            
-            <div class="input-field">
-                <ul id="tabs-swipe-demo" class="tabs">
-                    <li class="tab col s4"><a class="active" href="#test-swipe-1">Definition</a></li>
-                    <li class="tab col s4"><a href="#test-swipe-2">Synonyms</a></li>
-                    <li class="tab col s4"><a href="#test-swipe-3">Examples</a></li>
-                </ul>
-                <div id="test-swipe-1" class="blue">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic reprehenderit consequuntur unde officiis possimus harum officia, porro neque perferendis, vitae esse doloribus sunt debitis saepe facilis consectetur optio quisquam, aspernatur.
-                    Cum eligendi maiores illum hic quidem veritatis, sapiente explicabo nihil error officia quis, rerum delectus sed maxime repellendus. Fugiat, sed. Ullam inventore sapiente quasi excepturi et totam perspiciatis unde sed a doloremque
-                    molestias, nihil vel illum reprehenderit! Velit enim dolorem quia quaerat amet voluptates, voluptatem fugiat beatae repudiandae reiciendis pariatur, eligendi placeat eos culpa vel perspiciatis laborum, incidunt, obcaecati quibusdam
-                    neque. Beatae dolorem possimus, necessitatibus perferendis similique mollitia dolor! Blanditiis inventore magni aliquid distinctio, autem incidunt amet quam iure voluptatum nisi laboriosam deserunt non laborum quo vero, vitae nemo
-                    quis ducimus adipisci accusamus. Voluptas minima, magni. Porro perferendis error commodi ad reprehenderit maiores qui velit assumenda. Vitae veniam debitis, iste quae laborum nostrum laudantium eius voluptatibus suscipit fugit aperiam
-                    repellendus quidem autem, magni cumque cum ipsa dolorum, distinctio voluptatem similique nulla provident consectetur. Quibusdam rerum enim vel veritatis amet animi minima atque magni deleniti? Rem magni impedit assumenda obcaecati
-                    possimus aut veritatis eius inventore? Amet vel sed quisquam saepe animi aliquam maxime officia excepturi aliquid exercitationem! Id repudiandae sunt neque.</div>
-                <div id="test-swipe-2" class="red">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur et, molestiae numquam quia minus culpa sequi recusandae, nobis voluptatibus maiores aliquam deleniti voluptas. Ratione in magnam aliquam dolorum similique! Eum minus
-                    hic molestiae culpa esse amet eius dolore nisi, totam quidem perferendis eveniet eligendi ipsam. Atque quibusdam nostrum magnam, nam commodi dicta laudantium numquam quam ut, hic, in, soluta ducimus iste cupiditate. Dolorum illum at
-                    dolore consequatur voluptas accusamus atque quod voluptate. Eius nobis pariatur debitis, aperiam repellat sapiente ducimus veniam nostrum commodi maxime reiciendis possimus itaque minus inventore facilis cupiditate dolorem dolorum
-                    fuga? Sed nisi facere temporibus possimus numquam necessitatibus consectetur labore sunt illum sint a quasi nesciunt magnam voluptas, ab voluptates rem inventore aliquam? Tenetur, neque incidunt in possimus tempore aut commodi dolores
-                    quibusdam nam alias, necessitatibus, repellat modi officia? Rerum aspernatur cupiditate consequatur, iure molestiae, nostrum odio porro expedita sint ipsam exercitationem impedit alias. Pariatur dicta officia distinctio architecto
-                    ea molestiae vitae, praesentium dignissimos ab id provident, expedita ex. Similique at saepe, dolor doloribus voluptatem, nulla debitis vel explicabo praesentium quia sapiente facilis ipsum tenetur commodi, consequuntur provident!
-                    Cumque eum earum laudantium eveniet excepturi minima, consequatur delectus reiciendis labore rerum, aspernatur facilis eius nihil expedita voluptate error!</div>
-                <div id="test-swipe-3" class="green">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea enim a est dignissimos quae alias, autem, corrupti omnis voluptas ut sed doloribus praesentium earum inventore obcaecati, quidem nihil voluptate nisi rerum. Illo tenetur exercitationem
-                    corrupti, necessitatibus dolor quo, sapiente ipsam optio atque explicabo magnam ullam reiciendis facere velit repellendus libero assumenda neque dignissimos eos asperiores inventore veritatis doloremque similique. Quia voluptates nisi
-                    maiores, sequi aut placeat! Dolorum cupiditate numquam velit! Consectetur soluta laboriosam corporis veritatis veniam debitis accusamus quidem nostrum, magnam alias. Velit maiores impedit similique iure vero numquam nostrum est quidem
-                    cum dolor quo soluta, sed laboriosam eos minima! Sequi excepturi provident assumenda, qui ad tempora nisi quos laboriosam, quis commodi dicta distinctio perspiciatis id repudiandae debitis quia, molestias? Facere minima explicabo,
-                    corporis iure eum a doloremque alias, earum quae voluptatibus molestiae provident mollitia praesentium modi quod nihil cupiditate vel, laboriosam eius. Recusandae quisquam neque officia expedita placeat, dolorum nulla laborum ipsam
-                    nesciunt exercitationem impedit a eum debitis iste excepturi dolore rerum possimus saepe sunt mollitia pariatur similique consequuntur, est asperiores! Temporibus amet consequuntur perferendis fuga, et molestiae atque iste, veritatis
-                    corporis tempore nemo. Quidem earum veniam eum, cumque animi velit commodi dicta obcaecati aut illum neque ducimus exercitationem.</div>
-                <a class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>Get</a>
-
-
-
-            </div>
-
 
             <div class="input-field">
                 <i class="material-icons prefix">subject</i>
                 <textarea id="user_definition" name="user_definition" class="materialize-textarea" data-length="500"></textarea>
                 <label for="user_definition">User definition</label>
             </div>
-            
+
             <div class="input-field">
                 <i class="material-icons prefix">bookmark</i>
                 <select id="source" name="source">
@@ -101,10 +75,10 @@
                 <label for="misc">Miscellaneous</label>
             </div>
 
-                <!--<div class="input-field">-->
+            <!--<div class="input-field">-->
             <div class="range-field ">
-                    <i class="small material-icons">mode_edit</i><span> Difficulty level</span><input id="difficulty" name="difficulty" type="range" min="0" max="100" />
-                </div>
+                <i class="small material-icons">mode_edit</i><span> Difficulty level</span><input id="difficulty" name="difficulty" type="range" min="0" max="100" />
+            </div>
             <!--</div>-->
 
             <div class="input-field center-align">
@@ -119,4 +93,11 @@
 </div>
 {% block additional_scripts %}
 <script src="{{ url_for('static', filename='js/add_vocab.js') }}"></script>
+<script>
+    
+    function getVal() {
+        return $("#vocab").val()
+    }
+    
+</script>
 {% endblock %} {% endblock %}

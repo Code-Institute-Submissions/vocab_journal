@@ -28,7 +28,7 @@
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     {% if session['username'] %}
                         <li><a href="{{ url_for('dash') }}">Welcome {{ session['name'].title() }}</a></li>
-                        <li><a href="{{ url_for('add_vocab') }}">Add Vocab</a></li>
+                        <li><a href="{{ url_for('check_vocab') }}">Add Vocab</a></li>
                         {% if session['admin'] %}
                             <li><a href="{{ url_for('manage_sources') }}">Manage Sources</a></li>
                         {% endif %}

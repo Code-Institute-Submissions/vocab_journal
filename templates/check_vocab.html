@@ -1,0 +1,27 @@
+{% extends 'base.html'%} {% block title %}Dashboard{% endblock %} {% block content %}
+<h1>Add a new vocab</h1>
+<p>this page checks the vocab.<br>
+    pressing the button will fetch the definition of the vocab (calls a function in run.py which uses the api as a function or class)
+    and pushes into the "add_vocab" page.<br>
+    a div will show the content of the definition, synonym and examples at yop of the "add_vocab" page.
+    
+    also this page should check to see of the vocab already exists (then it loads the vocab page) NOT the add_vocab page.
+    </p>
+
+<form action="{{ url_for('add_vocab') }}" method="POST">
+
+    <div class="input-field">
+        <i class="material-icons prefix">add_box</i>
+        <input id="vocab" name="vocab" type="text" minlength="2" class="validate" required>
+        <label for="vocab">New Vocab</label>
+    </div>
+    <div class="row right-align">
+        <button class="btn waves-effect waves-light right-align" type="submit">Check definition
+            <i class="material-icons right">send</i>
+        </button>
+    </div>
+</form>
+
+
+
+{% endblock %}

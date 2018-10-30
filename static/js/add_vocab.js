@@ -38,11 +38,4 @@ $(document).ready(function() {
     })
 
 
-    $('ul.tabs').tabs({
-        swipeable: true,
-        responsiveThreshold: 3000
-    });
-
-
-
 });

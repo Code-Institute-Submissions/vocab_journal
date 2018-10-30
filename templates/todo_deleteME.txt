@@ -113,12 +113,13 @@ notes:
         - flash messages centered ... DONE!
      
      cater for "vocab_count" in user documents -- DONE!
-        - increment by one everytime they successfully add a vocab
+        - increment by one everytime they successfully add a vocab ---- Done
      
-    !!!!!!!!!!!!!! create a function for current date!
+    - create a function for current date! --- Done
     !!!!!!!!!!!!!! explore models 
         https://stackoverflow.com/questions/30473647/how-can-i-detect-if-a-user-tries-to-upvote-once-again
         looks promising ---> https://github.com/whoeverest/NSND-Upvoting/blob/master/upvote-list.py           
+    
     users management ... DONE!
         - view user profile... DONE!
             - view user stats ... DONE!
@@ -126,4 +127,12 @@ notes:
                 - show vocabs ... DONE!
                 - dob ... DONE!
                 - admin boolean ... DONE!
-  
+    navigations
+        if vocab page was called from check_vocab then the button at the end should say "back to the vocab"
+        instead of "back to the list"
+        
+    START with "add_vocab" function
+     - leave definitions for now
+     - fix edit_vocab next
+        - dont forget to add the following to it
+            - mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": get_today_date()} })
