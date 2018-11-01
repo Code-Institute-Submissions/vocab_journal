@@ -304,7 +304,7 @@ def delete_vocab(vocab_id):
     mongo.db.vocabs.remove({'_id': ObjectId(vocab_id)})
     
     # custom flash message as confirmation 
-    flash("'{}' was successfully DELETED!".format(to_del_vocab["vocab"]))
+    flash("'{}' was successfully DELETED!".format( to_del_vocab["vocab"].title() ))
     
     return redirect(url_for('dash'))
 
@@ -368,7 +368,6 @@ def add_vocab():
         return redirect( url_for("index"))
     
     vocab_in = request.form.get("vocab").lower()
-    print("vocab_in = ", vocab_in)
     
     ###############################  MAKE DEFINITION FUNCTION ################################################
     # make function to call using api to return definition, synonym and example
@@ -407,8 +406,8 @@ def insert_vocab(vocab):
     # initialisations
     data = {}
     vocabs = mongo.db.vocabs
-    # print("insert vocab = ", vocab)
-    
+
+    data["tags"] = request.form.get("tags") 
     data["pub_date"] = get_today_date() 
     data["last_lookup_date"] = get_today_date() 
     data["mod_date"] = get_today_date() 
@@ -498,7 +497,7 @@ def update_vocab(vocab_id):
     
     change_flag = False
     track_change = { "user_definition": False,"source": False,"context": False,
-                    "misc": False,"difficulty": False,"ref": False }
+                    "misc": False,"difficulty": False,"ref": False, "tags": False }
     
     if request.form.get("user_definition") != vocab["user_definition"]:
         track_change["user_definition"] = True
@@ -523,6 +522,10 @@ def update_vocab(vocab_id):
     if request.form.get("ref") != vocab["ref"]:
         track_change["ref"] = True
         mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "ref": request.form.get("ref") } })
+        
+    if request.form.get("tags") != vocab["tags"]:
+        track_change["tags"] = True
+        mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "tags": request.form.get("tags") } })
     
     for k,v in  track_change.items():
         if v:
@@ -530,7 +533,7 @@ def update_vocab(vocab_id):
     
     if change_flag:
         mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": get_today_date()} })
-        flash( "'{}' vocab was successfully modified!".format(vocab["vocab"].title()) )
+        flash( "'{}' vocab was successfully MODIFIED!".format(vocab["vocab"].title()) )
     else:
         flash( "No changes were made to '{}' vocab!".format(vocab["vocab"].title() ) )
         
