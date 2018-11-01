@@ -29,12 +29,12 @@
             <div class="input-field">
                 <i class="material-icons prefix">bookmark</i>
                 <select id="source" name="source">
-                    <option value="" disabled selected>Sources</option>
                     {% for source in sources %}
                         {% if vocab.source == source.name %}
                         <option value="{{ source.name }}" selected>{{ source.name.title() }}</option>
-                        {% endif %}
+                        {% else %}
                         <option value="{{ source.name }}">{{ source.name.title() }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>

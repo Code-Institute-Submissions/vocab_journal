@@ -37,7 +37,6 @@
             <div class="input-field">
                 <i class="material-icons prefix">bookmark</i>
                 <select id="source" name="source">
-                    <option value="" disabled selected>Sources</option>
                     {% for source in sources %}
                         <option value="{{ source.name }}">{{ source.name.title() }}</option>
                     {% endfor %}

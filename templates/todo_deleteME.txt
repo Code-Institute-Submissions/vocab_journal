@@ -98,7 +98,6 @@ notes:
         def view_vocab(vocab_id)
          - >>>>>>>>>>>>>>>>>>>>>>> IMPORTANT!!! the "mod_date" should be moved to the edit or update function on line 334
      fix api (first page)
-     think of the game
      upvoting or liking!
      dash visuals - maybe switch to cards?
         - handle user profile access 
@@ -115,7 +114,7 @@ notes:
      cater for "vocab_count" in user documents -- DONE!
         - increment by one everytime they successfully add a vocab ---- Done
      
-    - create a function for current date! --- Done
+    - create a function for current date! --- DONE!
     !!!!!!!!!!!!!! explore models 
         https://stackoverflow.com/questions/30473647/how-can-i-detect-if-a-user-tries-to-upvote-once-again
         looks promising ---> https://github.com/whoeverest/NSND-Upvoting/blob/master/upvote-list.py           
@@ -140,3 +139,13 @@ notes:
      - fix edit_vocab next
         - dont forget to add the following to it
             - mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": get_today_date()} })
+    
+    NEW LIST!
+        - add more filters for dash
+         - defualt order should be latest added or modified.
+         - search by source
+        - disbale enter to submit on forms
+        - add user delete, edit
+        - delete source
+          - when delete sources, if the source is in use, flash a message that the user can search for the
+            vocabs using that specific source 

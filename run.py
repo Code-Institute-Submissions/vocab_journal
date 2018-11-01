@@ -413,7 +413,7 @@ def insert_vocab(vocab):
     data["mod_date"] = get_today_date() 
     data["vocab"] = vocab # request.form["vocab"].lower()
     data["user_definition"] = request.form["user_definition"].lower()
-    data["source"] = request.form.get("source","") # ATTENTION!
+    data["source"] = request.form.get("source") # ATTENTION!
     data["context"] = request.form["context"].lower()
     data["misc"] = request.form["misc"].lower()
     data["difficulty"] = int(request.form["difficulty"])
