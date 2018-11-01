@@ -327,16 +327,12 @@ def view_vocab(vocab_id):
 
     # fetch the existing vocab out of the db
     vocab = mongo.db.vocabs.find_one({'_id': ObjectId(vocab_id)})
-
-    # get total number views for the vocab
-    views = vocab["views"]
-
-    # increment the views 
-    views += 1
+    views = vocab["views"]  # get total number views for the vocab
+    views += 1  # increment the views
     
     # update db
     mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "views": views }})
-    # mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": get_today_date()} })
+    
 
     return render_template("vocab.html", vocab=vocab, current_user=current_user)
 
@@ -371,7 +367,7 @@ def add_vocab():
         flash("Please log in first")
         return redirect( url_for("index"))
     
-    vocab_in = request.form.get("vocab")
+    vocab_in = request.form.get("vocab").lower()
     print("vocab_in = ", vocab_in)
     
     ###############################  MAKE DEFINITION FUNCTION ################################################
@@ -426,9 +422,9 @@ def insert_vocab(vocab):
     data["user"] = session['username'] # request.form["user_id"] # ?????????????
     data["lookup_count"] = 0
     data["likes"] = 0
-    data["views"] = 0
+    data["views"] = 1
     
-    
+    # insert data
     vocabs.insert_one(data)
         
     # keep track of vocabs added by the the user
@@ -464,8 +460,82 @@ def insert_vocab(vocab):
     #     # view the existing vocab by redirecting to view_vocab
     #     return redirect( url_for("view_vocab", vocab_id=vocab['_id']) )
 
-
     return redirect(url_for('dash'))
+
+
+
+
+
+@app.route("/edit_vocab/<vocab_id>")
+def edit_vocab(vocab_id):
+    
+    # DEFENSIVE redirecting
+    try:
+        # identify the logged in user 
+        current_user = mongo.db.users.find_one({"username": session['username']})
+    except KeyError:
+        # no session - redirect back to index view
+        flash("Please log in first")
+        return redirect( url_for("index"))
+    
+    # show all the vocab details on the screen
+    vocab = mongo.db.vocabs.find_one({'_id': ObjectId(vocab_id)})
+    sources = mongo.db.sources.find()
+    
+    
+    return render_template("edit_vocab.html", vocab=vocab, sources=sources)
+    # the submit should pass everything to the update_vocab
+    
+    
+
+@app.route("/update_vocab/<vocab_id>", methods=["POST"])
+def update_vocab(vocab_id):
+    
+    
+    print("i got called!!!!!")
+    # fetch vocab
+    vocab = mongo.db.vocabs.find_one({'_id': ObjectId(vocab_id)})
+    
+    change_flag = False
+    track_change = { "user_definition": False,"source": False,"context": False,
+                    "misc": False,"difficulty": False,"ref": False }
+    
+    if request.form.get("user_definition") != vocab["user_definition"]:
+        track_change["user_definition"] = True
+        mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "user_definition": request.form.get("user_definition") } })
+    
+    if request.form.get("source") != vocab["source"]:
+        track_change["source"] = True
+        mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "source": request.form.get("source") } })
+    
+    if request.form.get("context") != vocab["context"]:
+        track_change["context"] = True
+        mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "context": request.form.get("context") } })
+    
+    if request.form.get("misc") != vocab["misc"]:
+        track_change["misc"] = True
+        mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "misc": request.form.get("misc") } })
+    
+    if request.form.get("difficulty") != vocab["difficulty"]:
+        track_change["difficulty"] = True
+        mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "difficulty": request.form.get("difficulty") } })
+    
+    if request.form.get("ref") != vocab["ref"]:
+        track_change["ref"] = True
+        mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "ref": request.form.get("ref") } })
+    
+    for k,v in  track_change.items():
+        if v:
+            change_flag = True
+    
+    if change_flag:
+        mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": get_today_date()} })
+        flash( "'{}' vocab was successfully modified!".format(vocab["vocab"].title()) )
+    else:
+        flash( "No changes were made to '{}' vocab!".format(vocab["vocab"].title() ) )
+        
+    return redirect( url_for('dash') )
+
 
 
 @app.route("/view_user/<username>")

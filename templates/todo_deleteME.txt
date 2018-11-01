@@ -131,8 +131,12 @@ notes:
         if vocab page was called from check_vocab then the button at the end should say "back to the vocab"
         instead of "back to the list"
         
-    START with "add_vocab" function
+    START with "edit_vocab" function
      - leave definitions for now
+     - start with edit_vocab
+        - update_vocab to finalise 
+     - change insert_vocab to work with id,  "insert_vocab/<vocab_id>" instead of "insert_vocab/<vocab>"
+     
      - fix edit_vocab next
         - dont forget to add the following to it
             - mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": get_today_date()} })
