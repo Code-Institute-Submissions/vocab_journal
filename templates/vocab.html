@@ -7,9 +7,9 @@
 </div>
 <p class="right-align">Published on <strong>{{ vocab.pub_date }}</strong> </p>
 {% if current_user.username == vocab.user %}
-<p class="right-align">Added by <strong>you</strong> </p>
+<p class="right-align">Added by<a href="{{ url_for('view_user', username=vocab.user) }}"> <strong> you </strong> </a> </p>
 {% else %}
-<p class="right-align">Added by <strong>{{ vocab.user  }}</strong> </p>
+<p class="right-align">Added by<a href="{{ url_for('view_user', username=vocab.user) }}"> <strong> {{ vocab.user }} </strong> </a> </p>
 {% endif %}
 <div class="right-align"><i class="tiny material-icons">favorite</i>Likes: {{ vocab.likes }} </div>
 <div class="row">

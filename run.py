@@ -303,6 +303,11 @@ def delete_vocab(vocab_id):
     # remove vocab
     mongo.db.vocabs.remove({'_id': ObjectId(vocab_id)})
     
+    # update user vocab_count 
+    user = mongo.db.users.find_one({"username": to_del_vocab["user"]})
+    vocabs_count =  mongo.db.vocabs.find({"user": to_del_vocab["user"]}).count()
+    mongo.db.users.update({'username': to_del_vocab["user"]}, { "$set": { "vocab_count": vocabs_count }})
+        
     # custom flash message as confirmation 
     flash("'{}' was successfully DELETED!".format( to_del_vocab["vocab"].title() ))
     
@@ -427,11 +432,12 @@ def insert_vocab(vocab):
     vocabs.insert_one(data)
         
     # keep track of vocabs added by the the user
-    user = mongo.db.users.find_one({"username": data["user"] })  # get user
-    vocab_count = user["vocab_count"] # get vocab_count
-    vocab_count += 1 # increment the vocab_count 
-    user = mongo.db.users.update({"username": data["user"] }, {"$set": {"vocab_count": vocab_count} }) # update db
-    
+
+    # update user vocab_count 
+    user = mongo.db.users.find_one({"username": data["user"]})
+    vocabs_count =  mongo.db.vocabs.find({"user": data["user"]}).count()
+    mongo.db.users.update({'username': data["user"]}, { "$set": { "vocab_count": vocabs_count }})
+
     
     ################### WAS MOVED TO "add_vocab" FUNCTION #######################################
     # if vocabs.find_one({"vocab": data["vocab"]}) is None:
