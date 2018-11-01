@@ -36,7 +36,6 @@
                 <p>Published on: {{ vocab.pub_date }}</p>
                 <p>Added by: {{ vocab.user }}</p>
                 <p>Views: {{ vocab.views }}</p>
-                <p>Tags: {{ vocab.tags }}</p>
                 <p>Last modified on: {{ vocab.mod_date }}</p>
                 <p>Last lookup date: {{ vocab.last_lookup_date }}</p>
             </div>
@@ -60,6 +59,13 @@
             <div class="card-content">
                 <span class="card-title">Reference</span>
                 <p>{{ vocab.ref }}</p>
+            </div>
+        </div>
+        {% endif %} {% if vocab.tags != "" %}
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Tags</span>
+                <p>{{ vocab.tags }}</p>
             </div>
         </div>
         {% endif %} 
