@@ -138,18 +138,22 @@ notes:
             - mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": get_today_date()} })
     
     NEW LIST!
-        - add more filters for dash
-             - defualt order should be latest added or modified.
-             - search by source
+        - add more filters for dash ... DONE!
+             - defualt order should be latest added or modified. ... DONE!(not working! BUG!)
+             - search by source --- DONE!
+             - add clear fliter via javascript if $(id) pressed clear bla bla bla
         - disbale enter to submit on forms
-        - add user delete, edit
         - definitions API
             - create function in another pyfile and then import
         - Likes functionality added
-        - interactive shit < -- is it necessary?
-        - delete source
-              - when delete sources, if the source is in use, flash a message that the user can search for the
-                vocabs using that specific source 
         - navigations
                 - if vocab page was called from check_vocab then the button at the end should say "back to the vocab"
                 instead of "back to the list"
+        - styling using sass and css
+        - unittest completion
+        - gitignore sensitive docs   
+                
+    problems:
+        - sorting by date doesnt work since it only looks at the first two numbers of the date. it
+        treats the date as a number. so 12/08/2018 comes before 22/05/2018. it completely ignores the months
+         and just takes the days.

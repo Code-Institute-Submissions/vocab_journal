@@ -6,7 +6,7 @@
     <div class="switch">
         <label>
           Show all vocabs
-          {% if user_vocabs_only %}
+          {% if filter_options.user_vocabs_only %}
               <input type="checkbox" name="vocab_only" checked>
           {% else %}
               <input type="checkbox" name="vocab_only" >
@@ -15,7 +15,52 @@
           Only show your own vocabs
         </label>
     </div>
+
+    <div class="input-field">
+        <i class="material-icons prefix">bookmark</i>
+        <select id="source" name="source">
+            <option value="" selected disabled>pick a source</option>
+            {% for source in sources %}
+                {% if filter_options.source == source.name %}
+                    <option value="{{ source.name }}" selected>{{ source.name.title() }}</option>
+                {% else %}
+                    <option value="{{ source.name }}">{{ source.name.title() }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s6">
+            <i class="material-icons prefix">bookmark</i>
+            <select id="order_by" name="order_by">
+            {% for key, value in  filter_options.order_by.iteritems() %}
+                {% if value %}
+                    <option value="{{ key }}" selected>{{ key.title() }}</option>
+                {% else %}
+                    <option value="{{ key }}">{{ key.title() }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        </div>
+        <div class="input-field col s6">
+            <i class="material-icons prefix">bookmark</i>
+            <select id="order" name="order">
+            {% for key, value in  filter_options.order.iteritems() %}
+                {% if value %}
+                    <option value="{{ key }}" selected>{{ key.title() }}</option>
+                {% else %}
+                    <option value="{{ key }}">{{ key.title() }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        </div>
+    </div>
+
     <div class="row right-align">
+        <a id="clear_filter" class="btn waves-effect waves-light right-align">clear
+            <i class="material-icons right">clear</i>
+        </a>
         <button class="btn waves-effect waves-light right-align" type="submit">Apply filter
             <i class="material-icons right">send</i>
         </button>
@@ -43,7 +88,7 @@
             </div>
             <div class="collapsible-body">
                 <span>definition: {{ vocab.user_definition }}</span>
-                <p>likes: {{ vocab.likes }}<br> lookup count: {{ vocab.lookup_count }}<br> published date: {{ vocab.pub_date }}</p>
+                <p>views: {{ vocab.views }}<br> likes: {{ vocab.likes }}<br> lookup count: {{ vocab.lookup_count }}<br> published date: {{ vocab.pub_date }}</p>
                 <div class="right-align">
                     {% if current_user.username == vocab.user or current_user.admin %}
                     <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
@@ -59,7 +104,11 @@
 </div>
 
 
-<!--<div class="row">-->
-<!--    <a href="{{ url_for('logout') }}" class="waves-effect waves-light btn-large"><i class="material-icons left">group_add</i>Log out</a>-->
-<!--</div>-->
-{% endblock %}
+
+{% block additional_scripts %}
+<script>
+    
+</script>
+
+
+{% endblock %} {% endblock %}

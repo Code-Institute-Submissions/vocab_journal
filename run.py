@@ -180,8 +180,15 @@ def dash():
         # no session - redirect back to index view
         return redirect( url_for("index"))
     
+    # dictionary created for the sole purpose of saving the filter settings upon selections
+    filter_options = {}
+    filter_options["user_vocabs_only"] =  False
+    filter_options["order_by"] =  {"views": False, "lookup count": True, "likes": False, "difficulty": False, "publish date": False, "modified date": False  }
+    filter_options["order"] =  { "descneding": True, "ascending": False }
+    filter_options["source"] =  ""
+    
     # user identified
-    return render_template("dash.html", vocabs=mongo.db.vocabs.find(), current_user=current_user, user_vocabs_only=False)
+    return render_template("dash.html", vocabs=mongo.db.vocabs.find(), sources=mongo.db.sources.find(), current_user=current_user, filter_options=filter_options)
 
 
 
@@ -189,11 +196,8 @@ def dash():
 
 @app.route("/get_filtered/<user_id>", methods=['POST'])
 def get_filtered(user_id):
-    print("i got called!")
-    print("user_id = ", user_id)
-    user_vocabs_only= False
+    """ Apply filters to db"""
     
-    # current_user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
     # DEFENSIVE redirecting
     try:
         # identify the logged in user 
@@ -202,16 +206,75 @@ def get_filtered(user_id):
         # no session - redirect back to index view
         return redirect( url_for("index"))
     
-    if request.form.to_dict("vocab_only"):
-        user_vocabs_only = True
+    # dictionary created for the sole purpose of saving the filter settings upon selections
+    filter_options = {}
+    filter_options["user_vocabs_only"] =  False
+    filter_options["order_by"] =  {"views": False, "lookup count": True, "likes": False, "difficulty": False, "publish date": False, "modified date": False }
+    filter_options["order"] =  { "descneding": True, "ascending": False }
+    filter_options["source"] =  ""
     
-        vocabs= list(mongo.db.vocabs.find({"user": current_user["username"]}))
-        if len(vocabs) == 0:
-            flash("No vocabs found!")
+    # getting all vocabs at first
+    vocabs = mongo.db.vocabs.find()
+    
+    # Setting up filter logic
+    filter_dict = {} # 
+    if request.form.get("source"):
+        filter_options["source"] = request.form.get("source")   # updating filter options 
+        filter_dict["source"] = request.form.get("source")      
+    if request.form.get("vocab_only"):
+        # user_vocabs_only = True
+        filter_options["user_vocabs_only"] = True   # updating filter options 
+        filter_dict["user"] = current_user["username"]
+    
+    # Applying filters
+    vocabs = mongo.db.vocabs.find(filter_dict)
+    
+    # Setting up "order" logic
+    order_by = request.form.get("order_by")
+    for k in filter_options["order_by"]:
+        print("order_by, k = ", order_by, k, (order_by == k))
+        # updating filter options 
+        if order_by == k:
+            filter_options["order_by"][k] = True
+        else:
+            filter_options["order_by"][k] = False
+    
+    print('filter_options["order_by"] = ', filter_options["order_by"])
+    
+    # readjusting sorting data before passing it into db (entities listed below are stored differently in db)
+    # entities were changed since they're being used to populate the "select" inputs within the filter options
+    # of the dash.
+    if order_by == "lookup count":
+        order_by = "lookup_count"
+    elif order_by == "publish date":
+        order_by = "pub_date"
+    elif order_by == "modified date":
+        order_by = "mod_date"
+    else:
+        pass
+
+    # Applying sorts
+    if request.form.get("order") == "ascending":
+        # updating filter options 
+        filter_options["order"]["ascending"] = True
+        filter_options["order"]["descneding"] = False
+        vocabs.sort(order_by, 1) 
+    else:
+        # updating filter options 
+        filter_options["order"]["ascending"] = False
+        filter_options["order"]["descneding"] = True
+        vocabs.sort(order_by, -1) 
+
+    # Custom flash msg for no results 
+    if vocabs.count() == 0:
+        flash("No vocabs found!")
+        # custom flash msg for user not having added any vocabs
+        if mongo.db.vocabs.find({"user": current_user["username"]}).count() == 0:
             flash("'{}' has not added any vocabs.".format( current_user["username"].title()))
-        
-        return render_template("dash.html", vocabs=vocabs, current_user=current_user, user_vocabs_only=user_vocabs_only)
-    return redirect( url_for("dash"))
+    
+      
+    return render_template("dash.html", vocabs=vocabs, sources=mongo.db.sources.find(), current_user=current_user, filter_options=filter_options)
+
     
 
 
