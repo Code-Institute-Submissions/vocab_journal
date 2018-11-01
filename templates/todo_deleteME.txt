@@ -128,8 +128,7 @@ notes:
                 - admin boolean ... DONE!
         
     DONE LIST!
-     - vocab_count for user now correctly functions using .count()
-     - leave definitions for now
+     - vocab_count for user now correctly functions using .count() ... DONE!
      - start with edit_vocab
         - update_vocab to finalise 
      - change insert_vocab to work with id,  "insert_vocab/<vocab_id>" instead of "insert_vocab/<vocab>"
@@ -140,16 +139,17 @@ notes:
     
     NEW LIST!
         - add more filters for dash
-         - defualt order should be latest added or modified.
-         - search by source
+             - defualt order should be latest added or modified.
+             - search by source
         - disbale enter to submit on forms
         - add user delete, edit
         - definitions API
-        - Likes 
+            - create function in another pyfile and then import
+        - Likes functionality added
         - interactive shit < -- is it necessary?
         - delete source
-          - when delete sources, if the source is in use, flash a message that the user can search for the
-            vocabs using that specific source 
+              - when delete sources, if the source is in use, flash a message that the user can search for the
+                vocabs using that specific source 
         - navigations
-            - if vocab page was called from check_vocab then the button at the end should say "back to the vocab"
-            instead of "back to the list"
+                - if vocab page was called from check_vocab then the button at the end should say "back to the vocab"
+                instead of "back to the list"
