@@ -58,7 +58,7 @@
     </div>
 
     <div class="row right-align">
-        <a id="clear_filter" class="btn waves-effect waves-light right-align">clear
+        <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn waves-effect waves-light right-align">clear
             <i class="material-icons right">clear</i>
         </a>
         <button class="btn waves-effect waves-light right-align" type="submit">Apply filter
@@ -102,13 +102,4 @@
     </ul>
 
 </div>
-
-
-
-{% block additional_scripts %}
-<script>
-    
-</script>
-
-
-{% endblock %} {% endblock %}
+{% endblock %}

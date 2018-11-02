@@ -151,7 +151,8 @@ notes:
                 instead of "back to the list"
         - styling using sass and css
         - unittest completion
-        - gitignore sensitive docs   
+        - gitignore sensitive docs
+        - pagination
                 
     problems:
         - sorting by date doesnt work since it only looks at the first two numbers of the date. it
