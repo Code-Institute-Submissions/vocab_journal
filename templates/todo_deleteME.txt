@@ -141,7 +141,11 @@ notes:
         - add more filters for dash ... DONE!
              - defualt order should be latest added or modified. ... DONE!(not working! BUG!)
              - search by source --- DONE!
-             - add clear fliter via javascript if $(id) pressed clear bla bla bla
+             - add clear fliter via javascript if $(id) pressed clear bla bla bla ... DONE!
+                - done by passing through dash.html again, rather than using javascript to clear
+                  the options on the screen. can select the elements by i cant change their values 
+                  i reckon it's got something to do with loops put in place in the template to
+                  populate the select inputs with options.
         - disbale enter to submit on forms
         - definitions API
             - create function in another pyfile and then import
@@ -149,10 +153,12 @@ notes:
         - navigations
                 - if vocab page was called from check_vocab then the button at the end should say "back to the vocab"
                 instead of "back to the list"
+        - pagination
+        - footer
+        - put the defensive desgin bit of each function into a seperate function? since it's the same?
         - styling using sass and css
         - unittest completion
         - gitignore sensitive docs
-        - pagination
                 
     problems:
         - sorting by date doesnt work since it only looks at the first two numbers of the date. it
