@@ -34,7 +34,7 @@
         <div class="input-field col s6">
             <i class="material-icons prefix">bookmark</i>
             <select id="order_by" name="order_by">
-            {% for key, value in  filter_options.order_by.iteritems() %}
+            {% for key, value in  filter_options.order_by.items() %}
                 {% if value %}
                     <option value="{{ key }}" selected>{{ key.title() }}</option>
                 {% else %}
@@ -46,7 +46,7 @@
         <div class="input-field col s6">
             <i class="material-icons prefix">bookmark</i>
             <select id="order" name="order">
-            {% for key, value in  filter_options.order.iteritems() %}
+            {% for key, value in  filter_options.order.items() %}
                 {% if value %}
                     <option value="{{ key }}" selected>{{ key.title() }}</option>
                 {% else %}
