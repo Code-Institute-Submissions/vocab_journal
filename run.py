@@ -465,13 +465,13 @@ def add_vocab():
     #      get_examples():  to extract vocab "examples"
     
     def_stat, def_data = local_dictionary.get_definitions()     # get definitions
-    # syn_stat, syn_data = vocab_in_defintions.get_synonyms()   # get synonyms
+    syn_stat, syn_data = local_dictionary.get_synonyms()   # get synonyms
     # exa_stat, exa_data = vocab_in_defintions.get_examples()   # get examples
-
+    data = {"definitions": def_data, "synonyms": syn_data}
     #############################################################################################################
     
     
-    return render_template("add_vocab.html", sources = mongo.db.sources.find(), vocab=vocab_in.lower(), def_data=def_data)
+    return render_template("add_vocab.html", sources = mongo.db.sources.find(), vocab=vocab_in.lower(), data=data )
 
 
 

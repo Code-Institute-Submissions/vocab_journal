@@ -6,15 +6,15 @@
     <form action="{{ url_for('insert_vocab', vocab=vocab) }}" method="POST" class="col s10 offset-s1 m8 offset-m2">
         <div class="row">
             
-            {% if def_data|length != 0 %}
+            {% if data.definitions|length != 0 %}
                 <ul class="collapsible" data-collapsible="Expandable">
                     <li>
                         <div class="collapsible-header active"><i class="material-icons">description</i> Definitions</div>
                         <div class="collapsible-body" >
                             <span>
-                                {% for key in def_data %}
+                                {% for key in data.definitions %}
                                     <p><strong>{{ key }}:</strong></p>
-                                    {% for def in def_data[key] %} 
+                                    {% for def in data.definitions[key] %} 
                                         {{ loop.index }}) {{ def }}<br> 
                                     {% endfor %} 
                                 {% endfor %}
@@ -23,7 +23,19 @@
                     </li>
                     <li>
                         <div class="collapsible-header"><i class="material-icons">place</i>Synonyms</div>
-                        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                        <div class="collapsible-body" >
+                            <span>
+                                {% for key in data.synonyms %}
+                                    <p><strong>{{ key }}:</strong></p>
+                                    {% for syn in data.synonyms[key] %} 
+                                        {{ syn }},
+                                        {% if loop.index == loop.length %}
+                                            {{ syn }}.
+                                        {% endif %}
+                                    {% endfor %} 
+                                {% endfor %}
+                            </span>
+                        </div>
                     </li>
                     <li>
                         <div class="collapsible-header"><i class="material-icons">whatshot</i>Examples</div>
