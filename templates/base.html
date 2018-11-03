@@ -23,11 +23,12 @@
     <header>
         <nav class="nav-extended">
             <div class="nav-wrapper">
-                <a href="#" class="brand-logo">VJournal</a>
+                <a href="{{ url_for('dash') }}" class="brand-logo">VJournal</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     {% if session['username'] %}
-                        <li><a href="{{ url_for('dash') }}">Welcome {{ session['name'].title() }}</a></li>
+                        <li><a href="#">Welcome {{ session['name'].title() }}</a></li>
+                        <li><a href="{{ url_for('dash') }}">Dashboard</a></li>
                         <li><a href="{{ url_for('check_vocab') }}">Add Vocab</a></li>
                         {% if session['admin'] %}
                             <li><a href="{{ url_for('manage_sources') }}">Manage Sources</a></li>
@@ -39,9 +40,18 @@
                     {% endif %}
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
-                    <li><a href="{{ url_for('index') }}">Log in</a></li>
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
-                    <li><a href="{{ url_for('dash') }}">Dashbboard</a></li>
+                    {% if session['username'] %}
+                        <li><a href="#">Welcome {{ session['name'].title() }}</a></li>
+                        <li><a href="{{ url_for('dash') }}">Dashbboard</a></li>
+                        <li><a href="{{ url_for('check_vocab') }}">Add Vocab</a></li>
+                        {% if session['admin'] %}
+                            <li><a href="{{ url_for('manage_sources') }}">Manage Sources</a></li>
+                        {% endif %}
+                        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('index') }}">Log in</a></li>
+                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
