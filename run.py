@@ -1,6 +1,7 @@
 
 import os
 from dbconfig import db_name, db_uri # capitalise
+from py_define import OxDictApi
 from bson.objectid import ObjectId
 from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
@@ -436,19 +437,7 @@ def add_vocab():
         return redirect( url_for("index"))
     
     vocab_in = request.form.get("vocab").lower()
-    
-    ###############################  MAKE DEFINITION FUNCTION ################################################
-    # make function to call using api to return definition, synonym and example
-    
-    #definitions, synonyms, xamples =  define_vocab(vocab) # the outcome of which should be passed into "add_vocab"
-    
-    # create the function above (or class?) in another py file and import it in.
-    # the function should use the api in py_deine.py to find definitions, synonyms and examples
-    # then there are passed into the "add_vocab" page into a  div placed at the top of the page, 
-    # user can see the definitions then write his own definition.... and then finally insert by hitting the button!
-    ##########################################################################################################
-    
-    
+
     # if the vocab already exists then load its page with maybe the definintion
     if mongo.db.vocabs.find_one({"vocab": vocab_in}) is not None:    
         # issue custom flash message
@@ -463,8 +452,26 @@ def add_vocab():
         
         # view the existing vocab by redirecting to view_vocab
         return redirect( url_for("view_vocab", vocab_id=vocab['_id']) )
+
     
-    return render_template("add_vocab.html", sources = mongo.db.sources.find(), vocab=vocab_in.lower())
+    ###############################  DEFINITION EXTRACTION (API) ################################################
+    
+    # intantiate class with vocab_in
+    local_dictionary = OxDictApi(vocab_in)
+    
+    # using our instance's 3 methods:
+    #   get_definitions():  to extract vocab "definitions"
+    #      get_synonyms():  to extract vocab "synonyms"
+    #      get_examples():  to extract vocab "examples"
+    
+    def_stat, def_data = local_dictionary.get_definitions()     # get definitions
+    # syn_stat, syn_data = vocab_in_defintions.get_synonyms()   # get synonyms
+    # exa_stat, exa_data = vocab_in_defintions.get_examples()   # get examples
+
+    #############################################################################################################
+    
+    
+    return render_template("add_vocab.html", sources = mongo.db.sources.find(), vocab=vocab_in.lower(), def_data=def_data)
 
 
 

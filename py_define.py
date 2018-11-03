@@ -21,7 +21,7 @@ class OxDictApi:
         self.jdebug = jdebug
         
     def get_definitions(self):
-        """ get word definitions """
+        """ get vocab definitions """
         
         if self.jdebug > 0: print("\nget_definitions() method was called!")
         
@@ -84,17 +84,3 @@ class OxDictApi:
         
         # NOTE: response_code will be "200" at this point
         return response_code, defs_output
-
-
-
-
-myLocalDict = OxDictApi("quick")
-# myLocalDict = OxDictApi("kill", 5)
-# myLocalDict = OxDictApi("myriad")
-# myLocalDict = OxDictApi("hierarchy")
-# myLocalDict = OxDictApi("kos")
-status , kkobj = myLocalDict.get_definitions()
-
-print("status = ", status)
-for k,v in kkobj.items():
-        print("vocab as '{}' with definitions: {}".format(k,v))

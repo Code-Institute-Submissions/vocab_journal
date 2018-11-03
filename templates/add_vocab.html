@@ -5,20 +5,34 @@
     <h2>{{ vocab.title() }}</h2>
     <form action="{{ url_for('insert_vocab', vocab=vocab) }}" method="POST" class="col s10 offset-s1 m8 offset-m2">
         <div class="row">
-
-            <!--<div class="input-field">-->
-            <!--    <i class="material-icons prefix">add_box</i>-->
-            <!--    <input id="vocab" name="vocab" type="text" minlength="2" class="validate" value="{{ vocab }}" disabled>-->
-            <!--    <label for="vocab">New Vocab</label>-->
-            <!--</div>-->
             
-            <div class="api_definitions orange darken-4">
-                <p>definitions</p>
-                <p>definitions</p>
-                <p>synonyms</p>
-                <p>maybe have them all in a tab?????</p>
-            </div>
-            
+            {% if def_data|length != 0 %}
+                <ul class="collapsible" data-collapsible="Expandable">
+                    <li>
+                        <div class="collapsible-header active"><i class="material-icons">description</i> Definitions</div>
+                        <div class="collapsible-body" >
+                            <span>
+                                {% for key in def_data %}
+                                    <p><strong>{{ key }}:</strong></p>
+                                    {% for def in def_data[key] %} 
+                                        {{ loop.index }}) {{ def }}<br> 
+                                    {% endfor %} 
+                                {% endfor %}
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header"><i class="material-icons">place</i>Synonyms</div>
+                        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header"><i class="material-icons">whatshot</i>Examples</div>
+                        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                    </li>
+                </ul>
+            {% else %}
+                <p class="red-text text-darken-2"><strong>No definitions found</strong> </p>
+            {% endif %}
             
             {% with messages = get_flashed_messages() %} {% if messages %}
             <ul>
@@ -93,10 +107,8 @@
 {% block additional_scripts %}
 <script src="{{ url_for('static', filename='js/add_vocab.js') }}"></script>
 <script>
-    
     function getVal() {
         return $("#vocab").val()
     }
-    
 </script>
 {% endblock %} {% endblock %}
