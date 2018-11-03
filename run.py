@@ -1,6 +1,6 @@
 
 import os
-from dbconfig import db_name, db_uri # capitalise
+from setup_config import DB_NAME, DB_URI
 from py_define import OxDictApi
 from bson.objectid import ObjectId
 from flask import Flask, render_template, redirect, request, url_for, session, flash
@@ -11,7 +11,7 @@ from datetime import datetime
 
 app = Flask(__name__) # initiate Flask
 app.secret_key = os.urandom(24) # generate secret key randomly and safely
-app.config['MONGO_DBNAME'] = db_name # 'vocabdb' # select db
+app.config['MONGO_DBNAME'] = DB_NAME # 'vocabdb' # select db
 #app.config['MONGO_URI'] = 'mongodb://root:patriot1@ds115613.mlab.com:15613/rigsdb' 
 # app.config['MONGO_URI'] = os.getenv('MONGO_URI') # RETURNS "None 
 # PROBLEM:
@@ -20,7 +20,7 @@ app.config['MONGO_DBNAME'] = db_name # 'vocabdb' # select db
 #   even though "export MONGO_URI='mongodb://root:patriot1@ds115613.mlab.com:15613/rigsdb'" was set
 
 # mongo = PyMongo(app)
-mongo = PyMongo(app, uri=db_uri)
+mongo = PyMongo(app, uri=DB_URI)
 # mongo = PyMongo(app, uri='mongodb://root:patriot1@ds223063.mlab.com:23063/vocabdb')
 
 # ================================== helper functions ========================================

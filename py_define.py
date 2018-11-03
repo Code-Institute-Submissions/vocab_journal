@@ -1,9 +1,10 @@
+from setup_config import APP_ID, APP_KEY
 import requests
 import json
 
 # --- API PREREQUISITES ---------------------------
-app_id = '413b2e3a'
-app_key = '84354fe4c72b838606558498c33f6eb1'
+app_id = APP_ID # '413b2e3a'
+app_key = APP_KEY # '84354fe4c72b838606558498c33f6eb1'
 language = 'en'
 
 class OxDictApi:
