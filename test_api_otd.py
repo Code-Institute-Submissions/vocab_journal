@@ -13,8 +13,9 @@ myLocalDict = OxDictApi("myriad", 5)
 
 
 # status , kkobj = myLocalDict.get_definitions()
-status , kkobj = myLocalDict.get_synonyms()
+# status , kkobj = myLocalDict.get_synonyms()
+status , kkobj  = myLocalDict.get_examples()
 
-# print("status = ", status)
-# for k,v in kkobj.items():
-#         print("vocab as '{}' with definitions: {}".format(k,v))
+print("status = ", status)
+for k,v in kkobj.items():
+        print("\n\tvocab as '{}' with definitions: {}".format(k,v))

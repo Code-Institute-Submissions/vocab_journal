@@ -94,7 +94,7 @@ class OxDictApi:
         if self.jdebug > 0: print("\get_synonyms() method was called!")
         
         # --- PREREQUISITES ---------------------------
-        defs_output = dict() # blank dictionary to store all definintions in - function will return this dictionary once populated!
+        syns_output = dict() # blank dictionary to store all definintions in - function will return this dictionary once populated!
         url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + self.word.lower() + '/synonyms'
         r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
         
@@ -109,7 +109,7 @@ class OxDictApi:
         else:
             # response_code "404": No entry is found matching supplied id and source_language. - BAIL!
             # response_code "500": Internal Error. An error occurred while processing the data. - BAIL!
-            return response_code, defs_output
+            return response_code, syns_output
         
         # --- START ------------------------------------
         results = g["results"] # get all the results to loop over one by one
@@ -125,7 +125,7 @@ class OxDictApi:
                 if self.jdebug > 2: print("\nlexicalCategory = {}".format(lexicalCategory))
                 if self.jdebug > 7: print("lexicalEntryContents = ", lexicalEntryContents) 
 
-                syn_list = [] # collect all local definitions, senses or subsens(if exists)!
+                syn_list = [] # collect all local synonyms, senses or subsens(if exists)!
                 for content in lexicalEntryContents:
                     
                     # fetch sense contents
@@ -145,10 +145,57 @@ class OxDictApi:
                     
                     if self.jdebug > 2: print("syn_list = ", syn_list)
                     
-                # store ALL extracted definitions based on their lexicalCategory(noun, adverb, ...)
-                defs_output[lexicalCategory] = syn_list
+                # store ALL extracted synonyms based on their lexicalCategory(noun, adverb, ...)
+                syns_output[lexicalCategory] = syn_list
         
-        if self.jdebug > 4: print("\ndefs_output = {}\n".format(defs_output)) 
+        if self.jdebug > 4: print("\nsyns_output = {}\n".format(syns_output)) 
         
         # NOTE: response_code will be "200" at this point
-        return response_code, defs_output
+        return response_code, syns_output
+        
+    
+    def get_examples(self):
+        """ get vocab examples """
+        
+        if self.jdebug > 0: print("\get_examples() method was called!")
+        
+        # --- PREREQUISITES ---------------------------
+        exas_output = dict() # blank dictionary to store all definintions in - function will return this dictionary once populated!
+        url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + self.word.lower() + '/sentences'
+        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        
+        # fetch response_code from API 
+        response_code = r.status_code
+        
+        if self.jdebug > 0: print("response_code = {}".format(response_code))
+        
+        # response_code "200": vocab was successfully found and picked up by the API
+        if response_code == 200:
+            g = r.json()
+        else:
+            # response_code "404": No entry is found matching supplied id and source_language. - BAIL!
+            # response_code "500": Internal Error. An error occurred while processing the data. - BAIL!
+            return response_code, exas_output
+        
+        # --- START ------------------------------------
+        results = g["results"] # get all the results to loop over one by one
+        for resultNum in range(len(results)):
+            if self.jdebug > 0: print("Analysing result number '{}' for '{}'".format(len(g["results"]), self.word ) )
+            
+            # contains list of dictionaries for each lexicalEntries ("Noun", "Adjective" and so on)
+            lexicalEntries = results[resultNum]["lexicalEntries"]
+            for lexicalEntry in lexicalEntries:                     # loop over all entries
+                
+                lexicalCategory = lexicalEntry["lexicalCategory"]   # "Noun", "Adjective", "Adverb"
+                lexicalSentences= lexicalEntry["sentences"] 
+
+                exa_list = [] # collect all local examples
+                for sentence in lexicalSentences:
+                    exa_list.append(sentence["text"])
+                exas_output[lexicalCategory] = exa_list
+                
+
+        if self.jdebug > 4: print("\nexas_output = {}\n".format(exas_output)) 
+        
+        # NOTE: response_code will be "200" at this point
+        return response_code, exas_output

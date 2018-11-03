@@ -82,8 +82,8 @@ def create_user(insert=False, predefined_user=False):
         insert = True   # if a predefined user is given, go ahead and insert to db
         new_user = predefined_user
     else: 
-        new_user["name"] = request.form["first_name"].lower() + " " + request.form["last_name"].lower()
-        new_user["username"] = request.form["username"].lower()
+        new_user["name"] = request.form["first_name"].lower().strip() + " " + request.form["last_name"].lower().strip()
+        new_user["username"] = request.form["username"].lower().replace(" ", "")  # no spaces in usernames
         new_user["vocab_count"] = 0 # setup_counts as integer
         new_user["dob"] = request.form["dob"]
         new_user["admin"] = False
@@ -453,24 +453,21 @@ def add_vocab():
         # view the existing vocab by redirecting to view_vocab
         return redirect( url_for("view_vocab", vocab_id=vocab['_id']) )
 
-    
     ###############################  DEFINITION EXTRACTION (API) ################################################
-    
-    # intantiate class with vocab_in
+    # instantiate class with vocab_in
     local_dictionary = OxDictApi(vocab_in)
     
     # using our instance's 3 methods:
     #   get_definitions():  to extract vocab "definitions"
     #      get_synonyms():  to extract vocab "synonyms"
     #      get_examples():  to extract vocab "examples"
-    
     def_stat, def_data = local_dictionary.get_definitions()     # get definitions
-    syn_stat, syn_data = local_dictionary.get_synonyms()   # get synonyms
-    # exa_stat, exa_data = vocab_in_defintions.get_examples()   # get examples
-    data = {"definitions": def_data, "synonyms": syn_data}
-    #############################################################################################################
+    syn_stat, syn_data = local_dictionary.get_synonyms()        # get synonyms
+    exa_stat, exa_data = local_dictionary.get_examples()        # get examples
     
-    
+    # merge all extracted data into one object
+    data = {"definitions": def_data, "synonyms": syn_data, "examples": exa_data }
+
     return render_template("add_vocab.html", sources = mongo.db.sources.find(), vocab=vocab_in.lower(), data=data )
 
 
