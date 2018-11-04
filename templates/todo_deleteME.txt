@@ -154,6 +154,7 @@ notes:
         - footer
         - put the defensive desgin bit of each function into a seperate function? since it's the same?
         - styling using sass and css
+            - tooltips for all the elements in add_vocab template
         - unittest completion
         - gitignore sensitive docs
         - delete users
