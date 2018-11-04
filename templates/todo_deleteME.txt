@@ -147,6 +147,10 @@ notes:
         - definitions API  ... DONE!
             - create function in another pyfile and then import ... DONE!
         - Likes functionality added
+            - create a like profile for each user ... DONE!
+            - create function to check if user has indeed liked a vocab
+            - increment like counter for that vocab
+            - depending on what the function returns toggle between favourite icons (bold and normal)
         - navigations
                 - if vocab page was called from check_vocab then the button at the end should say "back to the vocab"
                 instead of "back to the list"
@@ -159,8 +163,21 @@ notes:
         - gitignore sensitive docs
         - delete users
             - delete all the vocabs added by user
-                
+        - apparently there is an $inc option just like $set for mongoDB
+        - admin tool
+            - reset counter and dates for vocabs and shit
+            
+        - use to disable enter on forms     
+              // disable enter on the form, this will stop incomplete form submissions,  
+              $(document).on('keyup keypress', 'form input[type="text"]', function(event) {
+                if (event.keyCode == 13) {
+                  event.preventDefault();
+                  return false;
+                }
+            });            
+            
     problems:
         - sorting by date doesnt work since it only looks at the first two numbers of the date. it
         treats the date as a number. so 12/08/2018 comes before 22/05/2018. it completely ignores the months
          and just takes the days.
+        - need the clear filter to reset the div containing the options ONLY!

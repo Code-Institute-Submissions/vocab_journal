@@ -11,7 +11,11 @@
 {% else %}
 <p class="right-align">Added by<a href="{{ url_for('view_user', username=vocab.user) }}"> <strong> {{ vocab.user }} </strong> </a> </p>
 {% endif %}
-<div class="right-align"><i class="tiny material-icons">favorite</i>Likes: {{ vocab.likes }} </div>
+{% if vocab.vocab in current_user.likes %}
+    <div class="right-align"><a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text"><i class="large material-icons">favorite</i></a></div>
+{% else %}
+    <div class="right-align"><a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text"><i class="large material-icons">favorite_border</i></a></div>
+{% endif %}
 <div class="row">
     <div class="col s12 m12">
         <div class="card">
@@ -68,7 +72,7 @@
                 <p>{{ vocab.tags }}</p>
             </div>
         </div>
-        {% endif %} 
+        {% endif %}
     </div>
 </div>
 
@@ -76,8 +80,7 @@
     {% if current_user.username == vocab.user or current_user.admin %}
     <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
     <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> {% endif %}
-    <a href="{{ url_for('dash') }}" class="waves-effect waves-light btn btn_small deep-orange">Back to list</a> 
+    <a href="{{ url_for('dash') }}" class="waves-effect waves-light btn btn_small deep-orange">Back to list</a>
 </div>
-
 
 {% endblock %}

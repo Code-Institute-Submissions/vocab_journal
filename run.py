@@ -87,6 +87,8 @@ def create_user(insert=False, predefined_user=False):
         new_user["vocab_count"] = 0 # setup_counts as integer
         new_user["dob"] = request.form["dob"]
         new_user["admin"] = False
+        new_user["likes"] = []
+        
     
     if insert:
         # to avoid duplicate entries
@@ -106,7 +108,36 @@ def get_today_date():
     """ returns the current date in the selectecd format """
     now = datetime.now()
     return now.strftime("%d/%m/%Y")
+
+def process_likes(vocab):
+    """ check to see if user has already liked the vocab
+        if the vocab is already liked by the user, then dislike, 
+        retract the like"""
     
+    # fetch db data
+    users = mongo.db.users
+    vocabs = mongo.db.vocabs
+    
+    # find the current user
+    user = users.find_one({"username": session['username']})
+    
+    # get the list of the vocabs the user has liked!
+    all_likes = user["likes"]
+    
+    liked_before = False    # initialising flag
+    if vocab["vocab"] in all_likes:
+        liked_before = True
+
+    if liked_before:
+        # if already liked, go ahead and retract the like 
+        users.update({"username": session['username']}, { "$pull": { "likes": vocab["vocab"] }})
+        vocabs.update({"vocab": vocab["vocab"] }, { "$inc": { "likes": -1 }})
+    else:
+        # add the vocab to the user likes list, and increment vocab likes
+        users.update({"username": session['username']}, { "$push": { "likes": vocab["vocab"] }})
+        vocabs.update({"vocab": vocab["vocab"] }, { "$inc": { "likes": 1 }})
+
+
 # ====================================== views ===============================================
 
 @app.route("/")
@@ -553,9 +584,9 @@ def edit_vocab(vocab_id):
     # show all the vocab details on the screen
     vocab = mongo.db.vocabs.find_one({'_id': ObjectId(vocab_id)})
     sources = mongo.db.sources.find()
+
     
-    
-    return render_template("edit_vocab.html", vocab=vocab, sources=sources)
+    return render_template("edit_vocab.html", vocab=vocab, sources=sources, current_user=current_user)
     # the submit should pass everything to the update_vocab
     
     
@@ -622,6 +653,19 @@ def view_user(username):
     vocabs= list(mongo.db.vocabs.find({"user": username}))
     
     return render_template("view_user.html", user=user,  vocabs=vocabs )
+
+
+@app.route("/toggle_like/<vocab>")
+def toggle_like(vocab):
+    
+    print("toggle_like(): i got called! with vocab '{}'".format(vocab))
+    # user=mongo.db.users.find_one({'username': username}) 
+    vocab = mongo.db.vocabs.find_one({"vocab": vocab})
+    
+    # if vocab is already liked by user, then dislike
+    process_likes( vocab )
+    
+    return redirect( url_for("view_vocab", vocab_id=vocab["_id"] ) )
 
 
 

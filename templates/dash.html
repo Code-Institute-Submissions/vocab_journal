@@ -83,7 +83,11 @@
                 <div class="vocab">"{{ vocab.vocab }}"</div>
                 <!--<div class="user_id"> by {{ vocab.user }} </div>-->
                 <div class="user_id">by <a href="{{ url_for('view_user', username=vocab.user) }}">{{ vocab.user }}  </a></div>
-                <div><i class="tiny material-icons">favorite</i>{{ vocab.likes }}</div>
+                {% if vocab.vocab in current_user.likes %}
+                    <div><i class="tiny material-icons">favorite</i>{{ vocab.likes }}</div>
+                {% else %}
+                    <div><i class="tiny material-icons">favorite_border</i>{{ vocab.likes }}</div>
+                {% endif %}
                 <div><i class="tiny material-icons">youtube_searched_for</i>{{ vocab.lookup_count }}</div>
             </div>
             <div class="collapsible-body">
@@ -102,4 +106,5 @@
     </ul>
 
 </div>
+
 {% endblock %}
