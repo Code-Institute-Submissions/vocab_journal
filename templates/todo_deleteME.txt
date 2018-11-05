@@ -185,5 +185,7 @@ notes:
         treats the date as a number. so 12/08/2018 comes before 22/05/2018. it completely ignores the months
          and just takes the days.
         - need the clear filter to reset the div containing the options ONLY!
-        - remove a file "setup_config.py" from git and add it to gitignore!
-            - too scared to do it as it might fuck it up!
+        - git
+            - removed "setup_config.py" from git and added it to gitignore
+                - now heroku cannot locate the file - ModuleNotFoundError: No module named 'setup_config'
+                - and i cant push to github - fatal: remote origin already exists.
