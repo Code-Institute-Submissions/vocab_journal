@@ -161,15 +161,15 @@ notes:
                 instead of "back to the list"
             
     problems:
-        - sorting by date doesnt work since it only looks at the first two numbers of the date. it
-        treats the date as a number. so 12/08/2018 comes before 22/05/2018. it completely ignores the months
-         and just takes the days.
-        - need the clear filter to reset the div containing the options ONLY!
-        - git
+        - heroku & git
             - removed "setup_config.py" from git and added it to gitignore
                 - now heroku cannot locate the file - ModuleNotFoundError: No module named 'setup_config'
                 - and i cant push to github - fatal: remote origin already exists. ... RESOLVED!
                 - GIHUB potential security vulnerability
+        - sorting by date doesnt work since it only looks at the first two numbers of the date. it
+        treats the date as a number. so 12/08/2018 comes before 22/05/2018. it completely ignores the months
+         and just takes the days.
+        - need the clear filter to reset the div containing the options ONLY!
         - odd updating issues with flask template like view count. voiew count updates in the database 
           but on the page, it doesnt right away, it has to be refreshed even though the page was just opened! same
           happened with likes when i had it setup with ajax
