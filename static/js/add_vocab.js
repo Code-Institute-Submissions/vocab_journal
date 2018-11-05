@@ -38,4 +38,13 @@ $(document).ready(function() {
     })
 
 
+    // disable enter on the form, this will stop incomplete form submissions,  
+    $(document).on('keyup keypress', 'form input[type="text"]', function(event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
+
 });

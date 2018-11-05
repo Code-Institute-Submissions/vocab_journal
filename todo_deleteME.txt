@@ -152,18 +152,17 @@ notes:
             - increment like counter for that vocab ... DONE!
             - depending on what the function returns toggle between favourite icons (bold and normal) ... DONE!
             
-        - navigations
-                - if vocab page was called from check_vocab then the button at the end should say "back to the vocab"
-                instead of "back to the list"
+
                 
         - pagination
-        - footer
+
         - put the defensive desgin bit of each function into a seperate function? since it's the same?
         - unittest completion
-        - gitignore sensitive docs
+
         - apparently there is an $inc option just like $set for mongoDB
             - user $inc for views, lookup_count
                 - likes is already using it
+                
         - what should happen if you delete a vocab?
             - likes
                 - user's like list
@@ -179,6 +178,10 @@ notes:
             
         - styling using sass and css
             - tooltips for all the elements in add_vocab template
+            - add basic footer
+            - navigations
+                - if vocab page was called from check_vocab then the button at the end should say "back to the vocab"
+                instead of "back to the list"
             
     problems:
         - sorting by date doesnt work since it only looks at the first two numbers of the date. it
@@ -188,4 +191,5 @@ notes:
         - git
             - removed "setup_config.py" from git and added it to gitignore
                 - now heroku cannot locate the file - ModuleNotFoundError: No module named 'setup_config'
-                - and i cant push to github - fatal: remote origin already exists.
+                - and i cant push to github - fatal: remote origin already exists. ... RESOLVED!
+                - GIHUB potential security vulnerability
