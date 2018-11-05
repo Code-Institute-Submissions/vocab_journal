@@ -143,30 +143,31 @@ notes:
              - search by source ... DONE!
              - add clear fliter ... DONE!
 
-        - disbale enter to submit on forms
+
         - definitions API  ... DONE!
             - create function in another pyfile and then import ... DONE!
         - Likes functionality added
             - create a like profile for each user ... DONE!
-            - create function to check if user has indeed liked a vocab
-            - increment like counter for that vocab
-            - depending on what the function returns toggle between favourite icons (bold and normal)
+            - create function to check if user has indeed liked a vocab ... DONE!
+            - increment like counter for that vocab ... DONE!
+            - depending on what the function returns toggle between favourite icons (bold and normal) ... DONE!
+            
         - navigations
                 - if vocab page was called from check_vocab then the button at the end should say "back to the vocab"
                 instead of "back to the list"
+                
         - pagination
         - footer
         - put the defensive desgin bit of each function into a seperate function? since it's the same?
-        - styling using sass and css
-            - tooltips for all the elements in add_vocab template
         - unittest completion
         - gitignore sensitive docs
-        - delete users
-            - delete all the vocabs added by user
         - apparently there is an $inc option just like $set for mongoDB
-        - admin tool
-            - reset counter and dates for vocabs and shit
-            
+            - user $inc for views, lookup_count
+                - likes is already using it
+        - what should happen if you delete a vocab?
+            - likes
+                - user's like list
+                
         - use to disable enter on forms     
               // disable enter on the form, this will stop incomplete form submissions,  
               $(document).on('keyup keypress', 'form input[type="text"]', function(event) {
@@ -176,8 +177,13 @@ notes:
                 }
             });            
             
+        - styling using sass and css
+            - tooltips for all the elements in add_vocab template
+            
     problems:
         - sorting by date doesnt work since it only looks at the first two numbers of the date. it
         treats the date as a number. so 12/08/2018 comes before 22/05/2018. it completely ignores the months
          and just takes the days.
         - need the clear filter to reset the div containing the options ONLY!
+        - remove a file "setup_config.py" from git and add it to gitignore!
+            - too scared to do it as it might fuck it up!
