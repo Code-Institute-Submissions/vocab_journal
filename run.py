@@ -202,7 +202,7 @@ def logout():
 @app.route("/dash")
 def dash():
     """ the first page the user sees after logging in. 
-    shows all setup/users"""
+    shows all vocabs in the db"""
 
     # DEFENSIVE redirecting
     try:
@@ -211,7 +211,7 @@ def dash():
     except KeyError:
         # no session - redirect back to index view
         return redirect( url_for("index"))
-    
+
     # dictionary created for the sole purpose of saving the filter settings upon selections
     filter_options = {}
     filter_options["user_vocabs_only"] =  False
@@ -221,9 +221,6 @@ def dash():
     
     # user identified
     return render_template("dash.html", vocabs=mongo.db.vocabs.find(), sources=mongo.db.sources.find(), current_user=current_user, filter_options=filter_options)
-
-
-
 
 
 @app.route("/get_filtered/<user_id>", methods=['POST'])
@@ -399,9 +396,12 @@ def delete_vocab(vocab_id):
     mongo.db.vocabs.remove({'_id': ObjectId(vocab_id)})
     
     # update user vocab_count 
-    user = mongo.db.users.find_one({"username": to_del_vocab["user"]})
-    vocabs_count =  mongo.db.vocabs.find({"user": to_del_vocab["user"]}).count()
+    vocabs_count =  mongo.db.vocabs.find({"user": to_del_vocab["user"]}).count() # count the remaining vocabs added by the user
     mongo.db.users.update({'username': to_del_vocab["user"]}, { "$set": { "vocab_count": vocabs_count }})
+    
+    # update likes for users
+    mongo.db.users.update({ "likes": {"$in": [ to_del_vocab["vocab"] ] } }, { "$pull": { "likes": to_del_vocab["vocab"] }}, upsert=False, multi=True )
+
         
     # custom flash message as confirmation 
     flash("'{}' was successfully DELETED!".format( to_del_vocab["vocab"].title() ))

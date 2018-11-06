@@ -147,8 +147,8 @@ notes:
         - disable enter key on forms (ONLY on add_vocab template) ......... DONE!   
         - apparently there is an $inc option just like $set for mongoDB ... DONE!
             - user $inc for views, lookup_count ........................... DONE!
+        - like vocabs from dash
         - pagination
-        - put the defensive desgin bit of each function into a seperate function? since it's the same?
         - unittest completion - how do u unittest a template???
         - what should happen if you delete a vocab?
             - likes
