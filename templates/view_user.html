@@ -5,11 +5,27 @@
 <p>Name: {{ user.name.title() }}</p>
 <p>Date of Birth: {{ user.dob }}</p>
 {% if user.admin %}
-<p>Admin: yes</p>
+<p>Admin: Yes</p>
 {% else %}
-<p>Admin: no</p>
+<p>Admin: No</p>
 {% endif %}
-<p>vocab count: {{ user.vocab_count }}</p>
+<p>Vocab count: {{ user.vocab_count }}</p>
+{% if user.likes|length > 0 %}
+    <div class="row">
+        <ul class="collapsible" data-collapsible="Expandable">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">favorite</i>&nbsp;Favourited vocabs</div>
+                <div class="collapsible-body" >
+                    <span>
+                        {% for fav in user.likes %}
+                            {{ loop.index }}) {{ fav }}<br>
+                        {% endfor %}
+                    </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+{% endif %}
 
 <h3>Added Vocabs</h3>
 

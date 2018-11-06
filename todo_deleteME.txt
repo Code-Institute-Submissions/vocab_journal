@@ -147,12 +147,12 @@ notes:
         - disable enter key on forms (ONLY on add_vocab template) ......... DONE!   
         - apparently there is an $inc option just like $set for mongoDB ... DONE!
             - user $inc for views, lookup_count ........................... DONE!
+        - what should happen if you delete a vocab? ....................... DONE!
+            - likes ....................................................... DONE!
+                - handle user's like list ................................. DONE!
         - like vocabs from dash
         - pagination
         - unittest completion - how do u unittest a template???
-        - what should happen if you delete a vocab?
-            - likes
-                - user's like list
         - styling using sass and css
             - tooltips for all the elements in add_vocab template
             - add basic footer
@@ -169,9 +169,10 @@ notes:
         - sorting by date doesnt work since it only looks at the first two numbers of the date. it
         treats the date as a number. so 12/08/2018 comes before 22/05/2018. it completely ignores the months
          and just takes the days.
-        - need the clear filter to reset the div containing the options ONLY!
+        - need the clear filter to reset the div containing the options ONLY! is what i have setup ok? 
         - odd updating issues with flask template like view count. voiew count updates in the database 
           but on the page, it doesnt right away, it has to be refreshed even though the page was just opened! same
           happened with likes when i had it setup with ajax
         - (add_vocab) what's wrong with this? it keeps picking on upsert for some reason
             mongo.db.vocabs.update({'vocab': vocab_in}, { "$set": {"last_lookup_date": get_today_date()} }, {"$inc": { "lookup_count": 1 } } )
+        - pagination ideas??
