@@ -1,5 +1,6 @@
 
 import os
+import sys 
 from py_define import OxDictApi
 from bson.objectid import ObjectId
 from flask import Flask, render_template, redirect, request, url_for, session, flash
@@ -223,17 +224,19 @@ def dash():
     filter_options = {}
     filter_options["user_vocabs_only"] =  False
     filter_options["order_by"] =  {"views": False, "lookup count": True, "likes": False, "difficulty": False, "publish date": False, "modified date": False  }
-    filter_options["order"] =  { "descneding": True, "ascending": False }
+    filter_options["order"] =  { "descending": True, "ascending": False }
     filter_options["source"] =  ""
     
     # user identified
     return render_template("dash.html", vocabs=mongo.db.vocabs.find(), sources=mongo.db.sources.find(), current_user=current_user, filter_options=filter_options)
 
 
-@app.route("/get_filtered/<user_id>")
-def get_filtered(user_id):
-    """ Apply filters to db"""
+@app.route("/get_filtered")
+def get_filtered():
+    """ Apply filters to db """
     
+    jdebug = 0
+
     # DEFENSIVE redirecting
     try:
         # identify the logged in user 
@@ -242,41 +245,39 @@ def get_filtered(user_id):
         # no session - redirect back to index view
         return redirect( url_for("index"))
     
-    # dictionary created for the sole purpose of saving the filter settings upon selections
+    # dictionary allows saving of the filter settings upon 
+    # selections and sorting of the vocabs screened through the filter.  
     filter_options = {}
     filter_options["user_vocabs_only"] =  False
     filter_options["order_by"] =  {"views": False, "lookup count": True, "likes": False, "difficulty": False, "publish date": False, "modified date": False }
-    filter_options["order"] =  { "descneding": True, "ascending": False }
+    filter_options["order"] =  { "descending": True, "ascending": False }
     filter_options["source"] =  ""
-    
-    # getting all vocabs at first
-    vocabs = mongo.db.vocabs.find()  #remove!
+
+    # "filter_dict" is used as a normal dictionary containing only two vocabs, "source" and "user" which will
+    # ultimately limit the numbers of vocabs show on the screen and nothing else.  "filter_options" wasnt used here because of its
+    # complexity which cannot be used with mongodb's .find() feature which requires a simple key, value structure. 
+    filter_dict = {} 
     
     # Setting up filter logic
-    filter_dict = {} # 
     if request.args.get("source"):
-        filter_options["source"] = request.args.get("source")   # updating filter options 
-        filter_dict["source"] = request.args.get("source")      
+        filter_dict["source"] = filter_options["source"] = request.args.get("source")   # updating filter options 
     if request.args.get("vocab_only"):
-        # user_vocabs_only = True
         filter_options["user_vocabs_only"] = True   # updating filter options 
         filter_dict["user"] = current_user["username"]
     
-    # Applying filters
+    # Applying filters - will affect the quanity of the returning vocabs only at this level.
     vocabs = mongo.db.vocabs.find(filter_dict)
-    
-    # Setting up "order" logic
+
+    # Setting up "order" logic to sort the returned vocabs!
     order_by = request.args.get("order_by")
     for k in filter_options["order_by"]:
-        print("order_by, k = ", order_by, k, (order_by == k))
         # updating filter options 
         if order_by == k:
             filter_options["order_by"][k] = True
         else:
             filter_options["order_by"][k] = False
     
-    print('filter_options["order_by"] = ', filter_options["order_by"])
-    
+
     # readjusting sorting data before passing it into db (entities listed below are stored differently in db)
     # entities were changed since they're being used to populate the "select" inputs within the filter options
     # of the dash.
@@ -293,12 +294,12 @@ def get_filtered(user_id):
     if request.args.get("order") == "ascending":
         # updating filter options 
         filter_options["order"]["ascending"] = True
-        filter_options["order"]["descneding"] = False
+        filter_options["order"]["descending"] = False
         vocabs.sort(order_by, 1) 
     else:
         # updating filter options 
         filter_options["order"]["ascending"] = False
-        filter_options["order"]["descneding"] = True
+        filter_options["order"]["descending"] = True
         vocabs.sort(order_by, -1) 
 
     # Custom flash msg for no results 
@@ -308,6 +309,10 @@ def get_filtered(user_id):
         if mongo.db.vocabs.find({"user": current_user["username"]}).count() == 0:
             flash("'{}' has not added any vocabs.".format( current_user["username"].title()))
     
+    # Debug
+    if jdebug > 0:
+        print("filter_options = ", filter_options)
+        print("filter_dict = ", filter_dict)
       
     return render_template("dash.html", vocabs=vocabs, sources=mongo.db.sources.find(), current_user=current_user, filter_options=filter_options)
 

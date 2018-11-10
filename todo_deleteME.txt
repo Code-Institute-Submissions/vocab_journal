@@ -150,7 +150,6 @@ notes:
         - what should happen if you delete a vocab? ....................... DONE!
             - likes ....................................................... DONE!
                 - handle user's like list ................................. DONE!
-        - pagination
         - unittest completion - how do u unittest a template???
         - styling using sass and css
             - tooltips for all the elements in add_vocab template
@@ -158,9 +157,9 @@ notes:
             - navigations
                 - if vocab page was called from check_vocab then the button at the end should say "back to the vocab"
                 instead of "back to the list"
-        - rename button or add labels for items in filter div
+        
     problems:
-        - heroku & git
+        - heroku & git -- RESOLVED!!!
             - removed "setup_config.py" from git and added it to gitignore
                 - now heroku cannot locate the file - ModuleNotFoundError: No module named 'setup_config'
                 - and i cant push to github - fatal: remote origin already exists. ... RESOLVED!
@@ -168,7 +167,7 @@ notes:
                 
         - sorting by date doesnt work since it only looks at the first two numbers of the date. it
         treats the date as a number. so 12/08/2018 comes before 22/05/2018. it completely ignores the months
-         and just takes the days. --- change the format
+         and just takes the days. --- change the format to "2018-11-09"
 
 
         - (add_vocab) what's wrong with this? it keeps picking on upsert for some reason
@@ -176,5 +175,12 @@ notes:
             mongo.db.vocabs.update({'vocab': vocab_in}, { "$set": {"last_lookup_date": get_today_date()} }, {"$inc": { "lookup_count": 1 } } )
             
         - unittest completion - how do u unittest a template???
-        
-        - is what i have enough?
+                - KEEP IT LIGHT
+                - only test the logic
+                - for templates, check to see if something exists! and then change a small item on the page
+                    - for example: if there should be a banana on the page, then add freakin banana
+                    
+        - rename button or add labels for items in filter div
+        - removed the user_id out of the get_filtered function! ... DONE!
+        - source page -
+            - show the used vocabs when the deleting message goes on the screen
