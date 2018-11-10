@@ -1,10 +1,15 @@
-from setup_config import APP_ID, APP_KEY
+import os
 import requests
 import json
+try:
+    import setup_config 
+except ImportError:
+    # taken from the env
+    pass
+APP_ID = os.getenv("APP_ID")
+APP_KEY = os.getenv("APP_KEY")
 
 # --- API PREREQUISITES ---------------------------
-app_id = APP_ID # '413b2e3a'
-app_key = APP_KEY # '84354fe4c72b838606558498c33f6eb1'
 language = 'en'
 
 class OxDictApi:
@@ -29,7 +34,7 @@ class OxDictApi:
         # --- PREREQUISITES ---------------------------
         defs_output = dict() # blank dictionary to store all definintions in - function will return this dictionary once populated!
         url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + self.word.lower() + '/' + 'definitions'
-        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        r = requests.get(url, headers = {'app_id': APP_ID, 'app_key': APP_KEY})
         
         # fetch response_code from API 
         response_code = r.status_code
@@ -96,7 +101,7 @@ class OxDictApi:
         # --- PREREQUISITES ---------------------------
         syns_output = dict() # blank dictionary to store all definintions in - function will return this dictionary once populated!
         url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + self.word.lower() + '/synonyms'
-        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        r = requests.get(url, headers = {'app_id': APP_ID, 'app_key': APP_KEY})
         
         # fetch response_code from API 
         response_code = r.status_code
@@ -162,7 +167,7 @@ class OxDictApi:
         # --- PREREQUISITES ---------------------------
         exas_output = dict() # blank dictionary to store all definintions in - function will return this dictionary once populated!
         url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + self.word.lower() + '/sentences'
-        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        r = requests.get(url, headers = {'app_id': APP_ID, 'app_key': APP_KEY})
         
         # fetch response_code from API 
         response_code = r.status_code

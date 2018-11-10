@@ -1,16 +1,23 @@
 
 import os
-from setup_config import DB_NAME, DB_URI
 from py_define import OxDictApi
 from bson.objectid import ObjectId
 from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
 from datetime import datetime
+try:
+    import setup_config 
+except ImportError:
+    # taken from the env
+    pass
+DB_NAME = os.getenv("DB_NAME")
+DB_URI = os.getenv("DB_URI")
 
 # ================================ initial configuration =====================================
 
 app = Flask(__name__) # initiate Flask
 app.secret_key = os.urandom(24) # generate secret key randomly and safely
+
 app.config['MONGO_DBNAME'] = DB_NAME # 'vocabdb' # select db
 #app.config['MONGO_URI'] = 'mongodb://root:patriot1@ds115613.mlab.com:15613/rigsdb' 
 # app.config['MONGO_URI'] = os.getenv('MONGO_URI') # RETURNS "None 
@@ -223,7 +230,7 @@ def dash():
     return render_template("dash.html", vocabs=mongo.db.vocabs.find(), sources=mongo.db.sources.find(), current_user=current_user, filter_options=filter_options)
 
 
-@app.route("/get_filtered/<user_id>", methods=['POST'])
+@app.route("/get_filtered/<user_id>")
 def get_filtered(user_id):
     """ Apply filters to db"""
     
@@ -243,14 +250,14 @@ def get_filtered(user_id):
     filter_options["source"] =  ""
     
     # getting all vocabs at first
-    vocabs = mongo.db.vocabs.find()
+    vocabs = mongo.db.vocabs.find()  #remove!
     
     # Setting up filter logic
     filter_dict = {} # 
-    if request.form.get("source"):
-        filter_options["source"] = request.form.get("source")   # updating filter options 
-        filter_dict["source"] = request.form.get("source")      
-    if request.form.get("vocab_only"):
+    if request.args.get("source"):
+        filter_options["source"] = request.args.get("source")   # updating filter options 
+        filter_dict["source"] = request.args.get("source")      
+    if request.args.get("vocab_only"):
         # user_vocabs_only = True
         filter_options["user_vocabs_only"] = True   # updating filter options 
         filter_dict["user"] = current_user["username"]
@@ -259,7 +266,7 @@ def get_filtered(user_id):
     vocabs = mongo.db.vocabs.find(filter_dict)
     
     # Setting up "order" logic
-    order_by = request.form.get("order_by")
+    order_by = request.args.get("order_by")
     for k in filter_options["order_by"]:
         print("order_by, k = ", order_by, k, (order_by == k))
         # updating filter options 
@@ -283,7 +290,7 @@ def get_filtered(user_id):
         pass
 
     # Applying sorts
-    if request.form.get("order") == "ascending":
+    if request.args.get("order") == "ascending":
         # updating filter options 
         filter_options["order"]["ascending"] = True
         filter_options["order"]["descneding"] = False
@@ -424,11 +431,11 @@ def view_vocab(vocab_id):
         return redirect( url_for("index"))    
     
 
-    # fetch the existing vocab out of the db
-    vocab = mongo.db.vocabs.find_one({'_id': ObjectId(vocab_id)})
-    
     # vocab view counter
     mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$inc": { "views": 1 }})
+    
+    # fetch the existing vocab out of the db
+    vocab = mongo.db.vocabs.find_one({'_id': ObjectId(vocab_id)})
     
 
     return render_template("vocab.html", vocab=vocab, current_user=current_user)
@@ -664,7 +671,6 @@ def toggle_like(vocab):
     process_likes( vocab )
     
     return redirect( url_for("view_vocab", vocab_id=vocab["_id"] ) )
-
 
 
 if __name__ == '__main__':
