@@ -178,3 +178,8 @@ notes:
         - rename button or add labels for items in filter div
         - removed the user_id out of the get_filtered function! .................. DONE!
         - delete_source page show the vocabs being used by source ................ DONE!
+        - change of date of births for users
+        - navigations NOT navbar
+        - styling
+            - reponsiveness m4 s3 ... 
+        - unittest
