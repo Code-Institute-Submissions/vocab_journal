@@ -169,11 +169,6 @@ notes:
         treats the date as a number. so 12/08/2018 comes before 22/05/2018. it completely ignores the months
          and just takes the days. --- change the format to "2018-11-09" ... DONE!
 
-
-        - (add_vocab) what's wrong with this? it keeps picking on upsert for some reason
-            change two fields in a document 
-            mongo.db.vocabs.update({'vocab': vocab_in}, { "$set": {"last_lookup_date": get_today_date()} }, {"$inc": { "lookup_count": 1 } } )
-            
         - unittest completion - how do u unittest a template???
                 - KEEP IT LIGHT
                 - only test the logic
@@ -181,6 +176,5 @@ notes:
                     - for example: if there should be a banana on the page, then add freakin banana
                     
         - rename button or add labels for items in filter div
-        - removed the user_id out of the get_filtered function! ... DONE!
-        - source page -
-            - show the used vocabs when the deleting message goes on the screen
+        - removed the user_id out of the get_filtered function! .................. DONE!
+        - delete_source page show the vocabs being used by source ................ DONE!

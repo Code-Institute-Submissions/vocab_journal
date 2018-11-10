@@ -359,12 +359,14 @@ def delete_source(source_id):
         
         # delete source if not in use
         if source_in_use:
-            flash("Could NOT delete source '{}' as it is currently in use!".format(source["name"]))
+            vocabs = list(mongo.db.vocabs.find({"source": source["name"]}) )
+            flash("Could NOT delete source '{}' as it is currently in used by the following vocabs!".format(source["name"]))
+
         else:
-            flash("Source '{}' was DELETED!".format(source["name"]))
+            flash("Source '{}' was successfully DELETED!".format(source["name"]))
             mongo.db.sources.remove({'_id': ObjectId(source_id)})
         
-        return render_template("manage_sources.html", sources = mongo.db.sources.find() )
+        return render_template("manage_sources.html", sources = mongo.db.sources.find(), vocabs=vocabs )
 
     
     # redirect back to index screen if there sint any users logged in   

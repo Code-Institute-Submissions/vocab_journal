@@ -28,9 +28,10 @@
                                 {% for key in data.synonyms %}
                                     <p><strong>{{ key }}:</strong></p>
                                     {% for syn in data.synonyms[key] %} 
-                                        {{ syn }},
                                         {% if loop.index == loop.length %}
                                             {{ syn }}.
+                                        {% else %}
+                                            {{ syn }},
                                         {% endif %}
                                     {% endfor %} 
                                 {% endfor %}

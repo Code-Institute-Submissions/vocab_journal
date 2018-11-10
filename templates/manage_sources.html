@@ -28,6 +28,15 @@
         {% for message in messages %}
         <p class="red-text text-darken-2">{{ message }}</p>
         {% endfor %}
+        {% for vocab in vocabs %}
+            {% if loop.index == loop.length %}
+                
+                <a href="{{ url_for('view_vocab', vocab_id=vocab._id ) }}" class="">{{vocab.vocab}}</a>
+            {% else %}
+                <a href="{{ url_for('view_vocab', vocab_id=vocab._id ) }}" class="">{{vocab.vocab}},&nbsp;&nbsp;</a>
+                
+            {% endif %}
+        {% endfor %}
     </ul>
     {% endif %} {% endwith %}
 </div>
