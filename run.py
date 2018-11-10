@@ -115,8 +115,8 @@ def create_user(insert=False, predefined_user=False):
 def get_today_date():
     """ returns the current date in the selectecd format """
     now = datetime.now()
-    return now.strftime("%d/%m/%Y")
-
+    return now.strftime("%Y/%m/%d")
+    
 def process_likes(vocab):
     """ check to see if user has already liked the vocab
         if the vocab is already liked by the user, then dislike, 

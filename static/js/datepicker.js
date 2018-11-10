@@ -5,7 +5,7 @@ $(document).ready(function() {
         selectYears: 50, // Creates a dropdown of 15 years to control year,
         today: false,
         setDefaultDate: true,
-        format: 'dd/mm/yyyy',
+        format: 'yyyy/mm/dd',
         // yearRange: [1940,2010],
         clear: 'Clear',
         close: 'Ok',
@@ -18,6 +18,7 @@ $(document).ready(function() {
     var picker = $input.pickadate('picker')
     
     // Using JavaScript Date objects.
+    // picker.set('select', new Date(1990, 00, 01))
     picker.set('select', new Date(1990, 00, 01))
     
 

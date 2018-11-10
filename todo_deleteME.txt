@@ -167,7 +167,7 @@ notes:
                 
         - sorting by date doesnt work since it only looks at the first two numbers of the date. it
         treats the date as a number. so 12/08/2018 comes before 22/05/2018. it completely ignores the months
-         and just takes the days. --- change the format to "2018-11-09"
+         and just takes the days. --- change the format to "2018-11-09" ... DONE!
 
 
         - (add_vocab) what's wrong with this? it keeps picking on upsert for some reason
