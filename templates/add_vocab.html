@@ -1,136 +1,142 @@
 {% extends 'base.html'%} {% block title %}Add setup{% endblock %} {% block content %}
 
-<div class="row">
-    <p class="current_date right-align"></p>
-    <h2>{{ vocab.title() }}</h2>
-    <form action="{{ url_for('insert_vocab', vocab=vocab) }}" method="POST" class="col s10 offset-s1 m8 offset-m2">
-        <div class="row">
-            
-            {% if data.definitions|length != 0 %}
-                <ul class="collapsible" data-collapsible="Expandable">
-                    <li>
-                        <div class="collapsible-header active"><i class="material-icons">description</i> Definitions</div>
-                        <div class="collapsible-body" >
-                            <span>
-                                {% for key in data.definitions %}
-                                    <p><strong>{{ key }}:</strong></p>
-                                    {% for def in data.definitions[key] %} 
-                                        {{ loop.index }}) {{ def }}<br> 
-                                    {% endfor %} 
-                                {% endfor %}
-                            </span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="collapsible-header"><i class="material-icons">place</i>Synonyms</div>
-                        <div class="collapsible-body" >
-                            <span>
-                                {% for key in data.synonyms %}
-                                    <p><strong>{{ key }}:</strong></p>
-                                    {% for syn in data.synonyms[key] %} 
-                                        {% if loop.index == loop.length %}
-                                            {{ syn }}.
-                                        {% else %}
-                                            {{ syn }},
-                                        {% endif %}
-                                    {% endfor %} 
-                                {% endfor %}
-                            </span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="collapsible-header"><i class="material-icons">whatshot</i>Examples</div>
-                        <div class="collapsible-body" >
-                            <span>
-                                {% for key in data.examples %}
-                                    <p><strong>{{ key }}:</strong></p>
-                                    {% for exa in data.examples[key][:7] %} 
-                                        {{ exa }}<br>
-                                    {% endfor %} 
-                                {% endfor %}
-                            </span>
-                        </div>
-                    </li>
-                </ul>
-            {% else %}
-                <p class="red-text text-darken-2"><strong>No definitions found</strong> </p>
-            {% endif %}
-            
-            {% with messages = get_flashed_messages() %} {% if messages %}
-            <ul>
-                {% for message in messages %}
-                <p>{{ message }}.</p>
+
+
+<h2>{{ vocab.title() }}</h2>
+
+<!--API SECTION-->
+
+{% if data.definitions|length != 0 %}
+<ul class="collapsible" data-collapsible="Expandable">
+    <li>
+        <div class="collapsible-header active"><i class="material-icons">description</i>&nbsp;Definitions</div>
+        <div class="collapsible-body">
+            <span>
+                {% for key in data.definitions %}
+                    <p><strong>{{ key }}:</strong></p>
+                    {% for def in data.definitions[key] %} 
+                        {{ loop.index }}) {{ def }}<br> 
+                    {% endfor %} 
                 {% endfor %}
-            </ul>
-            {% endif %} {% endwith %}
+            </span>
+        </div>
+    </li>
+    {% if data.synonyms|length != 0 %}
+    <li>
+        <div class="collapsible-header"><i class="material-icons">place</i>&nbsp;Synonyms</div>
+        <div class="collapsible-body">
+            <span>
+                {% for key in data.synonyms %}
+                    <p><strong>{{ key }}:</strong></p>
+                    {% for syn in data.synonyms[key] %} 
+                        {% if loop.index == loop.length %}
+                            {{ syn }}.
+                        {% else %}
+                            {{ syn }},
+                        {% endif %}
+                    {% endfor %} 
+                {% endfor %}
+            </span>
+        </div>
+    </li>
+    {% endif %} {% if data.examples|length != 0 %}
+    <li>
+        <div class="collapsible-header"><i class="material-icons">whatshot</i>&nbsp;Examples</div>
+        <div class="collapsible-body">
+            <span>
+                {% for key in data.examples %}
+                    <p><strong>{{ key }}:</strong></p>
+                    {% for exa in data.examples[key][:7] %} 
+                        {{ loop.index }}) {{ exa }}<br>
+                    {% endfor %} 
+                {% endfor %}
+            </span>
+        </div>
+    </li>
+    {% endif %}
+</ul>
+{% else %}
+<p class="red-text text-darken-2 center-align"><strong>No definitions found in the dictionary.</strong> </p>
+{% endif %}
 
-            <div class="input-field">
-                <i class="material-icons prefix">subject</i>
-                <textarea id="user_definition" name="user_definition" class="materialize-textarea" data-length="500"></textarea>
-                <label for="user_definition">User definition</label>
-            </div>
 
-            <div class="input-field">
-                <i class="material-icons prefix">bookmark</i>
-                <select id="source" name="source">
+<!--FLASH SECTION-->
+<div class="row">
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul class="center-align">
+        {% for message in messages %}
+        <p>{{ message }}.</p>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+</div>
+
+<p></p>
+
+<!--FORM SECTION-->
+<form action="{{ url_for('insert_vocab', vocab=vocab) }}" method="POST" class="col s10 offset-s1 m8 offset-m2">
+
+    <div class="input-field">
+        <i class="material-icons prefix">subject</i>
+        <textarea id="user_definition" name="user_definition" class="materialize-textarea" data-length="500"></textarea>
+        <label for="user_definition">User definition</label>
+    </div>
+
+    <div class="input-field">
+        <i class="material-icons prefix">bookmark</i>
+        <select id="source" name="source">
                     {% for source in sources %}
                         <option value="{{ source.name }}">{{ source.name.title() }}</option>
                     {% endfor %}
                 </select>
-            </div>
+    </div>
 
-            <div class="input-field">
-                <div class="input-field">
-                    <i class="material-icons prefix">local_offer</i>
-                    <input id="tag" type="text" minlength="2">
-                    <div class="right-align">
-                        <a id="removeTags" class="waves-effect waves-light btn red"><i class="material-icons right">delete_forever</i>Clear all</a>
-                        <a id="addTag" class="waves-effect waves-light btn"><i class="material-icons right">add_circle</i>Add</a>
-                    </div>
-                    <label for="first_name">Tags</label>
-                    <input id="tag-pool" name="tags" type="text" readonly>
-                </div>
+    <div class="input-field">
+        <div class="input-field">
+            <i class="material-icons prefix">local_offer</i>
+            <input id="tag" type="text" minlength="2">
+            <div class="right-align">
+                <a id="removeTags" class="waves-effect waves-light btn red"><i class="material-icons right">delete_forever</i>Clear all</a>
+                <a id="addTag" class="waves-effect waves-light btn"><i class="material-icons right">add_circle</i>Add</a>
             </div>
-
-            <div class="input-field">
-                <i class="material-icons prefix">label</i>
-                <input id="ref" name="ref" type="text">
-                <label for="ref">Reference</label>
-            </div>
-
-            <div class="input-field">
-                <i class="material-icons prefix">mode_edit</i>
-                <textarea id="context" name="context" class="materialize-textarea" data-length="500"></textarea>
-                <label for="context">Context</label>
-            </div>
-
-            <div class="input-field">
-                <i class="material-icons prefix">event_note</i>
-                <textarea id="misc" name="misc" class="materialize-textarea" data-length="500"></textarea>
-                <label for="misc">Miscellaneous</label>
-            </div>
-
-            <!--<div class="input-field">-->
-            <div class="range-field ">
-                <i class="small material-icons">mode_edit</i><span> Difficulty level</span><input id="difficulty" name="difficulty" type="range" min="0" max="100" />
-            </div>
-            <!--</div>-->
-
-            <div class="input-field center-align">
-                <button class="btn waves-effect waves-light" type="submit">Add Vocab
-                    <i class="material-icons right">send</i>
-                </button>
-            </div>
-
+            <label for="first_name">Tags</label>
+            <input id="tag-pool" name="tags" type="text" readonly>
         </div>
-    </form>
+    </div>
 
-</div>
+    <div class="input-field">
+        <i class="material-icons prefix">label</i>
+        <input id="ref" name="ref" type="text">
+        <label for="ref">Reference</label>
+    </div>
+
+    <div class="input-field">
+        <i class="material-icons prefix">mode_edit</i>
+        <textarea id="context" name="context" class="materialize-textarea" data-length="500"></textarea>
+        <label for="context">Context</label>
+    </div>
+
+    <div class="input-field">
+        <i class="material-icons prefix">event_note</i>
+        <textarea id="misc" name="misc" class="materialize-textarea" data-length="500"></textarea>
+        <label for="misc">Miscellaneous</label>
+    </div>
+
+
+    <div class="range-field">
+        <i class="small material-icons">mode_edit</i><span> Difficulty level</span><input id="difficulty" name="difficulty" type="range" min="0" max="100" />
+    </div>
+
+
+    <div class="input-field center-align">
+        <button class="btn waves-effect waves-light" type="submit">Add Vocab
+          <i class="material-icons right">send</i>
+        </button>
+    </div>
+
+
+</form>
+
 {% block additional_scripts %}
 <script src="{{ url_for('static', filename='js/add_vocab.js') }}"></script>
-<script>
-    function getVal() {
-        return $("#vocab").val()
-    }
-</script>
 {% endblock %} {% endblock %}

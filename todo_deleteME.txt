@@ -176,18 +176,20 @@ notes:
                     - for example: if there should be a banana on the page, then add freakin banana
                     
         - rename button or add labels for items in filter div
-        - removed the user_id out of the get_filtered function! .................. DONE!
-        - delete_source page show the vocabs being used by source ................ DONE!
-        - change of date of births for users ..................................... DONE!
+        - removed the user_id out of the get_filtered function! ........................ DONE!
+        - delete_source page show the vocabs being used by source ...................... DONE!
+        - change of date of births for users ........................................... DONE!
         - dash
-            - add results numbers to dash ........................................ DONE!
-            - username = YOU ..................................................... DONE!
-            - not returning any results .......................................... DONE!
-            - vocab contents inside the accordions   <<<<<<<<<<  ATTENTION
+            - add results numbers to dash .............................................. DONE!
+            - username = YOU ........................................................... DONE!
+            - not returning any results ................................................ DONE!
+            - vocab contents inside the accordions                      <<<<<<<<<<  ATTENTION!
         - view_user
-            - put both favourited vocabs and added vocabs in accordions .......... DONE!
+            - put both favourited vocabs and added vocabs in accordions ................ DONE!
         - add vocabs
-            - address if no synonyms or examples - exactly the same way as dash
+            - address if no synonyms or examples - exactly the same way as dash ........ DONE!
+            - replace difficulty range shit with normal number input    <<<<<<<<<<  ATTENTION!
+            - add tooltips for everything                               <<<<<<<<<<  ATTENTION!
         - navigations NOT navbar
         - user helper count functions in run.py and test_app
         - styling
