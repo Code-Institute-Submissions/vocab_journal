@@ -16,20 +16,10 @@ DB_URI = os.getenv("DB_URI")
 
 # ================================ initial configuration =====================================
 
-app = Flask(__name__) # initiate Flask
-app.secret_key = os.urandom(24) # generate secret key randomly and safely
-
-app.config['MONGO_DBNAME'] = DB_NAME # 'vocabdb' # select db
-#app.config['MONGO_URI'] = 'mongodb://root:patriot1@ds115613.mlab.com:15613/rigsdb' 
-# app.config['MONGO_URI'] = os.getenv('MONGO_URI') # RETURNS "None 
-# PROBLEM:
-#   app.config['MONGO_URI'] = os.getenv('MONGO_URI')  CANNOT BE USED! as it returns None, meaning it hasnt been set up at all!
-#   os.getenv('MONGO_URI') keeps returning None! hence cant hide the code
-#   even though "export MONGO_URI='mongodb://root:patriot1@ds115613.mlab.com:15613/rigsdb'" was set
-
-# mongo = PyMongo(app)
+app = Flask(__name__)               # initiate Flask
+app.secret_key = os.urandom(24)     # generate secret key randomly and safely
+app.config['MONGO_DBNAME'] = DB_NAME
 mongo = PyMongo(app, uri=DB_URI)
-# mongo = PyMongo(app, uri='mongodb://root:patriot1@ds223063.mlab.com:23063/vocabdb')
 
 # ================================== helper functions ========================================
 
@@ -38,10 +28,22 @@ def check_connection():
     users = mongo.db.users
     return users
 
+
 def get_users_count():
     """ count the number of users """
-    users = mongo.db.users.find() # .count()
-    count = len(list(users)) 
+    count = mongo.db.users.find().count()
+    return count
+
+
+def get_vocabs_count():
+    """ count the number of vocabs """
+    count = mongo.db.vocabs.find().count()
+    return count
+
+
+def get_sources_count():
+    """ count the number of sources """
+    count = mongo.db.sources.find().count()
     return count
 
 
@@ -97,7 +99,6 @@ def create_user(insert=False, predefined_user=False):
         new_user["admin"] = False
         new_user["likes"] = []
         
-    
     if insert:
         # to avoid duplicate entries
         if users.find_one({"username": new_user["username"]}) is None:
@@ -112,15 +113,16 @@ def create_user(insert=False, predefined_user=False):
     else:
         return new_user
 
+
 def get_today_date():
     """ returns the current date in the selectecd format """
     now = datetime.now()
     return now.strftime("%Y/%m/%d")
     
+    
 def process_likes(vocab):
-    """ check to see if user has already liked the vocab
-        if the vocab is already liked by the user, then dislike, 
-        retract the like"""
+    """ check to see if user has already liked the vocab if the vocab is already liked 
+    by the user, then dislike (retract the like)"""
     
     # fetch db data
     users = mongo.db.users
@@ -161,9 +163,9 @@ def index():
 
 @app.route("/login", methods=["POST"])
 def login():
-    """ attempts to log in the user if the user is registered (record in the database)
-    otherwise, redirect back to index (didnt redirect to register since they might have had
-    a typo """
+    """ attempts to log the user in, if the user is registered (record in the database), 
+    redirect back to index (didnt redirect to register since they might have had a typo """
+    
     users = mongo.db.users
     user = users.find_one({"username": request.form["username"].lower()})
     
@@ -180,11 +182,9 @@ def login():
         return redirect(url_for("index"))
 
 
-
-
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    """ attempt to register the user if the user is not already registered! """
+    """ attempts to register the user if the user is not already registered! """
 
     if request.method == "POST":
         # create new user and insert into db
@@ -202,7 +202,7 @@ def register():
 
 @app.route('/logout')
 def logout():
-    """ clear all session """
+    """ logs user out by clearing all session """
     session.clear()
     return redirect(url_for('index'))
 
@@ -210,7 +210,7 @@ def logout():
 @app.route("/dash")
 def dash():
     """ the first page the user sees after logging in. 
-    shows all vocabs in the db"""
+    shows all vocabs in the db."""
 
     # DEFENSIVE redirecting
     try:
@@ -233,9 +233,17 @@ def dash():
 
 @app.route("/get_filtered")
 def get_filtered():
-    """ Apply filters to db """
+    """ Apply filters to vocabs
+        vocab filters:
+            toggle between vocabs added by user and ALL vocabs in db.
+            show vocabs asigned to a specific source.
+        sort by:
+            views, lookup count, likes, difficulty, publish date, modified date
+        order:
+            ascending, descending.
+        """
     
-    jdebug = 0
+    jdebug = 0  # debugging flag
 
     # DEFENSIVE redirecting
     try:
@@ -338,7 +346,16 @@ def manage_sources():
 
 @app.route("/delete_source/<source_id>")
 def delete_source(source_id):
-    """   """
+    """ ADMIN ONLY! - delete a source from the db
+    NOTE: sources in use CANNOT BE DELETED BY DESIGN!
+    check to see if the logged in user is an admin.
+    if not an admin, redirect back to dash.
+    if admin, check to see if the source is already in use
+    by any vocabs within the db.
+    if so, fetch the vocabs, push to template along the custom
+    flash message.
+    if source not in use, then go ahead and remove from db.
+    """
     
     # only go forward if there's a user logged in 
     if "username" in session:
@@ -359,12 +376,13 @@ def delete_source(source_id):
         
         # delete source if not in use
         if source_in_use:
-            vocabs = list(mongo.db.vocabs.find({"source": source["name"]}) )
+            # fetch vocabs using this specific source!
+            vocabs = list(mongo.db.vocabs.find({"source": source["name"]}) ) # to be passed into the template with custom flash msg.
+            # custom message to let the user know that the source he/she wished to delete is currently in use!
             flash("Could NOT delete source '{}' as it is currently in used by the following vocabs!".format(source["name"]))
-
         else:
-            flash("Source '{}' was successfully DELETED!".format(source["name"]))
-            mongo.db.sources.remove({'_id': ObjectId(source_id)})
+            flash("Source '{}' was successfully DELETED!".format(source["name"])) # custom flash message to confirm deletion.
+            mongo.db.sources.remove({'_id': ObjectId(source_id)}) # remove source after locating it by its id "source_id"
         
         return render_template("manage_sources.html", sources = mongo.db.sources.find(), vocabs=vocabs )
 
@@ -375,12 +393,14 @@ def delete_source(source_id):
 
 @app.route("/insert_source", methods=["POST"])
 def insert_source():
-    """ fetch new source and insert into db """
-    
+    """ ADMIN ONLY! - creates a new source.
+        fetch new source from the input off the screen. 
+        insert into db if it DOESNT  already exist! """
+
     sources = mongo.db.sources
     data = {}
-    data["name"] = request.form["new_source"].lower()
-    
+    data["name"] = request.form["new_source"].lower().strip()
+
     # checks  to see if the source already exists!
     if sources.find_one({"name": data["name"]}) is None:
         sources.insert_one(data)
@@ -393,6 +413,11 @@ def insert_source():
 
 @app.route("/delete_vocab/<vocab_id>")
 def delete_vocab(vocab_id):
+    """ attempts to remove a vocab from the database.
+    get vocab to be deleted via its id "vocab_id".
+    remove vocab from db.
+    update "vocabs_count" of the user it was added by.
+    remove vocab from the liked(favourited) list of users."""
     
     # DEFENSIVE redirecting
     try:
@@ -416,7 +441,6 @@ def delete_vocab(vocab_id):
     # update likes for users
     mongo.db.users.update({ "likes": {"$in": [ to_del_vocab["vocab"] ] } }, { "$pull": { "likes": to_del_vocab["vocab"] }}, upsert=False, multi=True )
 
-        
     # custom flash message as confirmation 
     flash("'{}' was successfully DELETED!".format( to_del_vocab["vocab"].title() ))
     
@@ -426,7 +450,10 @@ def delete_vocab(vocab_id):
 
 @app.route("/view_vocab/<vocab_id>")
 def view_vocab(vocab_id):
-    
+    """" view a vocab details using the dedicated vocab template.
+    get vocab through its "vocab_id" and view it full screen in a 
+    dedicated template "vocab.html".
+    update vocab view count!"""
     
     # DEFENSIVE redirecting
     try:
@@ -437,19 +464,18 @@ def view_vocab(vocab_id):
         flash("Your session has Expired!")
         return redirect( url_for("index"))    
     
-
     # vocab view counter
     mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$inc": { "views": 1 }})
     
     # fetch the existing vocab out of the db
     vocab = mongo.db.vocabs.find_one({'_id': ObjectId(vocab_id)})
-    
 
     return render_template("vocab.html", vocab=vocab, current_user=current_user)
 
 
 @app.route("/check_vocab")
 def check_vocab():
+    """ render check_vocab template """
     
     # DEFENSIVE redirecting
     try:
@@ -462,12 +488,12 @@ def check_vocab():
         
     return render_template("check_vocab.html")
 
-# methods=["POST"] was added here to test the new layout
-# take it out to return the functionality to it from the nav.
-# 
+
 @app.route("/add_vocab", methods=["POST"])
 def add_vocab():
-    """ render add_vocab page """
+    """ checks to see the vocabs already exists.ArithmeticError
+        if the vocab exists, it will load the vocab and update its lookup_count
+        otherwise, it runs the vocab through the API for definitions, synonyms and examples."""
     
     # DEFENSIVE redirecting
     try:
@@ -489,7 +515,6 @@ def add_vocab():
         vocab = mongo.db.vocabs.find_one({'vocab': vocab_in })  # fetch the existing vocab out of the db
 
         # update db
-        # mongo.db.vocabs.update({'vocab': vocab_in}, { "$set": {"last_lookup_date": get_today_date()} }, {"$inc": { "lookup_count": 1 } } )
         mongo.db.vocabs.update({'vocab': vocab_in}, {"$inc": { "lookup_count": 1 } })
         mongo.db.vocabs.update({'vocab': vocab_in}, { "$set": {"last_lookup_date": get_today_date()} })
                 
@@ -517,23 +542,26 @@ def add_vocab():
 
 @app.route("/insert_vocab/<vocab>", methods=["POST"])
 def insert_vocab(vocab):
-    """ fetch new vocab and insert into db """
+    """ fetch new vocab off the screen from the form and insert into db
+        update user vocab_count."""
+        
     # initialisations
     data = {}
     vocabs = mongo.db.vocabs
-
+    
+    # fetch from form
     data["tags"] = request.form.get("tags") 
     data["pub_date"] = get_today_date() 
     data["last_lookup_date"] = get_today_date() 
     data["mod_date"] = get_today_date() 
-    data["vocab"] = vocab # request.form["vocab"].lower()
+    data["vocab"] = vocab 
     data["user_definition"] = request.form["user_definition"].lower()
-    data["source"] = request.form.get("source") # ATTENTION!
+    data["source"] = request.form.get("source") 
     data["context"] = request.form["context"].lower()
     data["misc"] = request.form["misc"].lower()
     data["difficulty"] = int(request.form["difficulty"])
     data["ref"] = request.form["ref"].lower()
-    data["user"] = session['username'] # request.form["user_id"] # ?????????????
+    data["user"] = session['username'] 
     data["lookup_count"] = 0
     data["likes"] = 0
     data["views"] = 1
@@ -541,48 +569,17 @@ def insert_vocab(vocab):
     # insert data
     vocabs.insert_one(data)
         
-    # keep track of vocabs added by the the user
-
-    # update user vocab_count 
+    # keep track of vocabs added by the the user - update user vocab_count 
     user = mongo.db.users.find_one({"username": data["user"]})
     vocabs_count =  mongo.db.vocabs.find({"user": data["user"]}).count()
     mongo.db.users.update({'username': data["user"]}, { "$set": { "vocab_count": vocabs_count }})
 
-    
-    ################### WAS MOVED TO "add_vocab" FUNCTION #######################################
-    # if vocabs.find_one({"vocab": data["vocab"]}) is None:
-    #     # vocab doesnt exist in the db - go ahead and insert
-    #     vocabs.insert_one(data)
-        
-    #     # keep track of vocabs added by the the user
-    #     user = mongo.db.users.find_one({"username": data["user"] })  # get user
-    #     vocab_count = user["vocab_count"] # get vocab_count
-    #     vocab_count += 1 # increment the vocab_count 
-    #     user = mongo.db.users.update({"username": data["user"] }, {"$set": {"vocab_count": vocab_count} }) # update db
-    # else:
-    #     # vocab already exists in the database!
-        
-    #     # issue custom flash message
-    #     flash("Vocab '{}' already exists. Lookup count was updated!".format(data["vocab"]))
-        
-    #     vocab = mongo.db.vocabs.find_one({'vocab': data["vocab"] }) # fetch the existing vocab out of the db
-    #     lookup_count = vocab["lookup_count"]    # get lookup_count of the vocab
-    #     lookup_count += 1   # increment the lookup_count 
-        
-    #     # update db
-    #     mongo.db.vocabs.update({'vocab': data["vocab"]},{ "$set": { "lookup_count": lookup_count, "last_lookup_date": get_today_date()}})
-        
-    #     # view the existing vocab by redirecting to view_vocab
-    #     return redirect( url_for("view_vocab", vocab_id=vocab['_id']) )
-
     return redirect(url_for('dash'))
-
-
-
 
 
 @app.route("/edit_vocab/<vocab_id>")
 def edit_vocab(vocab_id):
+    """ render the edit_vocab template for the vocab with id "vocab_id" """
     
     # DEFENSIVE redirecting
     try:
@@ -597,7 +594,6 @@ def edit_vocab(vocab_id):
     vocab = mongo.db.vocabs.find_one({'_id': ObjectId(vocab_id)})
     sources = mongo.db.sources.find()
 
-    
     return render_template("edit_vocab.html", vocab=vocab, sources=sources, current_user=current_user)
     # the submit should pass everything to the update_vocab
     
@@ -605,16 +601,16 @@ def edit_vocab(vocab_id):
 
 @app.route("/update_vocab/<vocab_id>", methods=["POST"])
 def update_vocab(vocab_id):
+    """ update the vocab in the db if any changes made! """
     
-    
-    print("i got called!!!!!")
     # fetch vocab
     vocab = mongo.db.vocabs.find_one({'_id': ObjectId(vocab_id)})
     
-    change_flag = False
+    change_flag = False   # flag to indicate a change was made!
     track_change = { "user_definition": False,"source": False,"context": False,
                     "misc": False,"difficulty": False,"ref": False, "tags": False }
     
+    # fetch items from the from and update "track_change" if a change was made
     if request.form.get("user_definition") != vocab["user_definition"]:
         track_change["user_definition"] = True
         mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "user_definition": request.form.get("user_definition") } })
@@ -643,10 +639,12 @@ def update_vocab(vocab_id):
         track_change["tags"] = True
         mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "tags": request.form.get("tags") } })
     
+    # check to see a changed was made, if so set flag to True
     for k,v in  track_change.items():
         if v:
             change_flag = True
     
+    # update db if there was a change - also, update the modified time.
     if change_flag:
         mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": get_today_date()} })
         flash( "'{}' vocab was successfully MODIFIED!".format(vocab["vocab"].title()) )
@@ -659,8 +657,8 @@ def update_vocab(vocab_id):
 
 @app.route("/view_user/<username>")
 def view_user(username):
-    print("i got called!")
-
+    """ render user profile template "view_user" """
+    
     user=mongo.db.users.find_one({'username': username}) 
     vocabs= list(mongo.db.vocabs.find({"user": username}))
     
@@ -669,9 +667,10 @@ def view_user(username):
 
 @app.route("/toggle_like/<vocab>")
 def toggle_like(vocab):
-    
-    print("toggle_like(): i got called! with vocab '{}'".format(vocab))
-    # user=mongo.db.users.find_one({'username': username}) 
+    """ Apply like to the vocab - on view_vocab template only!
+        if the vocab is already liked! then retract.
+        logic from "process_likes" function """
+
     vocab = mongo.db.vocabs.find_one({"vocab": vocab})
     
     # if vocab is already liked by user, then dislike
