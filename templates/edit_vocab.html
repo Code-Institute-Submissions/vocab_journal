@@ -1,34 +1,37 @@
 {% extends 'base.html'%} {% block title %}Add setup{% endblock %} {% block content %}
 
+<h2>{{ vocab.vocab.title() }}</h2>
+
+<!--FLASH SECTION-->
 <div class="row">
-    <p class="current_date right-align"></p>
-    <h2>{{ vocab.vocab.title() }}</h2>
-    <form action="{{ url_for('update_vocab', vocab_id=vocab._id) }}" method="POST" class="col s10 offset-s1 m8 offset-m2">
-        <div class="row">
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul class="center-align">
+        {% for message in messages %}
+        <p>{{ message }}.</p>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+</div>
 
-            <!--<div class="input-field">-->
-            <!--    <i class="material-icons prefix">add_box</i>-->
-            <!--    <input id="vocab" name="vocab" type="text" minlength="2" class="validate" value="{{ vocab }}" disabled>-->
-            <!--    <label for="vocab">New Vocab</label>-->
-            <!--</div>-->
+<!--FORM SECTION-->
+<form action="{{ url_for('update_vocab', vocab_id=vocab._id) }}" method="POST" class="col s10 offset-s1 m8 offset-m2">
+    <div class="row">
 
-            {% with messages = get_flashed_messages() %} {% if messages %}
-            <ul>
-                {% for message in messages %}
-                <p>{{ message }}.</p>
-                {% endfor %}
-            </ul>
-            {% endif %} {% endwith %}
+        <div class="input-field col s12">
+            <i class="material-icons prefix">subject</i>
+            <textarea id="user_definition" name="user_definition" class="materialize-textarea" data-length="500">{{ vocab.user_definition }}</textarea>
+            <label for="user_definition">User definition</label>
+        </div>
 
-            <div class="input-field">
-                <i class="material-icons prefix">subject</i>
-                <textarea id="user_definition" name="user_definition" class="materialize-textarea" data-length="500">{{ vocab.user_definition }}</textarea>
-                <label for="user_definition">User definition</label>
-            </div>
+        <div class="input-field col s12 m6">
+            <i class="material-icons prefix">label</i>
+            <input id="difficulty" name="difficulty" type="number" min="1" max="100" value="{{ vocab.difficulty }}">
+            <label for="difficulty">Difficulty level</label>
+        </div>
 
-            <div class="input-field">
-                <i class="material-icons prefix">bookmark</i>
-                <select id="source" name="source">
+        <div class="input-field col s12 m6">
+            <i class="material-icons prefix">bookmark</i>
+            <select id="source" name="source">
                     {% for source in sources %}
                         {% if vocab.source == source.name %}
                         <option value="{{ source.name }}" selected>{{ source.name.title() }}</option>
@@ -36,56 +39,49 @@
                         <option value="{{ source.name }}">{{ source.name.title() }}</option>
                         {% endif %}
                     {% endfor %}
-                </select>
-            </div>
-
-            <div class="input-field">
-                <div class="input-field">
-                    <i class="material-icons prefix">local_offer</i>
-                    <input id="tag" type="text" minlength="2">
-                    <div class="right-align">
-                        <a id="removeTags" class="waves-effect waves-light btn red"><i class="material-icons right">delete_forever</i>Clear all</a>
-                        <a id="addTag" class="waves-effect waves-light btn"><i class="material-icons right">add_circle</i>Add</a>
-                    </div>
-                    <label for="first_name">Tags</label>
-                    <input id="tag-pool" name="tags" type="text" value="{{ vocab.tags }}"  readonly>
-                </div>
-            </div>
-
-            <div class="input-field">
-                <i class="material-icons prefix">label</i>
-                <input id="ref" name="ref" type="text" value="{{ vocab.ref }}">
-                <label for="ref">Reference</label>
-            </div>
-
-            <div class="input-field">
-                <i class="material-icons prefix">mode_edit</i>
-                <textarea id="context" name="context" class="materialize-textarea" data-length="500">{{ vocab.context }}</textarea>
-                <label for="context">Context</label>
-            </div>
-
-            <div class="input-field">
-                <i class="material-icons prefix">event_note</i>
-                <textarea id="misc" name="misc" class="materialize-textarea" data-length="500">{{ vocab.misc }}</textarea>
-                <label for="misc">Miscellaneous</label>
-            </div>
-
-            <!--<div class="input-field">-->
-            <div class="range-field ">
-                <i class="small material-icons">mode_edit</i><span> Difficulty level</span><input id="difficulty" name="difficulty" type="range" min="0" max="100" value="{{ vocab.difficulty }}"/>
-            </div>
-            <!--</div>-->
-
-            <div class="input-field center-align">
-                <button class="btn waves-effect waves-light" type="submit">Submit
-                    <i class="material-icons right">send</i>
-                </button>
-            </div>
-
+            </select>
         </div>
-    </form>
 
-</div>
+        <div class="input-field col s12 m6">
+            <i class="material-icons prefix">mode_edit</i>
+            <textarea id="context" name="context" class="materialize-textarea" data-length="500">{{ vocab.context }}</textarea>
+            <label for="context">Context</label>
+        </div>
+
+        <div class="input-field col s12 m6">
+            <i class="material-icons prefix">event_note</i>
+            <textarea id="misc" name="misc" class="materialize-textarea" data-length="500">{{ vocab.misc }}</textarea>
+            <label for="misc">Miscellaneous</label>
+        </div>
+
+        <div class="input-field col s12">
+            <i class="material-icons prefix">label</i>
+            <input id="ref" name="ref" type="text" value="{{ vocab.ref }}">
+            <label for="ref">Reference</label>
+        </div>
+
+        <div class="input-field col s12">
+            <i class="material-icons prefix">local_offer</i>
+            <input id="tag" type="text" minlength="2">
+            <div class="right-align">
+                <a id="removeTags" class="waves-effect waves-light btn red"><i class="material-icons right">delete_forever</i>Clear all</a>
+                <a id="addTag" class="waves-effect waves-light btn"><i class="material-icons right">add_circle</i>Add</a>
+            </div>
+            <label for="first_name">Tags</label>
+            <input id="tag-pool" name="tags" type="text" value="{{ vocab.tags }}" readonly>
+        </div>
+
+    </div>
+
+    <div class="input-field center-align">
+        <button class="btn waves-effect waves-light deep-orange" type="submit">Update
+                <i class="material-icons right">send</i>
+            </button>
+    </div>
+
+</form>
+
+
 {% block additional_scripts %}
 <script src="{{ url_for('static', filename='js/add_vocab.js') }}"></script>
 {% endblock %} {% endblock %}

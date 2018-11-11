@@ -169,11 +169,6 @@ notes:
         treats the date as a number. so 12/08/2018 comes before 22/05/2018. it completely ignores the months
          and just takes the days. --- change the format to "2018-11-09" ... DONE!
 
-        - unittest completion - how do u unittest a template???
-                - KEEP IT LIGHT
-                - only test the logic
-                - for templates, check to see if something exists! and then change a small item on the page
-                    - for example: if there should be a banana on the page, then add freakin banana
                     
         - rename button or add labels for items in filter div
         - removed the user_id out of the get_filtered function! ........................ DONE!
@@ -191,9 +186,21 @@ notes:
             - replace difficulty range shit with normal number input    <<<<<<<<<<  ATTENTION!
             - add tooltips for everything                               <<<<<<<<<<  ATTENTION!
         - navigations NOT navbar
-        - user helper count functions in run.py and test_app
+        
+        
+        -  in run.py and test_app
+        
         - styling
             - reponsiveness m4 s3 ... 
-        - unittest
+            - add BASIC footer
+            - buttons back to dash? 
+            - add vocab button on dash?
+
+        - unittest completion - how do u unittest a template???
+                - KEEP IT LIGHT
+                - only test the logic
+                - for templates, check to see if something exists! and then change a small item on the page
+                    - for example: if there should be a banana on the page, then add freakin banana
+                    
         - WRITE UP
             - readme.md
