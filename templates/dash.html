@@ -1,5 +1,6 @@
 {% extends 'base.html'%} {% block title %}Dashboard{% endblock %} {% block content %}
 
+<!--FILTERS SECTION-->
 <h5>Filters</h5>
 <form action="{{ url_for('get_filtered', user_id=current_user._id) }}">
     <div class="switch">
@@ -60,16 +61,20 @@
     </div>
 
     <div class="row right-align">
+        {% if vocabs.count() == 0 %}
+        <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-light right-align red darken-2 pulse">clear filters
+            <i class="material-icons right">clear</i>
+        </a> {% else %}
         <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-light right-align red darken-2">clear filters
             <i class="material-icons right">clear</i>
-        </a>
+        </a> {% endif %}
         <button class="btn btn_small waves-effect waves-light right-align deep-orange" type="submit">Apply filters
             <i class="material-icons right">send</i>
         </button>
     </div>
 </form>
 
-
+<!--FLASH SECTION-->
 <div>
     {% with messages = get_flashed_messages() %} {% if messages %}
     <ul class="center-align">
@@ -80,39 +85,65 @@
     {% endif %} {% endwith %}
 </div>
 
+<!--VOCABS SECTION-->
+{% if vocabs.count() == 0 %}
+<p class="center-align red-text text-darken-2"><strong> Please clear or edit filters</strong> </p>
+{% else %}
 <h4>Vocabs</h4>
-<div class="row">
-    <ul class="collapsible" data-collapsible="Expandable">
-        {% for vocab in vocabs %}
-        <li>
-            {% if loop.index == 1 %}
-            <div class="collapsible-header active">
-                {% else %}
-                <div class="collapsible-header">
-                    {% endif %}
-                    <div class="vocab">"{{ vocab.vocab }}"</div>
-                    <div class="user_id">by <a href="{{ url_for('view_user', username=vocab.user) }}">{{ vocab.user }}  </a></div>
-                    {% if vocab.vocab in current_user.likes %}
-                    <div><i class="tiny material-icons">favorite</i>{{ vocab.likes }}</div>
-                    {% else %}
-                    <div><i class="tiny material-icons">favorite_border</i>{{ vocab.likes }}</div>
-                    {% endif %}
-                    <div><i class="tiny material-icons">youtube_searched_for</i>{{ vocab.lookup_count }}</div>
-                </div>
-                <div class="collapsible-body">
-                    <span>definition: {{ vocab.user_definition }}</span>
-                    <p>views: {{ vocab.views }}<br> likes: {{ vocab.likes }}<br> lookup count: {{ vocab.lookup_count }}<br> published date: {{ vocab.pub_date }}</p>
-                    <div class="right-align">
-                        {% if current_user.username == vocab.user or current_user.admin %}
-                        <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
-                        <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> {% endif %}
-                        <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">view</a>
-                        <!--<a href="{{ url_for('view_user', username=vocab.user) }}" class="waves-effect waves-light btn btn_small deep-orange">user</a>-->
-                    </div>
-                </div>
-        </li>
-        {% endfor %}
-    </ul>
-
-    </div>
-    {% endblock %}
+<p class="right-align"><strong>Showing '{{ vocabs.count() }}' vocabs</strong></p>
+<ul class="collapsible" data-collapsible="Expandable">
+    {% for vocab in vocabs %}
+    <li>
+        {% if loop.index == 1 %}
+        <div class="collapsible-header active">
+            <div class="vocab">"{{ vocab.vocab }}"</div>
+            {% if current_user.username == vocab.user %}
+            <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">you</a></div>
+            {% else %}
+            <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">{{ vocab.user }}  </a></div>
+            {% endif %} {% if vocab.vocab in current_user.likes %}
+            <div><i class="tiny material-icons">favorite</i>{{ vocab.likes }}</div>
+            {% else %}
+            <div><i class="tiny material-icons">favorite_border</i>{{ vocab.likes }}</div>
+            {% endif %}
+            <div><i class="tiny material-icons">youtube_searched_for</i>{{ vocab.lookup_count }}</div>
+        </div>
+        <div class="collapsible-body">
+            <span>definition: {{ vocab.user_definition }}</span>
+            <p>views: {{ vocab.views }}<br> likes: {{ vocab.likes }}<br> lookup count: {{ vocab.lookup_count }}<br> published date: {{ vocab.pub_date }}</p>
+            <div class="right-align">
+                {% if current_user.username == vocab.user or current_user.admin %}
+                <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
+                <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> {% endif %}
+                <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">view</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="collapsible-header">
+            <div class="vocab">"{{ vocab.vocab }}"</div>
+            {% if current_user.username == vocab.user %}
+            <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">you</a></div>
+            {% else %}
+            <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">{{ vocab.user }}  </a></div>
+            {% endif %} {% if vocab.vocab in current_user.likes %}
+            <div><i class="tiny material-icons">favorite</i>{{ vocab.likes }}</div>
+            {% else %}
+            <div><i class="tiny material-icons">favorite_border</i>{{ vocab.likes }}</div>
+            {% endif %}
+            <div><i class="tiny material-icons">youtube_searched_for</i>{{ vocab.lookup_count }}</div>
+        </div>
+        <div class="collapsible-body">
+            <span>definition: {{ vocab.user_definition }}</span>
+            <p>views: {{ vocab.views }}<br> likes: {{ vocab.likes }}<br> lookup count: {{ vocab.lookup_count }}<br> published date: {{ vocab.pub_date }}</p>
+            <div class="right-align">
+                {% if current_user.username == vocab.user or current_user.admin %}
+                <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
+                <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> {% endif %}
+                <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">view</a>
+            </div>
+        </div>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %} {% endblock %}

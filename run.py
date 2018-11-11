@@ -309,7 +309,7 @@ def get_filtered():
         filter_options["order"]["ascending"] = False
         filter_options["order"]["descending"] = True
         vocabs.sort(order_by, -1) 
-
+    
     # Custom flash msg for no results 
     if vocabs.count() == 0:
         flash("No vocabs found!")
@@ -321,6 +321,7 @@ def get_filtered():
     if jdebug > 0:
         print("filter_options = ", filter_options)
         print("filter_dict = ", filter_dict)
+        print("vocabs.count()  = ", vocabs.count() )
       
     return render_template("dash.html", vocabs=vocabs, sources=mongo.db.sources.find(), current_user=current_user, filter_options=filter_options)
 

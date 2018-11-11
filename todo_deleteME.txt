@@ -179,9 +179,16 @@ notes:
         - removed the user_id out of the get_filtered function! .................. DONE!
         - delete_source page show the vocabs being used by source ................ DONE!
         - change of date of births for users ..................................... DONE!
-        - add results numbers to dash
-        - view_user:    put both favourited vocabs and added vocabs in accordions
+        - dash
+            - add results numbers to dash ........................................ DONE!
+            - username = YOU ..................................................... DONE!
+            - not returning any results .......................................... DONE!
+        - view_user
+            - put both favourited vocabs and added vocabs in accordions
+        - add vocabs
+            - address if no synonyms or examples - exactly the same way as dash
         - navigations NOT navbar
+        - user helper count functions in run.py and test_app
         - styling
             - reponsiveness m4 s3 ... 
         - unittest
