@@ -183,8 +183,9 @@ notes:
             - add results numbers to dash ........................................ DONE!
             - username = YOU ..................................................... DONE!
             - not returning any results .......................................... DONE!
+            - vocab contents inside the accordions   <<<<<<<<<<  ATTENTION
         - view_user
-            - put both favourited vocabs and added vocabs in accordions
+            - put both favourited vocabs and added vocabs in accordions .......... DONE!
         - add vocabs
             - address if no synonyms or examples - exactly the same way as dash
         - navigations NOT navbar
@@ -192,3 +193,5 @@ notes:
         - styling
             - reponsiveness m4 s3 ... 
         - unittest
+        - WRITE UP
+            - readme.md

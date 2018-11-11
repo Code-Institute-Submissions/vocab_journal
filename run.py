@@ -474,6 +474,31 @@ def view_vocab(vocab_id):
     return render_template("vocab.html", vocab=vocab, current_user=current_user)
 
 
+@app.route("/user_likes/<vocab>")
+def user_likes(vocab):
+    """" alternative version of "view_vocab" created as a fudge factor to
+        handle the favourite vocabs of the user within the view_user template, 
+        since user liked vocabs are just a list of strings(vocabs).
+        also allows the removal of the view buttons since the vocabs are
+        now links."""
+    
+    # DEFENSIVE redirecting
+    try:
+        # identify the logged in user 
+        current_user = mongo.db.users.find_one({"username": session['username']})
+    except KeyError:
+        # no session - redirect back to index view
+        flash("Your session has Expired!")
+        return redirect( url_for("index"))    
+    
+    # identify vocab
+    vocab = mongo.db.vocabs.find_one({'vocab': vocab})
+    
+    # get vocab _id and redurect to view_vocab
+    return redirect( url_for("view_vocab", vocab_id=vocab["_id"]) )
+
+
+
 @app.route("/check_vocab")
 def check_vocab():
     """ render check_vocab template """
@@ -545,7 +570,7 @@ def add_vocab():
 def insert_vocab(vocab):
     """ fetch new vocab off the screen from the form and insert into db
         update user vocab_count."""
-        
+    
     # initialisations
     data = {}
     vocabs = mongo.db.vocabs
@@ -574,7 +599,9 @@ def insert_vocab(vocab):
     user = mongo.db.users.find_one({"username": data["user"]})
     vocabs_count =  mongo.db.vocabs.find({"user": data["user"]}).count()
     mongo.db.users.update({'username': data["user"]}, { "$set": { "vocab_count": vocabs_count }})
-
+    
+    flash("'{}' was successfully ADDED!".format(vocab.title()))
+    
     return redirect(url_for('dash'))
 
 
@@ -659,7 +686,16 @@ def update_vocab(vocab_id):
 @app.route("/view_user/<username>")
 def view_user(username):
     """ render user profile template "view_user" """
-    
+
+    # DEFENSIVE redirecting
+    try:
+        # identify the logged in user 
+        current_user = mongo.db.users.find_one({"username": session['username']})
+    except KeyError:
+        # no session - redirect back to index view
+        flash("Please log in first")
+        return redirect( url_for("index"))
+
     user=mongo.db.users.find_one({'username': username}) 
     vocabs= list(mongo.db.vocabs.find({"user": username}))
     
@@ -671,6 +707,15 @@ def toggle_like(vocab):
     """ Apply like to the vocab - on view_vocab template only!
         if the vocab is already liked! then retract.
         logic from "process_likes" function """
+
+    # DEFENSIVE redirecting
+    try:
+        # identify the logged in user 
+        current_user = mongo.db.users.find_one({"username": session['username']})
+    except KeyError:
+        # no session - redirect back to index view
+        flash("Please log in first")
+        return redirect( url_for("index"))
 
     vocab = mongo.db.vocabs.find_one({"vocab": vocab})
     

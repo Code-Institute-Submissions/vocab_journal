@@ -31,9 +31,9 @@
         {% for vocab in vocabs %}
             {% if loop.index == loop.length %}
                 
-                <a href="{{ url_for('view_vocab', vocab_id=vocab._id ) }}" class="">{{vocab.vocab}}</a>
+                <a href="{{ url_for('view_vocab', vocab_id=vocab._id ) }}" class="">{{vocab.vocab.title()}}</a>
             {% else %}
-                <a href="{{ url_for('view_vocab', vocab_id=vocab._id ) }}" class="">{{vocab.vocab}},&nbsp;&nbsp;</a>
+                <a href="{{ url_for('view_vocab', vocab_id=vocab._id ) }}" class="">{{vocab.vocab.title()}},&nbsp;&nbsp;</a>
                 
             {% endif %}
         {% endfor %}
