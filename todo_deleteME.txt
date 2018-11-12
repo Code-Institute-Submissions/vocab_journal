@@ -185,11 +185,7 @@ notes:
             - address if no synonyms or examples - exactly the same way as dash ........ DONE!
             - replace difficulty range shit with normal number input    <<<<<<<<<<  ATTENTION!
             - add tooltips for everything                               <<<<<<<<<<  ATTENTION!
-        - navigations NOT navbar
-        
-        
-        -  in run.py and test_app
-        
+
         - styling
             - reponsiveness m4 s3 ... 
             - add BASIC footer
