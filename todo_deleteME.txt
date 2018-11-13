@@ -183,14 +183,13 @@ notes:
             - put both favourited vocabs and added vocabs in accordions ................ DONE!
         - add vocabs
             - address if no synonyms or examples - exactly the same way as dash ........ DONE!
-            - replace difficulty range shit with normal number input    <<<<<<<<<<  ATTENTION!
-            - add tooltips for everything                               <<<<<<<<<<  ATTENTION!
+            - replace difficulty range shit with normal number input ................... DONE!
 
         - styling
-            - reponsiveness m4 s3 ... 
-            - add BASIC footer
+            - reponsiveness m4 s3 ...                                   <<<<<<<<<<  ATTENTION!
+            - add BASIC footer ......................................................... DONE!
+            - add vocab button on dash? ................................................ DONE!
             - buttons back to dash? 
-            - add vocab button on dash?
 
         - unittest completion - how do u unittest a template???
                 - KEEP IT LIGHT

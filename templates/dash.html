@@ -1,7 +1,7 @@
 {% extends 'base.html'%} {% block title %}Dashboard{% endblock %} {% block content %}
 
 <!--FILTERS SECTION-->
-<h5>Filters</h5>
+<h4>Filters</h4>
 <form action="{{ url_for('get_filtered', user_id=current_user._id) }}">
     <div class="switch">
         <label>
@@ -62,13 +62,13 @@
 
     <div class="row right-align">
         {% if vocabs.count() == 0 %}
-        <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-light right-align red darken-2 pulse">clear filters
+        <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-yellow right-align red darken-2 pulse">clear filters
             <i class="material-icons right">clear</i>
         </a> {% else %}
-        <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-light right-align red darken-2">clear filters
+        <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-yellow right-align red darken-2">clear filters
             <i class="material-icons right">clear</i>
         </a> {% endif %}
-        <button class="btn btn_small waves-effect waves-light right-align deep-orange" type="submit">Apply filters
+        <button class="btn btn_small waves-effect waves-yellow right-align deep-orange"  id="apply_filter" type="submit">Apply filters
             <i class="material-icons right">send</i>
         </button>
     </div>
@@ -85,12 +85,25 @@
     {% endif %} {% endwith %}
 </div>
 
+
+
 <!--VOCABS SECTION-->
 {% if vocabs.count() == 0 %}
 <p class="center-align red-text text-darken-2"><strong> Please clear or edit filters</strong> </p>
+<p class="center-align red-text text-darken-2"><strong> or </strong> </p>
+<div class="center-align" >
+    <a href="{{ url_for('check_vocab') }}" class="btn btn_large waves-effect waves-red green darken-3">Add a new vocab
+                <i class="material-icons right">add</i></a>
+</div>
 {% else %}
-<h4>Vocabs</h4>
-<p class="right-align"><strong>Showing '{{ vocabs.count() }}' vocabs</strong></p>
+<h4 class="center-align">Vocabs</h4>
+<div id="new-vocab-count">
+    <a href="{{ url_for('check_vocab') }}" id="add_vocab" class="btn btn_small waves-effect waves-red green darken-3">Add a new vocab
+                <i class="material-icons right">add</i></a>
+    <p><strong>Showing '{{ vocabs.count() }}' vocabs</strong></p>
+</div>
+
+
 <ul class="collapsible" data-collapsible="Expandable">
     {% for vocab in vocabs %}
     <li>
@@ -113,9 +126,9 @@
             <p>views: {{ vocab.views }}<br> likes: {{ vocab.likes }}<br> lookup count: {{ vocab.lookup_count }}<br> published date: {{ vocab.pub_date }}</p>
             <div class="right-align">
                 {% if current_user.username == vocab.user or current_user.admin %}
-                <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
-                <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> {% endif %}
-                <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">view</a>
+                <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small deep-orange">Edit</a>
+                <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small deep-orange">delete</a> {% endif %}
+                <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small deep-orange">view</a>
             </div>
         </div>
         {% else %}

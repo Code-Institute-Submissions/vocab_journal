@@ -20,6 +20,18 @@
     margin-right: 0;
 }
 
-#main-content {
-    min-height: calc(100% - 333.4px);
+// ~~~~ DASH ~~~~~~~~~~~~~~~~~~
+#new-vocab-count {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    p {
+        margin: 0px;
+    }
+}
+
+.btn_small {
+    padding-left: 10px; 
+    padding-right: 10px; 
+    font-size: smaller;
 }
