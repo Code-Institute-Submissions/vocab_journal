@@ -14,9 +14,9 @@
 
 
 {% if vocab.vocab in current_user.likes %}
-    <div class="right-align"><a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text"><i class="large material-icons">favorite</i></a></div>
+    <div class="right-align"><a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text" onclick="Materialize.toast('You have unliked {{ vocab.vocab }}', 10000, 'rounded')"><i class="large material-icons">favorite</i></a></div>
 {% else %}
-    <div class="right-align"><a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text"><i class="large material-icons">favorite_border</i></a></div>
+    <div class="right-align"><a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text" onclick="Materialize.toast('You have liked {{ vocab.vocab }}', 10000, 'rounded')"><i class="large material-icons">favorite_border</i></a></div>
 {% endif %}
 <div class="row">
     <div class="col s12 m12">
@@ -85,4 +85,11 @@
     <a href="{{ url_for('dash') }}" class="waves-effect waves-light btn btn_small deep-orange">Back to list</a>
 </div>
 
-{% endblock %}
+{% block additional_scripts %}
+<script>
+/* global $ */
+    $(document).ready(function(){
+        $('.tooltipped').tooltip({delay: 50});
+  });
+</script>
+{% endblock %} {% endblock %}

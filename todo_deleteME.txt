@@ -181,10 +181,16 @@ notes:
             - vocab contents inside the accordions                      <<<<<<<<<<  ATTENTION!
         - view_user
             - put both favourited vocabs and added vocabs in accordions ................ DONE!
+            - adjust accordions (get rid of the gap in the middle)      <<<<<<<<<<  ATTENTION!
+            - style it somehow? maybe get rid of the accordions all together? <<<<  ATTENTION!
         - add vocabs
             - address if no synonyms or examples - exactly the same way as dash ........ DONE!
             - replace difficulty range shit with normal number input ................... DONE!
-
+        - vocab ( TODAY TASK! )
+            - toast for like (you have liked "vocab") .................................. DONE!       
+            - find a way to add API in there (press a button and it loads into a DIV)
+                - huge button centered in the middle of the page   
+            - change button layouts (left:Delete, middle:edit, right:back to dash
         - styling
             - reponsiveness m4 s3 ...                                   <<<<<<<<<<  ATTENTION!
             - add BASIC footer ......................................................... DONE!
