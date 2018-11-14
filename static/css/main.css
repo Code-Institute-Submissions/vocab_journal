@@ -30,7 +30,7 @@ html, body {
   padding-right: 10px;
   font-size: smaller; }
 
-#dic_api {
+#api_container_defs, #api_container_syns, #api_container_exams {
   display: none; }
 
 /*# sourceMappingURL=main.css.map */

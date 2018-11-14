@@ -733,13 +733,14 @@ def access_api(item, vocab_in):
     # instantiate class with vocab_in
     local_dictionary = OxDictApi(vocab_in)
     
-    def_stat, def_data = local_dictionary.get_definitions()     # get definitions
-    syn_stat, syn_data = local_dictionary.get_synonyms()        # get synonyms
+    
+    
     exa_stat, exa_data = local_dictionary.get_examples()        # get examples
     
     outt = ""
     
     if item.upper() == "DEFS":
+        def_stat, def_data = local_dictionary.get_definitions()     # get definitions
         def_data_list = list(def_data.keys())[0]
         outt += '<span class="card-title">Definitions</span>'
         for key in def_data:
@@ -749,8 +750,36 @@ def access_api(item, vocab_in):
                 outt += "<br><p><strong>{}</strong><p>\n".format(key)
             for x in range(len(def_data[key])):
                 if x < 7:
-                    defs = def_data[key][x]
+                    defs = def_data[key][x].encode("utf-8")
                     outt += "{})&nbsp; {}<br>".format(x+1, defs)
+                
+    if item.upper() == "SYNS":
+        syn_stat, syn_data = local_dictionary.get_synonyms()        # get synonyms
+        syn_data_list = list(syn_data.keys())[0]
+        outt += '<span class="card-title">Synonyms</span>'
+        for key in syn_data:
+            if key == syn_data_list[0]:
+                outt += "<p><strong>{}</strong><p>\n".format(key)
+            else:
+                outt += "<br><p><strong>{}</strong><p>\n".format(key)
+            for x in range(len(syn_data[key])):
+                if x < 7:
+                    syns = syn_data[key][x].encode("utf-8")
+                    outt += "{})&nbsp; {}<br>".format(x+1, syns)  
+                    
+    if item.upper() == "EXAMS":
+        exa_stat, exa_data = local_dictionary.get_examples()        # get examples
+        exa_data_list = list(exa_data.keys())[0]
+        outt += '<span class="card-title">Examples</span>'
+        for key in exa_data:
+            if key == exa_data_list[0]:
+                outt += "<p><strong>{}</strong><p>\n".format(key)
+            else:
+                outt += "<br><p><strong>{}</strong><p>\n".format(key)
+            for x in range(len(exa_data[key])):
+                if x < 7:
+                    exams = exa_data[key][x].encode("utf-8")
+                    outt += "{})&nbsp; {}<br>".format(x+1, exams)
             
     return outt
 
