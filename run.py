@@ -758,7 +758,7 @@ def access_api(item, vocab_in):
                     outt += "<br><p><strong>{}</strong><p>\n".format(key)   # add lexical category
                 for x in range(len(def_data[key])):
                     if x < 7:
-                        defs = def_data[key][x].encode("utf-8").encode('ascii', 'ignore').decode("utf-8")
+                        defs = def_data[key][x].encode('ascii', 'ignore').decode("utf-8")  # strip unicodes
                         outt += "{})&nbsp; {}<br>".format(x+1, defs)        # add definitions
     
     # get synonyms     
@@ -776,7 +776,7 @@ def access_api(item, vocab_in):
                     outt += "<br><p><strong>{}</strong><p>\n".format(key)   # add lexical category
                 for x in range(len(syn_data[key])):
                     if x < 7:
-                        syns = syn_data[key][x].encode("utf-8").encode('ascii', 'ignore').decode("utf-8")
+                        syns = syn_data[key][x].encode('ascii', 'ignore').decode("utf-8")  # strip unicodes
                         outt += "{})&nbsp; {}<br>".format(x+1, syns)        # add synonyms      
     
     # get example sentences           
@@ -794,7 +794,7 @@ def access_api(item, vocab_in):
                     outt += "<br><p><strong>{}</strong><p>\n".format(key)   # add lexical category
                 for x in range(len(exa_data[key])):
                     if x < 7:
-                        exams = exa_data[key][x].encode('ascii', 'ignore').decode("utf-8")
+                        exams = exa_data[key][x].encode('ascii', 'ignore').decode("utf-8")  # strip unicodes
                         outt += "{})&nbsp; {}<br>".format(x+1, exams)       # add examples
 
     return outt
