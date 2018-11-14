@@ -724,6 +724,36 @@ def toggle_like(vocab):
     
     return redirect( url_for("view_vocab", vocab_id=vocab["_id"] ) )
 
+@app.route("/access_api/<item>/<vocab_in>")
+def access_api(item, vocab_in):
+    
+    print("vocab_in = ", vocab_in)
+    print("item = ", item)
+    
+    # instantiate class with vocab_in
+    local_dictionary = OxDictApi(vocab_in)
+    
+    def_stat, def_data = local_dictionary.get_definitions()     # get definitions
+    syn_stat, syn_data = local_dictionary.get_synonyms()        # get synonyms
+    exa_stat, exa_data = local_dictionary.get_examples()        # get examples
+    
+    outt = ""
+    
+    if item.upper() == "DEFS":
+        def_data_list = list(def_data.keys())[0]
+        outt += '<span class="card-title">Definitions</span>'
+        for key in def_data:
+            if key == def_data_list[0]:
+                outt += "<p><strong>{}</strong><p>\n".format(key)
+            else:
+                outt += "<br><p><strong>{}</strong><p>\n".format(key)
+            for x in range(len(def_data[key])):
+                if x < 7:
+                    defs = def_data[key][x]
+                    outt += "{})&nbsp; {}<br>".format(x+1, defs)
+            
+    return outt
+
 
 if __name__ == '__main__':
     port = int( os.getenv("PORT") )

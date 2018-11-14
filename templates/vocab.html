@@ -5,19 +5,38 @@
     <p class="red-text text-darken-2">{{ message }}</p>
     {% endfor %} {% endif %} {% endwith %}
 </div>
+
+<!--VOCAB BRIEF-->
 <div class="right-align">Published on <strong>{{ vocab.pub_date }}</strong><br></div>
 {% if current_user.username == vocab.user %}
 <div class="right-align">Added by<a href="{{ url_for('view_user', username=vocab.user) }}"> <strong> you </strong> </a><br></div>
 {% else %}
 <div class="right-align">Added by<a href="{{ url_for('view_user', username=vocab.user) }}"> <strong> {{ vocab.user }} </strong> </a><br></div>
-{% endif %}
-
-
-{% if vocab.vocab in current_user.likes %}
-    <div class="right-align"><a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text" onclick="Materialize.toast('You have unliked {{ vocab.vocab }}', 10000, 'rounded')"><i class="large material-icons">favorite</i></a></div>
+{% endif %} {% if vocab.vocab in current_user.likes %}
+<div class="right-align"><a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text" onclick="Materialize.toast('You have unliked {{ vocab.vocab }}', 10000, 'rounded')"><i class="large material-icons">favorite</i></a></div>
 {% else %}
-    <div class="right-align"><a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text" onclick="Materialize.toast('You have liked {{ vocab.vocab }}', 10000, 'rounded')"><i class="large material-icons">favorite_border</i></a></div>
+<div class="right-align"><a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text" onclick="Materialize.toast('You have liked {{ vocab.vocab }}', 10000, 'rounded')"><i class="large material-icons">favorite_border</i></a></div>
 {% endif %}
+
+<!--API SECITON-->
+<div class="center-align">
+    <a href="#" id="check_dictionary" class="btn btn_large waves-effect waves-red green darken-3">check dictionary
+                <i class="material-icons right">add</i></a>
+</div>
+<div class="card" id="dic_api">
+    <div class="card-content">
+        <div id="dic_api_content">
+              <div class="progress">
+                  <div class="indeterminate"></div>
+              </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--MAIN STATS AND USER INPUT-->
 <div class="row">
     <div class="col s12 m12">
         <div class="card">
@@ -87,9 +106,24 @@
 
 {% block additional_scripts %}
 <script>
-/* global $ */
-    $(document).ready(function(){
-        $('.tooltipped').tooltip({delay: 50});
-  });
+    /* global $ */
+    $(document).ready(function() {
+        $('.tooltipped').tooltip({ delay: 50 });
+        
+    var vocab = {{vocab["vocab"]|tojson}};        
+    $("#check_dictionary").unbind('click').click(function(){
+        $('#dic_api_content').load(`/access_api/defs/${vocab}`);
+        $("#dic_api").slideToggle()
+    });
+    
+    
+    
+    // $("#dic_api").css("display","none")
+    // $("#dic_api").show();
+
+    });
+    
+
+    
 </script>
 {% endblock %} {% endblock %}
