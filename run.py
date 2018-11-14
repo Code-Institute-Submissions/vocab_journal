@@ -724,73 +724,79 @@ def toggle_like(vocab):
     
     return redirect( url_for("view_vocab", vocab_id=vocab["_id"] ) )
 
+
 @app.route("/access_api/<item>/<vocab_in>")
 def access_api(item, vocab_in):
-    
-    print("vocab_in = ", vocab_in)
-    print("item = ", item)
+    """ 
+    dedicated function to be used to vocab template and AJAX allowing
+    users to access the API functionality on demand.
+    fetches definitions, synonyms, example sentences for the vocab being viewed!
+    <item>:       
+        defs: definitions
+        syns: synonyms
+        defs: example sentences
+    <vocab_in>:     the vocab being viewed
+    """
     
     # instantiate class with vocab_in
     local_dictionary = OxDictApi(vocab_in)
 
-    outt = ""  # outgoing string 
+    outt = ""  # outgoing string as div contents (cards are being used as containers)
     
+    # get definitions
     if item.upper() == "DEFS":
         def_stat, def_data = local_dictionary.get_definitions()     # get definitions
-        outt += '<span class="card-title">Definitions</span>'
+        outt += '<span class="card-title">Definitions</span>'       # add card title
         if len(def_data) == 0:
             outt += "<p>No definitions found!<p>\n"
         else:
             def_data_list = list(def_data.keys())[0]
             for key in def_data:
                 if key == def_data_list[0]:
-                    outt += "<p><strong>{}</strong><p>\n".format(key)
+                    outt += "<p><strong>{}</strong><p>\n".format(key)       # add lexical category
                 else:
-                    outt += "<br><p><strong>{}</strong><p>\n".format(key)
+                    outt += "<br><p><strong>{}</strong><p>\n".format(key)   # add lexical category
                 for x in range(len(def_data[key])):
                     if x < 7:
-                        defs = def_data[key][x].encode("utf-8")
-                        outt += "{})&nbsp; {}<br>".format(x+1, defs)
-                
+                        defs = def_data[key][x].encode("utf-8").encode('ascii', 'ignore').decode("utf-8")
+                        outt += "{})&nbsp; {}<br>".format(x+1, defs)        # add definitions
+    
+    # get synonyms     
     if item.upper() == "SYNS":
         syn_stat, syn_data = local_dictionary.get_synonyms()        # get synonyms
-        outt += '<span class="card-title">Synonyms</span>'
+        outt += '<span class="card-title">Synonyms</span>'          # add card title
         if len(syn_data) == 0:
             outt += "<p>No synonyms found!<p>\n"
         else:
             syn_data_list = list(syn_data.keys())[0]
             for key in syn_data:
                 if key == syn_data_list[0]:
-                    outt += "<p><strong>{}</strong><p>\n".format(key)
+                    outt += "<p><strong>{}</strong><p>\n".format(key)       # add lexical category
                 else:
-                    outt += "<br><p><strong>{}</strong><p>\n".format(key)
+                    outt += "<br><p><strong>{}</strong><p>\n".format(key)   # add lexical category
                 for x in range(len(syn_data[key])):
                     if x < 7:
-                        syns = syn_data[key][x].encode("utf-8")
-                        outt += "{})&nbsp; {}<br>".format(x+1, syns)  
-                    
+                        syns = syn_data[key][x].encode("utf-8").encode('ascii', 'ignore').decode("utf-8")
+                        outt += "{})&nbsp; {}<br>".format(x+1, syns)        # add synonyms      
+    
+    # get example sentences           
     if item.upper() == "EXAMS":
         exa_stat, exa_data = local_dictionary.get_examples()        # get examples
-        outt += '<span class="card-title">Examples</span>'
+        outt += '<span class="card-title">Examples</span>'          # add card title
         if len(exa_data) == 0:
             outt += "<p>No examples found!<p>\n"
         else:
             exa_data_list = list(exa_data.keys())[0]
             for key in exa_data:
                 if key == exa_data_list[0]:
-                    outt += "<p><strong>{}</strong><p>\n".format(key)
+                    outt += "<p><strong>{}</strong><p>\n".format(key)       # add lexical category
                 else:
-                    outt += "<br><p><strong>{}</strong><p>\n".format(key)
+                    outt += "<br><p><strong>{}</strong><p>\n".format(key)   # add lexical category
                 for x in range(len(exa_data[key])):
                     if x < 7:
-                        exams = exa_data[key][x].encode('ascii', 'ignore').decode("utf-8") # .encode("utf-8")
-                        outt += "{})&nbsp; {}<br>".format(x+1, exams)
-                        # try:
-                        #     exams = exa_data[key][x]
-                        #     outt += "{})&nbsp; {}<br>".format(x+1, exams)
-                        # except UnicodeEncodeError:
-                        #     continue
-            
+                        exams = exa_data[key][x].encode('ascii', 'ignore').decode("utf-8")
+                        outt += "{})&nbsp; {}<br>".format(x+1, exams)       # add examples
+
     return outt
 
 
