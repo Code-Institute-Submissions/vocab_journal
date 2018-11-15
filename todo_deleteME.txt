@@ -217,3 +217,9 @@ notes:
                 - adding tags
                 - dynamic navbar
                 
+            - future features to be added
+                - more languages
+                - ability to download your data
+                - adding pronounciations
+                - 
+                
