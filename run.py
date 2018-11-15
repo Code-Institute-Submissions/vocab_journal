@@ -146,7 +146,9 @@ def process_likes(vocab):
         # add the vocab to the user likes list, and increment vocab likes
         users.update({"username": session['username']}, { "$push": { "likes": vocab["vocab"] }})
         vocabs.update({"vocab": vocab["vocab"] }, { "$inc": { "likes": 1 }})
-
+    
+    # acount for extra views since with every like or dislike triggers a page reload
+    vocabs.update({"vocab": vocab["vocab"] }, { "$inc": { "views": -1 }})
 
 # ====================================== views ===============================================
 
