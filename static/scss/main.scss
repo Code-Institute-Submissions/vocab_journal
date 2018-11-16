@@ -41,3 +41,21 @@
 #api_container_defs, #api_container_syns, #api_container_exams {
     display: none;
 }
+
+
+.vocab-stats {
+    display: flex;
+    justify-content: space-between;
+}
+
+.vocab-like {
+        i {
+        font-size: 13rem;
+    }
+}
+.check_dictionary {
+    margin: 1rem 0px;
+    .check_dictionary_btn {
+        border-radius: 5px;
+    }
+}

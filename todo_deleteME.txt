@@ -221,5 +221,5 @@ notes:
                 - more languages
                 - ability to download your data
                 - adding pronounciations
-                - 
+                - vocab game to test the user's memory
                 

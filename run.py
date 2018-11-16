@@ -6,6 +6,7 @@ from bson.objectid import ObjectId
 from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
 from datetime import datetime
+import time
 try:
     import setup_config 
 except ImportError:
@@ -723,6 +724,7 @@ def toggle_like(vocab):
     
     # if vocab is already liked by user, then dislike
     process_likes( vocab )
+    time.sleep(0.2)
     
     return redirect( url_for("view_vocab", vocab_id=vocab["_id"] ) )
 
