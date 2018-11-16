@@ -724,7 +724,7 @@ def toggle_like(vocab):
     
     # if vocab is already liked by user, then dislike
     process_likes( vocab )
-    time.sleep(0.2)
+    time.sleep(0.5)
     
     return redirect( url_for("view_vocab", vocab_id=vocab["_id"] ) )
 
