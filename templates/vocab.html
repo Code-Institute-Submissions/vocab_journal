@@ -5,7 +5,7 @@
 <div class="vocab-stats">
     <div>
         {% if current_user.username == vocab.user %}
-            By<a href="{{ url_for('view_user', username=vocab.user) }}"><strong> you</strong></a><br>
+            By<a href="{{ url_for('view_user', username=vocab.user) }}"><strong> You</strong></a><br>
         {% else %}
             By<a href="{{ url_for('view_user', username=vocab.user) }}"><strong> {{ vocab.user }}</strong> </a><br>
         {% endif %}
@@ -124,25 +124,24 @@
         {% endif %}
         <div class="card">
             <div class="card-content">
-                <span class="card-title">Full vocab stats</span>
+                <span class="card-title">Vocab stats</span>
                 <p>Added by<a href="{{ url_for('view_user', username=vocab.user) }}"> <strong> {{ vocab.user }} </strong> </a><br></p>
-                <p>Likes: {{ vocab.likes }}</p>
-                <p>Lookup count: {{ vocab.lookup_count }}</p>
-                <p>Views: {{ vocab.views }}</p>
-                <p>Last lookup date: {{ vocab.last_lookup_date }}</p>
-                <p>Last modified on: {{ vocab.mod_date }}</p>
-                <p>Published on: {{ vocab.pub_date }}</p>
+                <p>Likes: &nbsp;{{ vocab.likes }}</p>
+                <p>Lookup count: &nbsp;{{ vocab.lookup_count }}</p>
+                <p>Views: &nbsp;{{ vocab.views }}</p>
+                <p>Published on: &nbsp;{{ vocab.pub_date }}</p>
+                <p>Last lookup date: &nbsp;{{ vocab.last_lookup_date }}</p>
+                <p>Last modified on: &nbsp;{{ vocab.mod_date }}</p>
             </div>
         </div>
-        
-
     </div>
 </div>
 
-<div class="right-align">
+<div class="vocab_buttons">
     {% if current_user.username == vocab.user or current_user.admin %}
+    <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> 
     <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
-    <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> {% endif %}
+    {% endif %}
     <a href="{{ url_for('dash') }}" class="waves-effect waves-light btn btn_small deep-orange">Back to dash</a>
 </div>
 

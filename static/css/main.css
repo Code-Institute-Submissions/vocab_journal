@@ -26,9 +26,10 @@ html, body {
     margin: 0px; }
 
 .btn_small {
-  padding-left: 10px;
-  padding-right: 10px;
-  font-size: smaller; }
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: smaller;
+  border-radius: 7px; }
 
 #api_container_defs, #api_container_syns, #api_container_exams {
   display: none; }
@@ -44,5 +45,19 @@ html, body {
   margin: 1rem 0px; }
   .check_dictionary .check_dictionary_btn {
     border-radius: 5px; }
+
+.vocab_buttons {
+  display: flex;
+  justify-content: space-between; }
+
+.card {
+  border-radius: 10px; }
+
+.collapsible {
+  border-radius: 30px; }
+  .collapsible .collapsible-header {
+    border-radius: 30px; }
+  .collapsible .collapsible-body {
+    border-radius: 30px; }
 
 /*# sourceMappingURL=main.css.map */

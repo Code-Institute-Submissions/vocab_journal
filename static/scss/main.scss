@@ -31,17 +31,17 @@
 }
 
 .btn_small {
-    padding-left: 10px; 
-    padding-right: 10px; 
+    padding-left: 15px; 
+    padding-right: 15px; 
     font-size: smaller;
+    border-radius: 7px;
 }
 
 
-// TEST
+// vocab template
 #api_container_defs, #api_container_syns, #api_container_exams {
     display: none;
 }
-
 
 .vocab-stats {
     display: flex;
@@ -53,9 +53,34 @@
         font-size: 13rem;
     }
 }
+
 .check_dictionary {
     margin: 1rem 0px;
     .check_dictionary_btn {
         border-radius: 5px;
     }
+}
+
+.vocab_buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+
+// DASH
+.collapsible {
+    border-radius: 30px;
+
+    .collapsible-header {
+        border-radius: 30px;
+    }
+    
+    .collapsible-body {
+        border-radius: 30px;
+    }
+
 }
