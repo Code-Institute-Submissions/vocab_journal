@@ -199,6 +199,7 @@ notes:
             - add_vocab .................................................................... DONE!
             - login screen
             - check_vocab
+            - footer statement
         - logic (run.py) 
             - add search by last_lookup_date for filter .................................... DONE!
             - after updating vocab redirect to view_vocab instead of dash .................. DONE!
