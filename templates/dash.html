@@ -103,55 +103,74 @@
     <p><strong>Showing '{{ vocabs.count() }}' vocabs</strong></p>
 </div>
 
-
 <ul class="collapsible" data-collapsible="Expandable">
     {% for vocab in vocabs %}
     <li>
         {% if loop.index == 1 %}
         <div class="collapsible-header active">
-            <div class="vocab">"{{ vocab.vocab }}"</div>
+            <div class="vocab"><strong>"{{ vocab.vocab.title() }}"</strong></div>
             {% if current_user.username == vocab.user %}
             <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">you</a></div>
             {% else %}
             <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">{{ vocab.user }}  </a></div>
             {% endif %} {% if vocab.vocab in current_user.likes %}
-            <div><i class="tiny material-icons">favorite</i>{{ vocab.likes }}</div>
+            <div><i class="tiny material-icons red-text text-darken-4">favorite</i>{{ vocab.likes }}</div>
             {% else %}
             <div><i class="tiny material-icons">favorite_border</i>{{ vocab.likes }}</div>
             {% endif %}
             <div><i class="tiny material-icons">youtube_searched_for</i>{{ vocab.lookup_count }}</div>
         </div>
         <div class="collapsible-body">
-            <span>definition: {{ vocab.user_definition }}</span>
-            <p>views: {{ vocab.views }}<br> likes: {{ vocab.likes }}<br> lookup count: {{ vocab.lookup_count }}<br> published date: {{ vocab.pub_date }}</p>
+            <div class="left-align">
+                <span>Views: &nbsp;{{ vocab.views }}</span><br>
+                <span>Difficulty: &nbsp;{{ vocab.difficulty }}/100</span><br><br>
+            </div>
+            <span>User definition:</span><br>
+            <span>{{ vocab.user_definition }}</span><br><br>
             <div class="right-align">
+                <span>publish date: &nbsp;{{ vocab.pub_date }}</span><br>
+                <span>last modified date: &nbsp;{{ vocab.mod_date }}</span><br>
+                <span>last lookup date: &nbsp;{{ vocab.last_lookup_date }}</span><br><br> 
+            </div>
+            <div class="vocab_buttons">
                 {% if current_user.username == vocab.user or current_user.admin %}
+                <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small red darken-3">delete</a> 
                 <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small deep-orange">Edit</a>
-                <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small deep-orange">delete</a> {% endif %}
+                {% endif %}
                 <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small deep-orange">view</a>
             </div>
         </div>
         {% else %}
         <div class="collapsible-header">
-            <div class="vocab">"{{ vocab.vocab }}"</div>
+            <div class="vocab"><strong>"{{ vocab.vocab.title() }}"</strong></div>
             {% if current_user.username == vocab.user %}
             <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">you</a></div>
             {% else %}
             <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">{{ vocab.user }}  </a></div>
             {% endif %} {% if vocab.vocab in current_user.likes %}
-            <div><i class="tiny material-icons">favorite</i>{{ vocab.likes }}</div>
+            <div><i class="tiny material-icons red-text text-darken-4">favorite</i>{{ vocab.likes }}</div>
             {% else %}
             <div><i class="tiny material-icons">favorite_border</i>{{ vocab.likes }}</div>
             {% endif %}
             <div><i class="tiny material-icons">youtube_searched_for</i>{{ vocab.lookup_count }}</div>
         </div>
         <div class="collapsible-body">
-            <span>definition: {{ vocab.user_definition }}</span>
-            <p>views: {{ vocab.views }}<br> likes: {{ vocab.likes }}<br> lookup count: {{ vocab.lookup_count }}<br> published date: {{ vocab.pub_date }}</p>
+            <div class="left-align">
+                <span>Views: &nbsp;{{ vocab.views }}</span><br>
+                <span>Difficulty: &nbsp;{{ vocab.difficulty }}/100</span><br><br>
+            </div>
+            <span>User definition:</span><br>
+            <span>{{ vocab.user_definition }}</span><br><br>
             <div class="right-align">
+                <span>publish date: &nbsp;{{ vocab.pub_date }}</span><br>
+                <span>last modified date: &nbsp;{{ vocab.mod_date }}</span><br>
+                <span>last lookup date: &nbsp;{{ vocab.last_lookup_date }}</span><br><br> 
+            </div>
+            <div class="vocab_buttons">
                 {% if current_user.username == vocab.user or current_user.admin %}
+                <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small red darken-3">delete</a> 
                 <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
-                <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> {% endif %}
+                {% endif %}
                 <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">view</a>
             </div>
         </div>
