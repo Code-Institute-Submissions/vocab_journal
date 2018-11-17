@@ -15,7 +15,7 @@
 
 <ul class="collapsible" data-collapsible="Expandable">
         <li>
-            <div class="collapsible-header active"><strong>Vocabs liked by '{{ user.username }}'</strong>&nbsp;<i class="large material-icons red-text text-darken-4 view_user_icons">favorite</i></div>
+            <div class="collapsible-header active"><strong>Vocabs liked by '{{ user.username }}'</strong>&nbsp;<i class="large material-icons red-text text-darken-4 collapsible-header-icons">favorite</i></div>
             <div class="collapsible-body">
                 {% if user.likes|length > 0 %}
                 <span>
@@ -29,7 +29,7 @@
             </div>
         </li>
         <li>
-            <div class="collapsible-header active"><strong>Vocabs added by '{{ user.username }}'</strong>&nbsp;<i class="large material-icons view_user_icons">add</i></div>
+            <div class="collapsible-header active"><strong>Vocabs added by '{{ user.username }}'</strong>&nbsp;<i class="large material-icons collapsible-header-icons">add</i></div>
             <div class="collapsible-body">
                 {% if vocabs|length == 0 %}
                     <p>'{{ user.username }}' hasn't added any vocabs yet.</p>
