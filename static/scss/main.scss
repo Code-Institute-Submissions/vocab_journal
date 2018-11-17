@@ -118,3 +118,19 @@
 .collapsible-header-icons {
     margin-left: auto;
 }
+
+// index
+.minimal_look {
+    // media query for small screens
+    @include mQ("maxW", 701px) {
+        margin-top: 70px;
+    }
+    // media query for medium screens
+    @include mQ("w", 702px,1999px) {
+        margin-top: 150px;
+    }
+    // media query for large screens
+    @include mQ("minW", 2000px) {
+        margin-top: 300px;
+    }
+}
