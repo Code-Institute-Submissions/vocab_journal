@@ -201,6 +201,8 @@ notes:
             - register ..................................................................... DONE!
             - check_vocab .................................................................. DONE!
             - footer statement
+            - change font?
+            - add background pix to login and add_vocab?
         - logic (run.py) 
             - add search by last_lookup_date for filter .................................... DONE!
             - after updating vocab redirect to view_vocab instead of dash .................. DONE!
