@@ -37,6 +37,8 @@ html, body {
 .vocab-stats {
   display: flex;
   justify-content: space-between; }
+  .vocab-stats .vocab-stats-user {
+    font-size: 1.3rem; }
 
 .vocab-like i {
   font-size: 13rem; }

@@ -3,17 +3,17 @@
 
 <!--VOCAB BRIEF-->
 <div class="vocab-stats">
-    <div>
+    <div class="vocab-stats-user">
         {% if current_user.username == vocab.user %}
-            By<a href="{{ url_for('view_user', username=vocab.user) }}"><strong> You</strong></a><br>
+            <strong>by<a href="{{ url_for('view_user', username=vocab.user) }}"> You</a></strong><br>
         {% else %}
-            By<a href="{{ url_for('view_user', username=vocab.user) }}"><strong> {{ vocab.user }}</strong> </a><br>
+            <strong>by<a href="{{ url_for('view_user', username=vocab.user) }}"> {{ vocab.user }}</a></strong><br>
         {% endif %}
     </div>
     <div class="right-align">
-        Views: {{ vocab.views }}<br>
-        Likes: {{ vocab.likes }}<br>
-        Lookup count: {{ vocab.lookup_count }}<br>
+        <strong>Views: {{ vocab.views }}</strong><br>
+        <strong>Likes: {{ vocab.likes }}</strong><br>
+        <strong>Lookup count: {{ vocab.lookup_count }}</strong><br>
     </div>
 </div>
 <div class="vocab-like  center-align">
@@ -34,7 +34,7 @@
 
 <!--API SECITON-->
 <div class="center-align check_dictionary" >
-    <a class='dropdown-button btn btn_large waves-effect waves-red green darken-3 check_dictionary_btn' href='#' data-activates='dropdown1'>check dictionary<i class="material-icons right">search</i></a>
+    <a class='dropdown-button btn btn_large waves-effect waves-red deep-orange darken-3 check_dictionary_btn' href='#' data-activates='dropdown1'>check dictionary<i class="material-icons right">search</i></a>
     <ul id='dropdown1' class='dropdown-content'>
         <li><a href="#" id="get_defs" class="waves-effect waves-red center-align">Get Definitions</a></li>
         <li class="divider"></li>
@@ -73,21 +73,21 @@
     <div class="col s12 m12">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">User Definition</span>
+                <span class="card-title"><strong>User Definition</strong></span>
                 <p>{{ vocab.user_definition }}</p>
             </div>
         </div>
         {% if vocab.difficulty != "" %}
         <div class="card">
             <div class="card-content">
-                <span class="card-title">Difficulty</span>
+                <span class="card-title"><strong>Difficulty</strong></span>
                 <p>{{ vocab.difficulty }} / 100</p>
             </div>
         </div>
         {% endif %}
         <div class="card">
             <div class="card-content">
-                <span class="card-title">Source</span>
+                <span class="card-title"><strong>Source</strong></span>
                 <p>{{ vocab.source.title() }}</p>
 
             </div>
@@ -96,35 +96,35 @@
         {% if vocab.context != "" %}
         <div class="card">
             <div class="card-content">
-                <span class="card-title">Context</span>
+                <span class="card-title"><strong>Context</strong></span>
                 <p>{{ vocab.context }}</p>
             </div>
         </div>
         {% endif %} {% if vocab.ref != "" %}
         <div class="card">
             <div class="card-content">
-                <span class="card-title">Reference</span>
+                <span class="card-title"><strong>Reference</strong></span>
                 <p>{{ vocab.ref }}</p>
             </div>
         </div>
         {% endif %} {% if vocab.misc != "" %}
         <div class="card">
             <div class="card-content">
-                <span class="card-title">Miscellaneous</span>
+                <span class="card-title"><strong>Miscellaneous</strong></span>
                 <p>{{ vocab.misc }}</p>
             </div>
         </div>
         {% endif %} {% if vocab.tags != "" %}
         <div class="card">
             <div class="card-content">
-                <span class="card-title">Tags</span>
+                <span class="card-title"><strong>Tags</strong></span>
                 <p>{{ vocab.tags }}</p>
             </div>
         </div>
         {% endif %}
         <div class="card">
             <div class="card-content">
-                <span class="card-title">Vocab stats</span>
+                <span class="card-title"><strong>Vocab stats</strong></span>
                 <p>Added by<a href="{{ url_for('view_user', username=vocab.user) }}"> <strong> {{ vocab.user }} </strong> </a><br></p>
                 <p>Likes: &nbsp;{{ vocab.likes }}</p>
                 <p>Lookup count: &nbsp;{{ vocab.lookup_count }}</p>
@@ -139,7 +139,7 @@
 
 <div class="vocab_buttons">
     {% if current_user.username == vocab.user or current_user.admin %}
-    <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a> 
+    <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small red darken-3">delete</a> 
     <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
     {% endif %}
     <a href="{{ url_for('dash') }}" class="waves-effect waves-light btn btn_small deep-orange">Back to dash</a>

@@ -190,12 +190,14 @@ notes:
             - toast for like (you have liked "vocab") .................................. DONE!       
             - find a way to add API in there (press a button and it loads into a DIV)... DONE!
                 - huge button centered in the middle of the page ....................... DONE!  
-            - change button layouts (left:Delete, middle:edit, right:back to dash
+            - change button layouts (left:Delete, middle:edit, right:back to dash ...... DONE!
         - styling
             - reponsiveness m4 s3 ...                                   <<<<<<<<<<  ATTENTION!
             - add BASIC footer ......................................................... DONE!
             - add vocab button on dash? ................................................ DONE!
-            - buttons back to dash? 
+            - dash? 
+            - check_vocab
+            - add_vocab
         - unittest completion - how do u unittest a template???
                 - KEEP IT LIGHT
                 - only test the logic

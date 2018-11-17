@@ -46,6 +46,9 @@
 .vocab-stats {
     display: flex;
     justify-content: space-between;
+    .vocab-stats-user {
+        font-size: 1.3rem;
+    } 
 }
 
 .vocab-like {
