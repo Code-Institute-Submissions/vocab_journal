@@ -660,9 +660,9 @@ def update_vocab(vocab_id):
         track_change["misc"] = True
         mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "misc": request.form.get("misc") } })
     
-    if request.form.get("difficulty") != vocab["difficulty"]:
+    if int(request.form.get("difficulty")) != vocab["difficulty"]:
         track_change["difficulty"] = True
-        mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "difficulty": request.form.get("difficulty") } })
+        mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "difficulty": int(request.form.get("difficulty")) } })
     
     if request.form.get("ref") != vocab["ref"]:
         track_change["ref"] = True
@@ -676,7 +676,7 @@ def update_vocab(vocab_id):
     for k,v in  track_change.items():
         if v:
             change_flag = True
-    
+
     # update db if there was a change - also, update the modified time.
     if change_flag:
         mongo.db.vocabs.update({'_id': ObjectId(vocab_id)}, { "$set": { "mod_date": get_today_date()} })

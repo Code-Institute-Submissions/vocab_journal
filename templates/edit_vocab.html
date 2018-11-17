@@ -13,6 +13,41 @@
     {% endif %} {% endwith %}
 </div>
 
+<!--API SECITON-->
+<div class="center-align check_dictionary" >
+    <a class='dropdown-button btn btn_large waves-effect waves-red deep-orange darken-3 check_dictionary_btn' href='#' data-activates='dropdown1'>check dictionary<i class="material-icons right">search</i></a>
+    <ul id='dropdown1' class='dropdown-content'>
+        <li><a href="#" id="get_defs" class="waves-effect waves-red center-align">Get Definitions</a></li>
+        <li class="divider"></li>
+        <li><a href="#" id="get_syns" class="waves-effect waves-red center-align">Get Synonyms</a></li>
+        <li class="divider"></li>
+        <li><a href="#" id="get_exams" class="waves-effect waves-red center-align">Get Examples</a></li>
+    </ul>
+</div>
+<div class="card" id="api_container_defs">
+    <div class="card-content" id="api_container_defs_content">
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+    </div>
+</div>
+
+<div class="card" id="api_container_syns">
+    <div class="card-content" id="api_container_syns_content">
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+    </div>
+</div>
+
+<div class="card" id="api_container_exams">
+    <div class="card-content" id="api_container_exams_content">
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+    </div>
+</div>
+
 <!--FORM SECTION-->
 <form action="{{ url_for('update_vocab', vocab_id=vocab._id) }}" method="POST" class="col s10 offset-s1 m8 offset-m2">
     <div class="row">
@@ -84,4 +119,25 @@
 
 {% block additional_scripts %}
 <script src="{{ url_for('static', filename='js/add_vocab.js') }}"></script>
+<script src="{{ url_for('static', filename='js/view_vocab.js') }}"></script>
+<script>
+    /* global $ */
+    $(document).ready(function() {
+
+        var vocab = {{vocab["vocab"]|tojson}};
+        $("#get_defs").unbind('click').click(function() {
+            $('#api_container_defs_content').load(`/access_api/defs/${vocab}`);
+            $("#api_container_defs").slideToggle()
+        });
+        $("#get_syns").unbind('click').click(function() {
+            $('#api_container_syns_content').load(`/access_api/syns/${vocab}`);
+            $("#api_container_syns").slideToggle()
+        });
+        $("#get_exams").unbind('click').click(function() {
+            $('#api_container_exams_content').load(`/access_api/exams/${vocab}`);
+            $("#api_container_exams").slideToggle()
+        });
+
+    });
+</script>
 {% endblock %} {% endblock %}

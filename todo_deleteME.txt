@@ -191,6 +191,8 @@ notes:
             - find a way to add API in there (press a button and it loads into a DIV)... DONE!
                 - huge button centered in the middle of the page ....................... DONE!  
             - change button layouts (left:Delete, middle:edit, right:back to dash ...... DONE!
+        - edit vocab
+            - add API to help user with definition tweaking ............................ DONE!
         - styling
             - reponsiveness m4 s3 ...                                   <<<<<<<<<<  ATTENTION!
             - add BASIC footer ......................................................... DONE!
@@ -210,14 +212,22 @@ notes:
         - WRITE UP
             - readme.md
 
-            - BUG encountered:
+            - BUGS encountered:
                 - the persistent b' ' on heroku
                 - views count with every like or dislike, inc -1
-                - date formats - reversed order
+                - difficulty was being saved as a string(integer in db), causing the function to think there was a changed 
+                - date formats filter 
+                    - reversed order
+                    - not enoguh percision in date, doesnt allow proper filtering by date. for example
+                    if 3 vocabs were modified on the same date, one at noon, one at night and one at the morning, the correctly
+                    order of filtering wont be applied hence all these items witll have the same date on them and NOT time! not having added 
+                    time to the filter will treat these three vocabs the same since there's nothing to set apart apart from their choronological
+                    order of characters they start with. so the latest one added may end up in the middle position by filter and so on!
                 
             - challenges
                 - AJAX with flask template
                 - convert data from flask template to javascript
+                - api and flask credentials
                 - API 
                 - adding tags
                 - dynamic navbar
