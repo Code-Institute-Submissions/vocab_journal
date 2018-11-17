@@ -46,7 +46,7 @@ html, body {
   display: flex;
   justify-content: space-between; }
   .vocab-stats .vocab-stats-user {
-    font-size: 1.3rem; }
+    font-size: 1.2rem; }
 
 .vocab-like i {
   font-size: 13rem; }
@@ -80,5 +80,8 @@ html, body {
       justify-content: space-evenly; }
       .filter_buttons button {
         margin-left: 0px; } }
+
+.view_user_icons {
+  margin-left: auto; }
 
 /*# sourceMappingURL=main.css.map */

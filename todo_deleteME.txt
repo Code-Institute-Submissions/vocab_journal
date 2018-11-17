@@ -170,34 +170,32 @@ notes:
          and just takes the days. --- change the format to "2018-11-09" ... DONE!
 
                     
-        - rename button or add labels for items in filter div .......................... DONE!
-        - removed the user_id out of the get_filtered function! ........................ DONE!
-        - delete_source page show the vocabs being used by source ...................... DONE!
-        - change of date of births for users ........................................... DONE!
+        - rename button or add labels for items in filter div .............................. DONE!
+        - removed the user_id out of the get_filtered function! ............................ DONE!
+        - delete_source page show the vocabs being used by source .......................... DONE!
+        - change of date of births for users ............................................... DONE!
         - dash
-            - add results numbers to dash .............................................. DONE!
-            - username = YOU ........................................................... DONE!
-            - not returning any results ................................................ DONE!
-            - vocab contents inside the accordions ..................................... DONE!
+            - add results numbers to dash .................................................. DONE!
+            - username = YOU ............................................................... DONE!
+            - not returning any results .................................................... DONE!
+            - vocab contents inside the accordions ......................................... DONE!
         - view_user
-            - put both favourited vocabs and added vocabs in accordions ................ DONE!
-            - adjust accordions (get rid of the gap in the middle)      <<<<<<<<<<  ATTENTION!
-            - style it somehow? maybe get rid of the accordions all together? <<<<  ATTENTION!
+            - put both favourited vocabs and added vocabs in accordions .................... DONE!
+            - adjust accordions (get rid of the gap in the middle) ......................... DONE!
         - add vocabs
-            - address if no synonyms or examples - exactly the same way as dash ........ DONE!
-            - replace difficulty range shit with normal number input ................... DONE!
+            - address if no synonyms or examples - exactly the same way as dash ............ DONE!
+            - replace difficulty range shit with normal number input ....................... DONE!
         - vocab 
-            - toast for like (you have liked "vocab") .................................. DONE!       
-            - find a way to add API in there (press a button and it loads into a DIV)... DONE!
-                - huge button centered in the middle of the page ....................... DONE!  
-            - change button layouts (left:Delete, middle:edit, right:back to dash ...... DONE!
+            - toast for like (you have liked "vocab") ...................................... DONE!       
+            - find a way to add API in there (press a button and it loads into a DIV)....... DONE!
+                - huge button centered in the middle of the page ........................... DONE!  
+            - change button layouts (left:Delete, middle:edit, right:back to dash .......... DONE!
         - edit vocab
-            - add API to help user with definition tweaking ............................ DONE!
+            - add API to help user with definition tweaking ................................ DONE!
         - styling
-            - reponsiveness m4 s3 ...                                   <<<<<<<<<<  ATTENTION!
-            - add BASIC footer ......................................................... DONE!
-            - add vocab button on dash? ................................................ DONE!
-            - dash? 
+            - add BASIC footer ............................................................. DONE!
+            - add vocab button on dash? .................................................... DONE!
+            - dash ......................................................................... DONE!
             - check_vocab
             - add_vocab
         - logic (run.py) 

@@ -2,18 +2,20 @@
 
 <h3>{{ user.username }}</h3>
 
-<p>Name: {{ user.name.title() }}</p>
-<p>Date of Birth: {{ user.dob }}</p>
+<span><strong>Name:</strong> &nbsp;{{ user.name.title() }}</span><br>
+<span><strong>Date of Birth:</strong> &nbsp;{{ user.dob }}</span><br>
 {% if user.admin %}
-<p>Admin: Yes</p>
-{% else %}
-<p>Admin: No</p>
-{% endif %}
-<p>Vocab count: {{ user.vocab_count }}</p>
-<div class="row">
-    <ul class="collapsible" data-collapsible="Expandable">
+<span><strong>Admin:</strong> &nbsp;Yes</span><br>
+    {% else %}
+<span><strong>Admin:</strong> &nbsp;No</span><br>
+    {% endif %}
+<span><strong>Vocab count:</strong> &nbsp;{{ user.vocab_count }}</span><br><br>
+
+
+
+<ul class="collapsible" data-collapsible="Expandable">
         <li>
-            <div class="collapsible-header active">Favourited vocabs&nbsp;<i class="material-icons">favorite</i></div>
+            <div class="collapsible-header active"><strong>Vocabs liked by '{{ user.username }}'</strong>&nbsp;<i class="large material-icons red-text text-darken-4 view_user_icons">favorite</i></div>
             <div class="collapsible-body">
                 {% if user.likes|length > 0 %}
                 <span>
@@ -26,14 +28,8 @@
                 {% endif %}
             </div>
         </li>
-    </ul>
-
-</div>
-
-<div class="row">
-    <ul class="collapsible" data-collapsible="Expandable">
         <li>
-            <div class="collapsible-header active">Vocabs added by {{ user.username }}&nbsp;<i class="material-icons">favorite</i></div>
+            <div class="collapsible-header active"><strong>Vocabs added by '{{ user.username }}'</strong>&nbsp;<i class="large material-icons view_user_icons">add</i></div>
             <div class="collapsible-body">
                 {% if vocabs|length == 0 %}
                     <p>'{{ user.username }}' hasn't added any vocabs yet.</p>
@@ -44,10 +40,10 @@
                 {% endif %}
             </div>
         </li>
-    </ul>
-</div>
+</ul>
+<br>
 
 <div class="right-align">
-    <a href="{{ url_for('dash') }}" class="waves-effect waves-light btn btn_small deep-orange">Back to list</a>
+    <a href="{{ url_for('dash') }}" class="waves-effect waves-light btn btn_small deep-orange">Back to dash</a>
 </div>
 {% endblock %}

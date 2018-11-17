@@ -57,7 +57,7 @@
     display: flex;
     justify-content: space-between;
     .vocab-stats-user {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     } 
 }
 
@@ -110,4 +110,11 @@
             margin-left: 0px;
         }
     }
+}
+
+
+
+// view_user
+.view_user_icons {
+    margin-left: auto;
 }
