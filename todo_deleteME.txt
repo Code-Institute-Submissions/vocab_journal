@@ -196,6 +196,7 @@ notes:
             - add BASIC footer ............................................................. DONE!
             - add vocab button on dash? .................................................... DONE!
             - dash ......................................................................... DONE!
+            - login screen
             - check_vocab
             - add_vocab
         - logic (run.py) 
@@ -239,6 +240,7 @@ notes:
                 - add interactive page with graphs
                 - vocab of the day
                 - share vocab
+                - live change detection - if no change grey out apudate button
                 - administration control
                     - delete users
                     - edit users
