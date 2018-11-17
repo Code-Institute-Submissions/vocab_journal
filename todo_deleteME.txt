@@ -227,4 +227,11 @@ notes:
                 - ability to download your data
                 - adding pronounciations
                 - vocab game to test the user's memory
+                - add pagination
+                - add interactive page with graphs
+                - vocab of the day
+                - share vocab
+                - administration control
+                    - delete users
+                    - edit users
                 
