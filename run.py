@@ -226,12 +226,12 @@ def dash():
     # dictionary created for the sole purpose of saving the filter settings upon selections
     filter_options = {}
     filter_options["user_vocabs_only"] =  False
-    filter_options["order_by"] =  {"views": False, "lookup count": True, "likes": False, "difficulty": False, "publish date": False, "modified date": False, "lookup date": False  }
+    filter_options["order_by"] =  {"views": False, "lookup count": False, "likes": False, "difficulty": False, "publish date": False, "modified date": False, "lookup date": True  }
     filter_options["order"] =  { "descending": True, "ascending": False }
     filter_options["source"] =  ""
     
     # user identified
-    return render_template("dash.html", vocabs=mongo.db.vocabs.find(), sources=mongo.db.sources.find(), current_user=current_user, filter_options=filter_options)
+    return render_template("dash.html", vocabs=mongo.db.vocabs.find().sort("last_lookup_date", -1) , sources=mongo.db.sources.find(), current_user=current_user, filter_options=filter_options)
 
 
 @app.route("/get_filtered")

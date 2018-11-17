@@ -60,7 +60,7 @@
 
     </div>
 
-    <div class="row right-align">
+    <div class="filter_buttons">
         {% if vocabs.count() == 0 %}
         <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-yellow right-align red darken-2 pulse">clear filters
             <i class="material-icons right">clear</i>
@@ -79,7 +79,7 @@
     {% with messages = get_flashed_messages() %} {% if messages %}
     <ul class="center-align">
         {% for message in messages %}
-        <p class="red-text text-darken-2">{{ message }}</p>
+        <p class="red-text text-darken-2"><strong>{{ message }}</strong></p>
         {% endfor %}
     </ul>
     {% endif %} {% endwith %}

@@ -28,7 +28,7 @@
 <!--FLASH MSG-->
 <div class="center-align">
     {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
-    <p class="red-text text-darken-2">{{ message }}</p>
+    <p class="red-text text-darken-2"><strong>{{ message }}</strong></p>
     {% endfor %} {% endif %} {% endwith %}
 </div>
 

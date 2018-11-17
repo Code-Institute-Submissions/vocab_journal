@@ -35,6 +35,16 @@
     padding-right: 15px; 
     font-size: smaller;
     border-radius: 7px;
+    // media query for small screens
+    @include mQ("minW", 701px) {
+        font-size: unset;
+        padding-left: 25px; 
+        padding-right: 25px; 
+    }
+}
+
+.btn_large {
+    border-radius: 7px;
 }
 
 
@@ -87,3 +97,17 @@
 
 }
 
+.filter_buttons {
+    display: flex;
+    justify-content: flex-end;
+    button {
+        margin-left: 10px;
+    }
+    // media query for small screens
+    @include mQ("maxW", 701px) {
+        justify-content: space-evenly;
+        button {
+            margin-left: 0px;
+        }
+    }
+}

@@ -30,6 +30,14 @@ html, body {
   padding-right: 15px;
   font-size: smaller;
   border-radius: 7px; }
+  @media screen and (min-width: 701px) {
+    .btn_small {
+      font-size: unset;
+      padding-left: 25px;
+      padding-right: 25px; } }
+
+.btn_large {
+  border-radius: 7px; }
 
 #api_container_defs, #api_container_syns, #api_container_exams {
   display: none; }
@@ -61,5 +69,16 @@ html, body {
     border-radius: 30px; }
   .collapsible .collapsible-body {
     border-radius: 30px; }
+
+.filter_buttons {
+  display: flex;
+  justify-content: flex-end; }
+  .filter_buttons button {
+    margin-left: 10px; }
+  @media screen and (max-width: 701px) {
+    .filter_buttons {
+      justify-content: space-evenly; }
+      .filter_buttons button {
+        margin-left: 0px; } }
 
 /*# sourceMappingURL=main.css.map */
