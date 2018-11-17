@@ -170,7 +170,7 @@ notes:
          and just takes the days. --- change the format to "2018-11-09" ... DONE!
 
                     
-        - rename button or add labels for items in filter div
+        - rename button or add labels for items in filter div .......................... DONE!
         - removed the user_id out of the get_filtered function! ........................ DONE!
         - delete_source page show the vocabs being used by source ...................... DONE!
         - change of date of births for users ........................................... DONE!
@@ -178,7 +178,7 @@ notes:
             - add results numbers to dash .............................................. DONE!
             - username = YOU ........................................................... DONE!
             - not returning any results ................................................ DONE!
-            - vocab contents inside the accordions                      <<<<<<<<<<  ATTENTION!
+            - vocab contents inside the accordions ..................................... DONE!
         - view_user
             - put both favourited vocabs and added vocabs in accordions ................ DONE!
             - adjust accordions (get rid of the gap in the middle)      <<<<<<<<<<  ATTENTION!
@@ -186,7 +186,7 @@ notes:
         - add vocabs
             - address if no synonyms or examples - exactly the same way as dash ........ DONE!
             - replace difficulty range shit with normal number input ................... DONE!
-        - vocab ( TODAY TASK! )
+        - vocab 
             - toast for like (you have liked "vocab") .................................. DONE!       
             - find a way to add API in there (press a button and it loads into a DIV)... DONE!
                 - huge button centered in the middle of the page ....................... DONE!  
@@ -198,6 +198,9 @@ notes:
             - dash? 
             - check_vocab
             - add_vocab
+        - logic (run.py) 
+            - add search by last_lookup_date for filter .................................... DONE!
+            - after updating vocab redirect to view_vocab instead of dash .................. DONE!
         - unittest completion - how do u unittest a template???
                 - KEEP IT LIGHT
                 - only test the logic

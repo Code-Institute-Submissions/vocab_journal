@@ -226,7 +226,7 @@ def dash():
     # dictionary created for the sole purpose of saving the filter settings upon selections
     filter_options = {}
     filter_options["user_vocabs_only"] =  False
-    filter_options["order_by"] =  {"views": False, "lookup count": True, "likes": False, "difficulty": False, "publish date": False, "modified date": False  }
+    filter_options["order_by"] =  {"views": False, "lookup count": True, "likes": False, "difficulty": False, "publish date": False, "modified date": False, "lookup date": False  }
     filter_options["order"] =  { "descending": True, "ascending": False }
     filter_options["source"] =  ""
     
@@ -260,7 +260,7 @@ def get_filtered():
     # selections and sorting of the vocabs screened through the filter.  
     filter_options = {}
     filter_options["user_vocabs_only"] =  False
-    filter_options["order_by"] =  {"views": False, "lookup count": True, "likes": False, "difficulty": False, "publish date": False, "modified date": False }
+    filter_options["order_by"] =  {"views": False, "lookup count": False, "likes": False, "difficulty": False, "publish date": False, "modified date": False, "lookup date": True }
     filter_options["order"] =  { "descending": True, "ascending": False }
     filter_options["source"] =  ""
 
@@ -298,6 +298,8 @@ def get_filtered():
         order_by = "pub_date"
     elif order_by == "modified date":
         order_by = "mod_date"
+    elif order_by == "lookup date":
+        order_by = "last_lookup_date"
     else:
         pass
 
@@ -682,7 +684,7 @@ def update_vocab(vocab_id):
     else:
         flash( "No changes were made to '{}' vocab!".format(vocab["vocab"].title() ) )
         
-    return redirect( url_for('dash') )
+    return redirect( url_for("view_vocab", vocab_id=vocab["_id"]) )
 
 
 
