@@ -14,7 +14,11 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  background-image: url(../img/bg.png);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover; }
 
 .container {
   min-height: calc(100% - 350.297px);
