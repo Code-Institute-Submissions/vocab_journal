@@ -92,13 +92,13 @@ html, body {
   justify-content: flex-end; }
   .filter_buttons button {
     margin-left: 10px; }
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 412px) {
     .filter_buttons {
       flex-direction: column; }
       .filter_buttons #apply_filter, .filter_buttons #clear_filter {
         margin: 5px 0px;
         font-size: larger; } }
-  @media screen and (min-width: 401px) and (max-width: 701px) {
+  @media screen and (min-width: 413px) and (max-width: 701px) {
     .filter_buttons {
       justify-content: space-evenly; }
       .filter_buttons button {

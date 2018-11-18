@@ -105,7 +105,7 @@
         margin-left: 10px;
     }
     // media query for small narrow screens eg iphonex,xs
-    @include mQ("maxW", 400px) {
+    @include mQ("maxW", 412px) {
             flex-direction: column;
             #apply_filter, #clear_filter {
                 margin: 5px 0px;
@@ -113,7 +113,7 @@
             }
     }
     // media query for small screens
-    @include mQ("w",401px, 701px) {
+    @include mQ("w",413px, 701px) {
         justify-content: space-evenly;
         button {
             margin-left: 0px;
