@@ -1,34 +1,4 @@
 {% extends 'base.html'%} {% block title %}Welcome{% endblock %} {% block content %}
-<!--<h1 class="center-align">Login</h1>-->
-
-<!--<div class="row minimal_look">-->
-
-<!--    <form action="{{ url_for('login') }}" method="POST">-->
-
-<!--        <div class="input-field col s10 offset-s1 m6 offset-m3">-->
-<!--            <input id="username" name="username" type="text" class="validate" minlength="2" required>-->
-<!--            <label for="username">Username</label>-->
-<!--        </div>-->
-
-<!--        <div class="center-align col s12 m6 offset-m3">-->
-<!--            <button class="btn waves-effect waves-light btn_large deep-orange" type="submit">Log in-->
-<!--                            <i class="material-icons right">send</i>-->
-<!--                    </button>-->
-<!--        </div>-->
-
-<!--        <div class="red-text text-darken-2 col s12 m6 offset-m3">-->
-<!--            {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}-->
-<!--            <p class="center-align"><strong>{{ message }}</strong></p>-->
-<!--            {% endfor %} {% endif %} {% endwith %}-->
-<!--        </div>-->
-
-<!--        <div class="right-align col s10 offset-s1 m6 offset-m3">-->
-<!--            <br> Don't have an account? <a href="{{ url_for('register') }}">Sign up here</a>.-->
-<!--        </div>-->
-
-<!--    </form>-->
-
-<!--</div>-->
 <div class="container_minimal">
 
     <div class="card login_register_check_vocab">
@@ -36,31 +6,40 @@
             <span class="card-title center-align"><strong>LOG IN</strong></span>
             <form action="{{ url_for('login') }}" method="POST">
                 <div class="row">
-                     <div class="input-field col s12">
+                     <div class="input-field col s12 m10 offset-m1">
                         <input id="username" name="username" type="text" class="validate" minlength="2" required>
                         <label for="username">Username</label>
                     </div>
-            
+                    
                     <div class="center-align col s12">
-                        <button class="btn waves-effect waves-light btn_large deep-orange" type="submit">Log in
+                        <button id="index_submit" class="btn waves-effect waves-light btn_large deep-orange" type="submit">Log in
                                         <i class="material-icons right">send</i>
-                                </button>
+                        </button>
+                    </div>
+
+                    
+                                        
+                    <div>
+                        {% with messages = get_flashed_messages() %} {% if messages %} 
+                        <ul class="center-align  red-text text-darken-2">
+                            {% for message in messages %}
+                            <li><strong>{{ message }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %} {% endwith %}
                     </div>
                     
-                    <div class="red-text text-darken-2 col s12">
-                        {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
-                        <br><p class="center-align"><strong>{{ message }}</strong></p>
-                        {% endfor %} {% endif %} {% endwith %}
-                    </div>
+                    
+            
                 
                     <div class="right-align col s12">
-                        <br> Don't have an account? <a href="{{ url_for('register') }}">Sign up here</a>.
+                        Don't have an account? <a href="{{ url_for('register') }}">Sign up here</a>.
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    
+
 </div>
 
 {% endblock %}

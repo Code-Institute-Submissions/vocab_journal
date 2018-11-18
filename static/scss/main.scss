@@ -150,6 +150,15 @@
 
 
 .login_register_check_vocab {
-    width: 40%;
     
+    // media query for small screens
+    @include mQ("maxW", 701px) {
+        width: 80%;
+    }
+}
+
+
+
+#index_submit {
+    margin-bottom: 10px;
 }

@@ -10,7 +10,7 @@ html, body {
 
 .container_minimal {
   min-height: calc(100% - 350.297px);
-  padding-bottom: 2rem;
+  padding: 2rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -113,7 +113,11 @@ html, body {
   .minimal_look {
     margin-top: 300px; } }
 
-.login_register_check_vocab {
-  width: 40%; }
+@media screen and (max-width: 701px) {
+  .login_register_check_vocab {
+    width: 80%; } }
+
+#index_submit {
+  margin-bottom: 10px; }
 
 /*# sourceMappingURL=main.css.map */

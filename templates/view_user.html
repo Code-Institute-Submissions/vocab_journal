@@ -4,14 +4,14 @@
     
     <div class="card">
         <div class="card-content">
-                <span><strong>Name:</strong> &nbsp;{{ user.name.title() }}</span><br>
-                <span><strong>Date of Birth:</strong> &nbsp;{{ user.dob }}</span><br>
-                {% if user.admin %}
-                    <span><strong>Admin:</strong> &nbsp;Yes</span><br>
-                {% else %}
-                    <span><strong>Admin:</strong> &nbsp;No</span><br>
-                {% endif %}
-                    <span><strong>Vocab count:</strong> &nbsp;{{ user.vocab_count }}</span>
+            <span><strong>Name:</strong> &nbsp;{{ user.name.title() }}</span><br>
+            <span><strong>Date of Birth:</strong> &nbsp;{{ user.dob }}</span><br>
+            {% if user.admin %}
+                <span><strong>Admin:</strong> &nbsp;Yes</span><br>
+            {% else %}
+                <span><strong>Admin:</strong> &nbsp;No</span><br>
+            {% endif %}
+                <span><strong>Vocab count:</strong> &nbsp;{{ user.vocab_count }}</span>
         </div>
     </div>
     
@@ -21,10 +21,10 @@
             <div class="collapsible-body">
                 {% if user.likes|length > 0 %}
                 <span>
-                        {% for fav in user.likes %}
-                            {{ loop.index }}) <a href="{{ url_for('user_likes', vocab=fav ) }}" class="">{{ fav.title() }}</a><br>
-                        {% endfor %}
-                    </span>
+                    {% for fav in user.likes %}
+                        {{ loop.index }}) <a href="{{ url_for('user_likes', vocab=fav ) }}" class="">{{ fav.title() }}</a><br>
+                    {% endfor %}
+                </span>
                 {% else %}
                     <p>'{{ user.username }}' hasn't favourited any vocabs yet.</p>
                 {% endif %}

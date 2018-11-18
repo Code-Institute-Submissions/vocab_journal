@@ -1,5 +1,6 @@
 {% extends 'base.html'%} {% block title %}Dashboard{% endblock %} {% block content %}
 <div class="container">
+    
     <!--FILTERS SECTION-->
     <h4 class="center-align">DASHBOARD</h4>
     <div class="card">
@@ -88,8 +89,6 @@
         </ul>
         {% endif %} {% endwith %}
     </div>
-    
-    
     
     <!--VOCABS SECTION-->
     {% if vocabs.count() == 0 %}
@@ -187,4 +186,5 @@
     </ul>
     {% endif %} 
 </div>
+
 {% endblock %}
