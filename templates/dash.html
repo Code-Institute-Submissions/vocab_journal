@@ -1,78 +1,82 @@
 {% extends 'base.html'%} {% block title %}Dashboard{% endblock %} {% block content %}
 
 <!--FILTERS SECTION-->
-<h4>Filters</h4>
-<form action="{{ url_for('get_filtered', user_id=current_user._id) }}">
-    <div class="switch">
-        <label>
-          Show all vocabs
-          {% if filter_options.user_vocabs_only %}
-              <input type="checkbox" name="vocab_only" checked>
-          {% else %}
-              <input type="checkbox" name="vocab_only" >
-          {% endif %}
-          <span class="lever"></span>
-          Only show your own vocabs
-        </label>
+<h4 class="center-align">DASHBOARD</h4>
+<div class="card">
+    <div class="card-content">
+        <form action="{{ url_for('get_filtered', user_id=current_user._id) }}">
+            <div class="switch">
+                <label>
+                  Show all vocabs
+                  {% if filter_options.user_vocabs_only %}
+                      <input type="checkbox" name="vocab_only" checked>
+                  {% else %}
+                      <input type="checkbox" name="vocab_only" >
+                  {% endif %}
+                  <span class="lever"></span>
+                  Show user vocabs only
+                </label>
+            </div>
+        
+            <div class="row">
+        
+                <div class="input-field col s12 m4">
+                    <strong>Source:</strong>
+                    <select id="source" name="source">
+                    <option value="" selected disabled>pick a source</option>
+                    {% for source in sources %}
+                        {% if filter_options.source == source.name %}
+                            <option value="{{ source.name }}" selected>{{ source.name.title() }}</option>
+                        {% else %}
+                            <option value="{{ source.name }}">{{ source.name.title() }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                </div>
+        
+                <div class="input-field col s12 m4">
+                    <strong>Sort by:</strong>
+                    <select id="order_by" name="order_by">
+                    {% for key, value in  filter_options.order_by.items() %}
+                        {% if value %}
+                            <option value="{{ key }}" selected>{{ key.title() }}</option>
+                        {% else %}
+                            <option value="{{ key }}">{{ key.title() }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                </div>
+        
+                <div class="input-field col s12 m4">
+                    <strong>Order:</strong>
+                    <select id="order" name="order">
+                    {% for key, value in  filter_options.order.items() %}
+                        {% if value %}
+                            <option value="{{ key }}" selected>{{ key.title() }}</option>
+                        {% else %}
+                            <option value="{{ key }}">{{ key.title() }}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                </div>
+        
+            </div>
+        
+            <div class="filter_buttons">
+                {% if vocabs.count() == 0 %}
+                <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-yellow right-align red darken-2 pulse">clear filters
+                    <i class="material-icons right">clear</i>
+                </a> {% else %}
+                <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-yellow right-align red darken-2">clear filters
+                    <i class="material-icons right">clear</i>
+                </a> {% endif %}
+                <button class="btn btn_small waves-effect waves-yellow right-align deep-orange"  id="apply_filter" type="submit">Apply filters
+                    <i class="material-icons right">filter_list</i>
+                </button>
+            </div>
+        </form>
     </div>
-
-    <div class="row">
-
-        <div class="input-field col s12 m4">
-            <strong>Source:</strong>
-            <select id="source" name="source">
-            <option value="" selected disabled>pick a source</option>
-            {% for source in sources %}
-                {% if filter_options.source == source.name %}
-                    <option value="{{ source.name }}" selected>{{ source.name.title() }}</option>
-                {% else %}
-                    <option value="{{ source.name }}">{{ source.name.title() }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-        </div>
-
-        <div class="input-field col s12 m4">
-            <strong>Sort by:</strong>
-            <select id="order_by" name="order_by">
-            {% for key, value in  filter_options.order_by.items() %}
-                {% if value %}
-                    <option value="{{ key }}" selected>{{ key.title() }}</option>
-                {% else %}
-                    <option value="{{ key }}">{{ key.title() }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-        </div>
-
-        <div class="input-field col s12 m4">
-            <strong>Order:</strong>
-            <select id="order" name="order">
-            {% for key, value in  filter_options.order.items() %}
-                {% if value %}
-                    <option value="{{ key }}" selected>{{ key.title() }}</option>
-                {% else %}
-                    <option value="{{ key }}">{{ key.title() }}</option>
-                {% endif %}
-            {% endfor %}
-            </select>
-        </div>
-
-    </div>
-
-    <div class="filter_buttons">
-        {% if vocabs.count() == 0 %}
-        <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-yellow right-align red darken-2 pulse">clear filters
-            <i class="material-icons right">clear</i>
-        </a> {% else %}
-        <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-yellow right-align red darken-2">clear filters
-            <i class="material-icons right">clear</i>
-        </a> {% endif %}
-        <button class="btn btn_small waves-effect waves-yellow right-align deep-orange"  id="apply_filter" type="submit">Apply filters
-            <i class="material-icons right">filter_list</i>
-        </button>
-    </div>
-</form>
+</div>
 
 <!--FLASH SECTION-->
 <div>
@@ -89,14 +93,17 @@
 
 <!--VOCABS SECTION-->
 {% if vocabs.count() == 0 %}
-<p class="center-align red-text text-darken-2"><strong> Please clear or edit filters</strong> </p>
-<p class="center-align red-text text-darken-2"><strong> or </strong> </p>
-<div class="center-align" >
-    <a href="{{ url_for('check_vocab') }}" class="btn btn_large waves-effect waves-red green darken-3">Add a new vocab
-                <i class="material-icons right">add</i></a>
+<div class="card">
+    <div class="card-content">
+        <p class="center-align red-text text-darken-2"><strong> Please clear/edit filters</strong> </p>
+        <p class="center-align red-text text-darken-2"><strong> or </strong> </p>
+        <div class="center-align" >
+            <a href="{{ url_for('check_vocab') }}" class="btn btn_large waves-effect waves-red green darken-3">Add a new vocab
+                        <i class="material-icons right">add</i></a>
+        </div>
+    </div>
 </div>
 {% else %}
-<h4 class="center-align">Vocabs</h4>
 <div id="new-vocab-count">
     <a href="{{ url_for('check_vocab') }}" id="add_vocab" class="btn btn_small waves-effect waves-red green darken-3">Add a new vocab
                 <i class="material-icons right">add</i></a>

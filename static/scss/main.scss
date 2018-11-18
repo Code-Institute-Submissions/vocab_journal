@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Special+Elite');
-@import url('https://fonts.googleapis.com/css?family=Kosugi');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 @import "globals";
 @import "colors";
 @import "mixins";
@@ -25,6 +25,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    margin-top: 25px;
     p {
         margin: 0px;
     }
@@ -35,7 +36,7 @@
     padding-right: 15px; 
     font-size: smaller;
     border-radius: 7px;
-    // media query for small screens
+    // media query for large screens
     @include mQ("minW", 701px) {
         font-size: unset;
         padding-left: 25px; 
@@ -80,7 +81,7 @@
 }
 
 .card {
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 
@@ -103,13 +104,25 @@
     button {
         margin-left: 10px;
     }
+    // media query for small narrow screens eg iphonex,xs
+    @include mQ("maxW", 400px) {
+            flex-direction: column;
+            #apply_filter, #clear_filter {
+                margin: 5px 0px;
+                font-size: larger;
+            }
+    }
     // media query for small screens
-    @include mQ("maxW", 701px) {
+    @include mQ("w",401px, 701px) {
         justify-content: space-evenly;
         button {
             margin-left: 0px;
         }
     }
+    
+    
+    
+    
 }
 
 

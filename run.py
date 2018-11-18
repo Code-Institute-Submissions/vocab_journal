@@ -752,7 +752,7 @@ def access_api(item, vocab_in):
     # get definitions
     if item.upper() == "DEFS":
         def_stat, def_data = local_dictionary.get_definitions()     # get definitions
-        outt += '<span class="card-title">Definitions</span>'       # add card title
+        outt += '<span class="card-title"><strong>Definitions</strong></span>'       # add card title
         if len(def_data) == 0:
             outt += "<p>No definitions found!<p>\n"
         else:
@@ -770,7 +770,7 @@ def access_api(item, vocab_in):
     # get synonyms     
     if item.upper() == "SYNS":
         syn_stat, syn_data = local_dictionary.get_synonyms()        # get synonyms
-        outt += '<span class="card-title">Synonyms</span>'          # add card title
+        outt += '<span class="card-title"><strong>Synonyms</strong></span>'          # add card title
         if len(syn_data) == 0:
             outt += "<p>No synonyms found!<p>\n"
         else:
@@ -788,7 +788,7 @@ def access_api(item, vocab_in):
     # get example sentences           
     if item.upper() == "EXAMS":
         exa_stat, exa_data = local_dictionary.get_examples()        # get examples
-        outt += '<span class="card-title">Examples</span>'          # add card title
+        outt += '<span class="card-title"><strong>Examples</strong></span>'          # add card title
         if len(exa_data) == 0:
             outt += "<p>No examples found!<p>\n"
         else:

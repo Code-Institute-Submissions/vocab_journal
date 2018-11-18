@@ -1,8 +1,12 @@
-@import url("https://fonts.googleapis.com/css?family=Special+Elite");
-@import url("https://fonts.googleapis.com/css?family=Kosugi");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 html, body {
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  font-family: 'Roboto', sans-serif; }
+
+.btn {
+  font-family: 'Roboto Mono', monospace; }
 
 #main-content {
   min-height: calc(100% - 350.297px);
@@ -21,7 +25,8 @@ html, body {
 #new-vocab-count {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end; }
+  align-items: flex-end;
+  margin-top: 25px; }
   #new-vocab-count p {
     margin: 0px; }
 
@@ -61,7 +66,7 @@ html, body {
   justify-content: space-between; }
 
 .card {
-  border-radius: 10px; }
+  border-radius: 20px; }
 
 .collapsible {
   border-radius: 30px; }
@@ -75,7 +80,13 @@ html, body {
   justify-content: flex-end; }
   .filter_buttons button {
     margin-left: 10px; }
-  @media screen and (max-width: 701px) {
+  @media screen and (max-width: 400px) {
+    .filter_buttons {
+      flex-direction: column; }
+      .filter_buttons #apply_filter, .filter_buttons #clear_filter {
+        margin: 5px 0px;
+        font-size: larger; } }
+  @media screen and (min-width: 401px) and (max-width: 701px) {
     .filter_buttons {
       justify-content: space-evenly; }
       .filter_buttons button {

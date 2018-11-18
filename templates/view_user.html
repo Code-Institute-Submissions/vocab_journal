@@ -2,15 +2,18 @@
 
 <h3>{{ user.username }}</h3>
 
-<span><strong>Name:</strong> &nbsp;{{ user.name.title() }}</span><br>
-<span><strong>Date of Birth:</strong> &nbsp;{{ user.dob }}</span><br>
-{% if user.admin %}
-<span><strong>Admin:</strong> &nbsp;Yes</span><br>
-    {% else %}
-<span><strong>Admin:</strong> &nbsp;No</span><br>
-    {% endif %}
-<span><strong>Vocab count:</strong> &nbsp;{{ user.vocab_count }}</span><br><br>
-
+<div class="card">
+    <div class="card-content">
+            <span><strong>Name:</strong> &nbsp;{{ user.name.title() }}</span><br>
+            <span><strong>Date of Birth:</strong> &nbsp;{{ user.dob }}</span><br>
+            {% if user.admin %}
+                <span><strong>Admin:</strong> &nbsp;Yes</span><br>
+            {% else %}
+                <span><strong>Admin:</strong> &nbsp;No</span><br>
+            {% endif %}
+                <span><strong>Vocab count:</strong> &nbsp;{{ user.vocab_count }}</span>
+    </div>
+</div>
 
 
 <ul class="collapsible" data-collapsible="Expandable">

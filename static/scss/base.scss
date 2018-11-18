@@ -2,6 +2,11 @@ html, body {
     height: 100%;
     width: 100%;
     // background-color: map-get($color, mustard);
+    font-family: 'Roboto', sans-serif;
+}
+
+.btn {
+    font-family: 'Roboto Mono', monospace;
 }
 
 #main-content {
