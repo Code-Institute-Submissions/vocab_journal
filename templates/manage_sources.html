@@ -1,74 +1,71 @@
 {% extends 'base.html'%} {% block title %}Add Source{% endblock %} {% block content %}
-<h4 class="center-align">MANAGE SOURCES</h4>
-<p>Ordinary users of the website may only use the existing list of sources provided to them. However, admins have the power to expand the existing list by adding more sources. Admins can also delete a particular source as long as it is NOT being used by
-    any of the vocabs within the database.</p>
-
-<div class="card">
-    <div class="card-content">
-        <span class="card-title"><strong>Add New Source</strong></span>
-        <form action="{{ url_for('insert_source') }}" method="POST" class="col s10 offset-s1 m8 offset-m2">
-            <div class="row">
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">add_box</i>
-                    <input id="new_source" name="new_source" type="text" minlength="2" class="validate" required>
-                    <label for="vocab">New Source</label>
-                </div>
-                <div class="input-field right-align col s12">
-                    <button class="waves-effect waves-light btn btn_small deep-orange" type="submit">Add
-                                <i class="material-icons right">send</i>
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<br>
-
-<div>
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <ul class="center-align">
-        {% for message in messages %}
-        <p class="red-text text-darken-2"><strong>{{ message }}</strong></p>
-        {% endfor %}
-        {% for vocab in vocabs %}
-            {% if loop.index == loop.length %}
-                
-                <a href="{{ url_for('view_vocab', vocab_id=vocab._id ) }}" class="">{{vocab.vocab.title()}}</a>
-            {% else %}
-                <a href="{{ url_for('view_vocab', vocab_id=vocab._id ) }}" class="">{{vocab.vocab.title()}},&nbsp;&nbsp;</a>
-                
-            {% endif %}
-        {% endfor %}
-    </ul>
-    {% endif %} {% endwith %}
-</div>
-
-
-<h5>Current Sources</h5>
-<p>
-    Note: Only admins have the ability to add a new source!<br>
-    <span class="red-text">Note: Sources that are currently in use CANNOT be deleted! </span> 
-</p>
-<div class="row">
-    <div class="col s12 m12">
-        {% for source in sources %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">{{ source.name.title() }}
-                    <div class="right-align">
-                        <a href="{{ url_for('delete_source', source_id=source._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a>
+<div class="container">
+    
+    <h4 class="center-align">MANAGE SOURCES</h4>
+    <p>Ordinary users of the website may only use the existing list of sources provided to them. However, admins have the power to expand the existing list by adding more sources. Admins can also delete a particular source as long as it is NOT being used by
+        any of the vocabs within the database.</p>
+    <br>
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title"><strong>Add New Source</strong></span>
+            <form action="{{ url_for('insert_source') }}" method="POST" class="col s10 offset-s1 m8 offset-m2">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">add_box</i>
+                        <input id="new_source" name="new_source" type="text" minlength="2" class="validate" required>
+                        <label for="vocab">New Source</label>
                     </div>
-                </span>
-            </div>
+                    <div class="input-field right-align col s12">
+                        <button class="waves-effect waves-light btn btn_small deep-orange" type="submit">Add
+                                    <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-        {% endfor %}
+    </div>
+    
+    <br>
+    
+    <div>
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <ul class="center-align">
+            {% for message in messages %}
+            <p class="red-text text-darken-2"><strong>{{ message }}</strong></p>
+            {% endfor %}
+            {% for vocab in vocabs %}
+                {% if loop.index == loop.length %}
+                    
+                    <a href="{{ url_for('view_vocab', vocab_id=vocab._id ) }}" class="">{{vocab.vocab.title()}}</a>
+                {% else %}
+                    <a href="{{ url_for('view_vocab', vocab_id=vocab._id ) }}" class="">{{vocab.vocab.title()}},&nbsp;&nbsp;</a>
+                    
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+    </div>
+    
+    
+    <h5>Current Sources</h5>
+    <p>
+        Note: Only admins have the ability to add a new source!<br>
+        <span class="red-text">Note: Sources that are currently in use CANNOT be deleted! </span> 
+    </p>
+    <div class="row">
+        <div class="col s12 m12">
+            {% for source in sources %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ source.name.title() }}
+                        <div class="right-align">
+                            <a href="{{ url_for('delete_source', source_id=source._id) }}" class="waves-effect waves-light btn btn_small deep-orange">delete</a>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
-
-
-
-
-
-
 {% endblock %}

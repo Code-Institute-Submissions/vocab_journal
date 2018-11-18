@@ -8,7 +8,15 @@ html, body {
 .btn {
   font-family: 'Roboto Mono', monospace; }
 
-#main-content {
+.container_minimal {
+  min-height: calc(100% - 350.297px);
+  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.container {
   min-height: calc(100% - 350.297px);
   padding-bottom: 2rem; }
 
@@ -104,5 +112,8 @@ html, body {
 @media screen and (min-width: 2000px) {
   .minimal_look {
     margin-top: 300px; } }
+
+.login_register_check_vocab {
+  width: 40%; }
 
 /*# sourceMappingURL=main.css.map */

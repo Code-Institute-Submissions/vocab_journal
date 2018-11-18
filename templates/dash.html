@@ -1,188 +1,190 @@
 {% extends 'base.html'%} {% block title %}Dashboard{% endblock %} {% block content %}
-
-<!--FILTERS SECTION-->
-<h4 class="center-align">DASHBOARD</h4>
-<div class="card">
-    <div class="card-content">
-        <form action="{{ url_for('get_filtered', user_id=current_user._id) }}">
-            <div class="switch">
-                <label>
-                  Show all vocabs
-                  {% if filter_options.user_vocabs_only %}
-                      <input type="checkbox" name="vocab_only" checked>
-                  {% else %}
-                      <input type="checkbox" name="vocab_only" >
-                  {% endif %}
-                  <span class="lever"></span>
-                  Show user vocabs only
-                </label>
-            </div>
-        
-            <div class="row">
-        
-                <div class="input-field col s12 m4">
-                    <strong>Source:</strong>
-                    <select id="source" name="source">
-                    <option value="" selected disabled>pick a source</option>
-                    {% for source in sources %}
-                        {% if filter_options.source == source.name %}
-                            <option value="{{ source.name }}" selected>{{ source.name.title() }}</option>
-                        {% else %}
-                            <option value="{{ source.name }}">{{ source.name.title() }}</option>
-                        {% endif %}
-                    {% endfor %}
-                </select>
+<div class="container">
+    <!--FILTERS SECTION-->
+    <h4 class="center-align">DASHBOARD</h4>
+    <div class="card">
+        <div class="card-content">
+            <form action="{{ url_for('get_filtered', user_id=current_user._id) }}">
+                <div class="switch">
+                    <label>
+                      Show all vocabs
+                      {% if filter_options.user_vocabs_only %}
+                          <input type="checkbox" name="vocab_only" checked>
+                      {% else %}
+                          <input type="checkbox" name="vocab_only" >
+                      {% endif %}
+                      <span class="lever"></span>
+                      Show user vocabs only
+                    </label>
                 </div>
-        
-                <div class="input-field col s12 m4">
-                    <strong>Sort by:</strong>
-                    <select id="order_by" name="order_by">
-                    {% for key, value in  filter_options.order_by.items() %}
-                        {% if value %}
-                            <option value="{{ key }}" selected>{{ key.title() }}</option>
-                        {% else %}
-                            <option value="{{ key }}">{{ key.title() }}</option>
-                        {% endif %}
-                    {% endfor %}
-                </select>
-                </div>
-        
-                <div class="input-field col s12 m4">
-                    <strong>Order:</strong>
-                    <select id="order" name="order">
-                    {% for key, value in  filter_options.order.items() %}
-                        {% if value %}
-                            <option value="{{ key }}" selected>{{ key.title() }}</option>
-                        {% else %}
-                            <option value="{{ key }}">{{ key.title() }}</option>
-                        {% endif %}
-                    {% endfor %}
+            
+                <div class="row">
+            
+                    <div class="input-field col s12 m4">
+                        <strong>Source:</strong>
+                        <select id="source" name="source">
+                        <option value="" selected disabled>pick a source</option>
+                        {% for source in sources %}
+                            {% if filter_options.source == source.name %}
+                                <option value="{{ source.name }}" selected>{{ source.name.title() }}</option>
+                            {% else %}
+                                <option value="{{ source.name }}">{{ source.name.title() }}</option>
+                            {% endif %}
+                        {% endfor %}
                     </select>
+                    </div>
+            
+                    <div class="input-field col s12 m4">
+                        <strong>Sort by:</strong>
+                        <select id="order_by" name="order_by">
+                        {% for key, value in  filter_options.order_by.items() %}
+                            {% if value %}
+                                <option value="{{ key }}" selected>{{ key.title() }}</option>
+                            {% else %}
+                                <option value="{{ key }}">{{ key.title() }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    </div>
+            
+                    <div class="input-field col s12 m4">
+                        <strong>Order:</strong>
+                        <select id="order" name="order">
+                        {% for key, value in  filter_options.order.items() %}
+                            {% if value %}
+                                <option value="{{ key }}" selected>{{ key.title() }}</option>
+                            {% else %}
+                                <option value="{{ key }}">{{ key.title() }}</option>
+                            {% endif %}
+                        {% endfor %}
+                        </select>
+                    </div>
+            
                 </div>
-        
-            </div>
-        
-            <div class="filter_buttons">
-                {% if vocabs.count() == 0 %}
-                <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-yellow right-align red darken-2 pulse">clear filters
-                    <i class="material-icons right">clear</i>
-                </a> {% else %}
-                <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-yellow right-align red darken-2">clear filters
-                    <i class="material-icons right">clear</i>
-                </a> {% endif %}
-                <button class="btn btn_small waves-effect waves-yellow right-align deep-orange"  id="apply_filter" type="submit">Apply filters
-                    <i class="material-icons right">filter_list</i>
-                </button>
-            </div>
-        </form>
+            
+                <div class="filter_buttons">
+                    {% if vocabs.count() == 0 %}
+                    <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-yellow right-align red darken-2 pulse">clear filters
+                        <i class="material-icons right">clear</i>
+                    </a> {% else %}
+                    <a href="{{  url_for('dash')   }}" id="clear_filter" class="btn btn_small waves-effect waves-yellow right-align red darken-2">clear filters
+                        <i class="material-icons right">clear</i>
+                    </a> {% endif %}
+                    <button class="btn btn_small waves-effect waves-yellow right-align deep-orange"  id="apply_filter" type="submit">Apply filters
+                        <i class="material-icons right">filter_list</i>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<!--FLASH SECTION-->
-<div>
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <ul class="center-align">
-        {% for message in messages %}
-        <p class="red-text text-darken-2"><strong>{{ message }}</strong></p>
+    
+    <!--FLASH SECTION-->
+    <div>
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <ul class="center-align">
+            {% for message in messages %}
+            <p class="red-text text-darken-2"><strong>{{ message }}</strong></p>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+    </div>
+    
+    
+    
+    <!--VOCABS SECTION-->
+    {% if vocabs.count() == 0 %}
+    <div class="card">
+        <div class="card-content">
+            <p class="center-align red-text text-darken-2"><strong> Please clear/edit filters</strong> </p>
+            <p class="center-align red-text text-darken-2"><strong> or </strong> </p>
+            <div class="center-align" >
+                <a href="{{ url_for('check_vocab') }}" class="btn btn_large waves-effect waves-red green darken-3">Add a new vocab
+                            <i class="material-icons right">add</i></a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div id="new-vocab-count">
+        <a href="{{ url_for('check_vocab') }}" id="add_vocab" class="btn btn_small waves-effect waves-red green darken-3">Add a new vocab
+                    <i class="material-icons right">add</i></a>
+        <p><strong>Showing '{{ vocabs.count() }}' vocabs</strong></p>
+    </div>
+    
+    <ul class="collapsible" data-collapsible="Expandable">
+        {% for vocab in vocabs %}
+        <li>
+            {% if loop.index == 1 %}
+            <div class="collapsible-header active">
+                <div class="vocab"><strong>"{{ vocab.vocab.title() }}"</strong></div>
+                {% if current_user.username == vocab.user %}
+                <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">you</a></div>
+                {% else %}
+                <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">{{ vocab.user }}  </a></div>
+                {% endif %} {% if vocab.vocab in current_user.likes %}
+                <div><i class="tiny material-icons red-text text-darken-4">favorite</i>{{ vocab.likes }}</div>
+                {% else %}
+                <div><i class="tiny material-icons">favorite_border</i>{{ vocab.likes }}</div>
+                {% endif %}
+                <div><i class="tiny material-icons">youtube_searched_for</i>{{ vocab.lookup_count }}</div>
+            </div>
+            <div class="collapsible-body">
+                <div class="left-align">
+                    <span>Views: &nbsp;{{ vocab.views }}</span><br>
+                    <span>Difficulty: &nbsp;{{ vocab.difficulty }}/100</span><br><br>
+                </div>
+                <span>User definition:</span><br>
+                <span>{{ vocab.user_definition }}</span><br><br>
+                <div class="right-align">
+                    <span>Publish date: &nbsp;{{ vocab.pub_date }}</span><br>
+                    <span>Last modified date: &nbsp;{{ vocab.mod_date }}</span><br>
+                    <span>Last lookup date: &nbsp;{{ vocab.last_lookup_date }}</span><br><br> 
+                </div>
+                <div class="vocab_buttons">
+                    {% if current_user.username == vocab.user or current_user.admin %}
+                    <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small red darken-3">delete</a> 
+                    <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small deep-orange">Edit</a>
+                    {% endif %}
+                    <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small deep-orange">view</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="collapsible-header">
+                <div class="vocab"><strong>"{{ vocab.vocab.title() }}"</strong></div>
+                {% if current_user.username == vocab.user %}
+                <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">you</a></div>
+                {% else %}
+                <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">{{ vocab.user }}  </a></div>
+                {% endif %} {% if vocab.vocab in current_user.likes %}
+                <div><i class="tiny material-icons red-text text-darken-4">favorite</i>{{ vocab.likes }}</div>
+                {% else %}
+                <div><i class="tiny material-icons">favorite_border</i>{{ vocab.likes }}</div>
+                {% endif %}
+                <div><i class="tiny material-icons">youtube_searched_for</i>{{ vocab.lookup_count }}</div>
+            </div>
+            <div class="collapsible-body">
+                <div class="left-align">
+                    <span>Views: &nbsp;{{ vocab.views }}</span><br>
+                    <span>Difficulty: &nbsp;{{ vocab.difficulty }}/100</span><br><br>
+                </div>
+                <span>User definition:</span><br>
+                <span>{{ vocab.user_definition }}</span><br><br>
+                <div class="right-align">
+                    <span>Publish date: &nbsp;{{ vocab.pub_date }}</span><br>
+                    <span>Last modified date: &nbsp;{{ vocab.mod_date }}</span><br>
+                    <span>Last lookup date: &nbsp;{{ vocab.last_lookup_date }}</span><br><br> 
+                </div>
+                <div class="vocab_buttons">
+                    {% if current_user.username == vocab.user or current_user.admin %}
+                    <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small red darken-3">delete</a> 
+                    <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
+                    {% endif %}
+                    <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">view</a>
+                </div>
+            </div>
+            {% endif %}
+        </li>
         {% endfor %}
     </ul>
-    {% endif %} {% endwith %}
+    {% endif %} 
 </div>
-
-
-
-<!--VOCABS SECTION-->
-{% if vocabs.count() == 0 %}
-<div class="card">
-    <div class="card-content">
-        <p class="center-align red-text text-darken-2"><strong> Please clear/edit filters</strong> </p>
-        <p class="center-align red-text text-darken-2"><strong> or </strong> </p>
-        <div class="center-align" >
-            <a href="{{ url_for('check_vocab') }}" class="btn btn_large waves-effect waves-red green darken-3">Add a new vocab
-                        <i class="material-icons right">add</i></a>
-        </div>
-    </div>
-</div>
-{% else %}
-<div id="new-vocab-count">
-    <a href="{{ url_for('check_vocab') }}" id="add_vocab" class="btn btn_small waves-effect waves-red green darken-3">Add a new vocab
-                <i class="material-icons right">add</i></a>
-    <p><strong>Showing '{{ vocabs.count() }}' vocabs</strong></p>
-</div>
-
-<ul class="collapsible" data-collapsible="Expandable">
-    {% for vocab in vocabs %}
-    <li>
-        {% if loop.index == 1 %}
-        <div class="collapsible-header active">
-            <div class="vocab"><strong>"{{ vocab.vocab.title() }}"</strong></div>
-            {% if current_user.username == vocab.user %}
-            <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">you</a></div>
-            {% else %}
-            <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">{{ vocab.user }}  </a></div>
-            {% endif %} {% if vocab.vocab in current_user.likes %}
-            <div><i class="tiny material-icons red-text text-darken-4">favorite</i>{{ vocab.likes }}</div>
-            {% else %}
-            <div><i class="tiny material-icons">favorite_border</i>{{ vocab.likes }}</div>
-            {% endif %}
-            <div><i class="tiny material-icons">youtube_searched_for</i>{{ vocab.lookup_count }}</div>
-        </div>
-        <div class="collapsible-body">
-            <div class="left-align">
-                <span>Views: &nbsp;{{ vocab.views }}</span><br>
-                <span>Difficulty: &nbsp;{{ vocab.difficulty }}/100</span><br><br>
-            </div>
-            <span>User definition:</span><br>
-            <span>{{ vocab.user_definition }}</span><br><br>
-            <div class="right-align">
-                <span>Publish date: &nbsp;{{ vocab.pub_date }}</span><br>
-                <span>Last modified date: &nbsp;{{ vocab.mod_date }}</span><br>
-                <span>Last lookup date: &nbsp;{{ vocab.last_lookup_date }}</span><br><br> 
-            </div>
-            <div class="vocab_buttons">
-                {% if current_user.username == vocab.user or current_user.admin %}
-                <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small red darken-3">delete</a> 
-                <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small deep-orange">Edit</a>
-                {% endif %}
-                <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-yellow btn btn_small deep-orange">view</a>
-            </div>
-        </div>
-        {% else %}
-        <div class="collapsible-header">
-            <div class="vocab"><strong>"{{ vocab.vocab.title() }}"</strong></div>
-            {% if current_user.username == vocab.user %}
-            <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">you</a></div>
-            {% else %}
-            <div class="user_id">By <a href="{{ url_for('view_user', username=vocab.user) }}">{{ vocab.user }}  </a></div>
-            {% endif %} {% if vocab.vocab in current_user.likes %}
-            <div><i class="tiny material-icons red-text text-darken-4">favorite</i>{{ vocab.likes }}</div>
-            {% else %}
-            <div><i class="tiny material-icons">favorite_border</i>{{ vocab.likes }}</div>
-            {% endif %}
-            <div><i class="tiny material-icons">youtube_searched_for</i>{{ vocab.lookup_count }}</div>
-        </div>
-        <div class="collapsible-body">
-            <div class="left-align">
-                <span>Views: &nbsp;{{ vocab.views }}</span><br>
-                <span>Difficulty: &nbsp;{{ vocab.difficulty }}/100</span><br><br>
-            </div>
-            <span>User definition:</span><br>
-            <span>{{ vocab.user_definition }}</span><br><br>
-            <div class="right-align">
-                <span>Publish date: &nbsp;{{ vocab.pub_date }}</span><br>
-                <span>Last modified date: &nbsp;{{ vocab.mod_date }}</span><br>
-                <span>Last lookup date: &nbsp;{{ vocab.last_lookup_date }}</span><br><br> 
-            </div>
-            <div class="vocab_buttons">
-                {% if current_user.username == vocab.user or current_user.admin %}
-                <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small red darken-3">delete</a> 
-                <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
-                {% endif %}
-                <a href="{{ url_for('view_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">view</a>
-            </div>
-        </div>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
-{% endif %} {% endblock %}
+{% endblock %}

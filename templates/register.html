@@ -1,50 +1,51 @@
 {% extends 'base.html'%} {% block title %}Register{% endblock %} {% block content %}
+<div class="container_minimal">
 
-<h2 class="center-align">Registration</h2>
+    <div class="card login_register_check_vocab">
+        <div class="card-content">
+            <span class="card-title center-align"><strong>REGISTER</strong></span>
+            <form action="{{ url_for('register') }}" method="POST">
+                <div class="row">
+                    <div class="input-field col col s10 offset-s1">
+                        <input id="first_name" name="first_name" type="text" minlength="2" maxlength="10" class="validate" required>
+                        <label for="first_name">First Name</label>
+                    </div>
+                    <div class="input-field col s10 offset-s1">
+                        <input id="last_name" name="last_name" type="text" minlength="2" maxlength="10" class="validate" required>
+                        <label for="last_name">Last Name</label>
+                    </div>
 
+                    <div class="input-field col s10 offset-s1">
+                        <input id="username" name="username" type="text" minlength="3" maxlength="10" class="validate" required>
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="input-field col s10 offset-s1">
+                        <input id="dob" name="dob" type="text" class="datepicker">
+                        <label for="dob">Date of birth</label>
+                    </div>
 
-<div class="row">
-    <form action="{{ url_for('register') }}" method="POST">
-        <div class="row">
-            <div class="input-field col col s10 offset-s1 m4 offset-m4">
-                <input id="first_name" name="first_name" type="text" minlength="2" class="validate" required>
-                <label for="first_name">First Name</label>
-            </div>
-            <div class="input-field col s10 offset-s1 m4 offset-m4">
-                <input id="last_name" name="last_name" type="text" minlength="2" class="validate" required>
-                <label for="last_name">Last Name</label>
-            </div>
+                </div>
+                <div>
+                    {% with messages = get_flashed_messages() %} {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                        <li> {{ message }} Click
+                            <a href="{{ url_for('index') }}"> here</a> to login.</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %} {% endwith %}
 
-            <div class="input-field col s10 offset-s1 m4 offset-m4">
-                <input id="username" name="username" type="text" minlength="3" class="validate" required>
-                <label for="username">Username</label>
-            </div>
-            <div class="input-field col s10 offset-s1 m4 offset-m4">
-                <input id="dob" name="dob" type="text" class="datepicker">
-                <label for="dob">Date of birth</label>
-            </div>
-
+                </div>
+                <div class="center-align col s12 m4 offset-m4">
+                    <button class="btn waves-effect waves-light btn_large deep-orange" type="submit">Register
+                            <i class="material-icons right">send</i>
+                        </button>
+                </div>
+            </form>
         </div>
-        <div>
-            {% with messages = get_flashed_messages() %} {% if messages %}
-            <ul>
-                {% for message in messages %}
-                <li> {{ message }} Click
-                    <a href="{{ url_for('index') }}"> here</a> to login.</li>
-                {% endfor %}
-            </ul>
-            {% endif %} {% endwith %}
-
-        </div>
-        <div class="center-align col s12 m4 offset-m4">
-            <button class="btn waves-effect waves-light btn_large deep-orange" type="submit">Register
-                    <i class="material-icons right">send</i>
-                </button>
-        </div>
-    </form>
+    </div>
 </div>
 
-
-{% block additional_scripts %}
+{% endblock %} {% block additional_scripts %}
 <script src="{{ url_for('static', filename='js/datepicker.js') }}"></script>
-{% endblock %} {% endblock %}
+{% endblock %}

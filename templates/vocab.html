@@ -1,151 +1,153 @@
 {% extends 'base.html'%} {% block title %}{{ vocab.vocab }}{% endblock %} {% block content %}
-<h2>{{ vocab.vocab.title() }}</h2>
-
-<!--VOCAB BRIEF-->
-<div class="vocab-stats">
-    <div class="vocab-stats-user">
-        {% if current_user.username == vocab.user %}
-            <strong>by<a href="{{ url_for('view_user', username=vocab.user) }}"> You</a></strong><br>
+<div class="container">
+    <h2>{{ vocab.vocab.title() }}</h2>
+    
+    <!--VOCAB BRIEF-->
+    <div class="vocab-stats">
+        <div class="vocab-stats-user">
+            {% if current_user.username == vocab.user %}
+                <strong>by<a href="{{ url_for('view_user', username=vocab.user) }}"> You</a></strong><br>
+            {% else %}
+                <strong>by<a href="{{ url_for('view_user', username=vocab.user) }}"> {{ vocab.user }}</a></strong><br>
+            {% endif %}
+        </div>
+        <div class="right-align">
+            <strong>Views: &nbsp;{{ vocab.views }}</strong><br>
+            <strong>Likes: &nbsp;{{ vocab.likes }}</strong><br>
+            <strong>Lookup count: &nbsp;{{ vocab.lookup_count }}</strong><br>
+        </div>
+    </div>
+    <div class="vocab-like  center-align">
+        {% if vocab.vocab in current_user.likes %}
+            <a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text tooltipped" onclick="Materialize.toast('You have unliked {{ vocab.vocab }}', 10000, 'rounded')" data-position="top" data-delay="50" data-tooltip="Unlike '{{vocab.vocab}}'"><i class="large material-icons red-text text-darken-4">favorite</i></a>
         {% else %}
-            <strong>by<a href="{{ url_for('view_user', username=vocab.user) }}"> {{ vocab.user }}</a></strong><br>
+            <a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text tooltipped" onclick="Materialize.toast('You have liked {{ vocab.vocab }}', 10000, 'rounded')" data-position="top" data-delay="50" data-tooltip="Like '{{vocab.vocab}}'"><i class="large material-icons">favorite_border</i></a>
         {% endif %}
     </div>
-    <div class="right-align">
-        <strong>Views: &nbsp;{{ vocab.views }}</strong><br>
-        <strong>Likes: &nbsp;{{ vocab.likes }}</strong><br>
-        <strong>Lookup count: &nbsp;{{ vocab.lookup_count }}</strong><br>
+    
+    
+    <!--FLASH MSG-->
+    <div class="center-align">
+        {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+        <p class="red-text text-darken-2"><strong>{{ message }}</strong></p>
+        {% endfor %} {% endif %} {% endwith %}
     </div>
-</div>
-<div class="vocab-like  center-align">
-    {% if vocab.vocab in current_user.likes %}
-        <a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text tooltipped" onclick="Materialize.toast('You have unliked {{ vocab.vocab }}', 10000, 'rounded')" data-position="top" data-delay="50" data-tooltip="Unlike '{{vocab.vocab}}'"><i class="large material-icons red-text text-darken-4">favorite</i></a>
-    {% else %}
-        <a href="{{ url_for('toggle_like', vocab=vocab.vocab) }}" class="black-text tooltipped" onclick="Materialize.toast('You have liked {{ vocab.vocab }}', 10000, 'rounded')" data-position="top" data-delay="50" data-tooltip="Like '{{vocab.vocab}}'"><i class="large material-icons">favorite_border</i></a>
-    {% endif %}
-</div>
-
-
-<!--FLASH MSG-->
-<div class="center-align">
-    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
-    <p class="red-text text-darken-2"><strong>{{ message }}</strong></p>
-    {% endfor %} {% endif %} {% endwith %}
-</div>
-
-<!--API SECITON-->
-<div class="center-align check_dictionary" >
-    <a class='dropdown-button btn btn_large waves-effect waves-red deep-orange darken-3 check_dictionary_btn' href='#' data-activates='dropdown1'>check dictionary<i class="material-icons right">search</i></a>
-    <ul id='dropdown1' class='dropdown-content'>
-        <li><a href="#" id="get_defs" class="waves-effect waves-red center-align">Get Definitions</a></li>
-        <li class="divider"></li>
-        <li><a href="#" id="get_syns" class="waves-effect waves-red center-align">Get Synonyms</a></li>
-        <li class="divider"></li>
-        <li><a href="#" id="get_exams" class="waves-effect waves-red center-align">Get Examples</a></li>
-    </ul>
-</div>
-<div class="card" id="api_container_defs">
-    <div class="card-content" id="api_container_defs_content">
-        <div class="progress">
-            <div class="indeterminate"></div>
-        </div>
+    
+    <!--API SECITON-->
+    <div class="center-align check_dictionary" >
+        <a class='dropdown-button btn btn_large waves-effect waves-red deep-orange darken-3 check_dictionary_btn' href='#' data-activates='dropdown1'>check dictionary<i class="material-icons right">search</i></a>
+        <ul id='dropdown1' class='dropdown-content'>
+            <li><a href="#" id="get_defs" class="waves-effect waves-red center-align">Get Definitions</a></li>
+            <li class="divider"></li>
+            <li><a href="#" id="get_syns" class="waves-effect waves-red center-align">Get Synonyms</a></li>
+            <li class="divider"></li>
+            <li><a href="#" id="get_exams" class="waves-effect waves-red center-align">Get Examples</a></li>
+        </ul>
     </div>
-</div>
-
-<div class="card" id="api_container_syns">
-    <div class="card-content" id="api_container_syns_content">
-        <div class="progress">
-            <div class="indeterminate"></div>
-        </div>
-    </div>
-</div>
-
-<div class="card" id="api_container_exams">
-    <div class="card-content" id="api_container_exams_content">
-        <div class="progress">
-            <div class="indeterminate"></div>
-        </div>
-    </div>
-</div>
-
-
-<!--MAIN STATS AND USER INPUT-->
-<div class="row">
-    <div class="col s12 m12">
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title"><strong>User Definition</strong></span>
-                <p>{{ vocab.user_definition }}</p>
+    <div class="card" id="api_container_defs">
+        <div class="card-content" id="api_container_defs_content">
+            <div class="progress">
+                <div class="indeterminate"></div>
             </div>
         </div>
-        {% if vocab.difficulty != "" %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title"><strong>Difficulty</strong></span>
-                <p>{{ vocab.difficulty }} / 100</p>
+    </div>
+    
+    <div class="card" id="api_container_syns">
+        <div class="card-content" id="api_container_syns_content">
+            <div class="progress">
+                <div class="indeterminate"></div>
             </div>
         </div>
+    </div>
+    
+    <div class="card" id="api_container_exams">
+        <div class="card-content" id="api_container_exams_content">
+            <div class="progress">
+                <div class="indeterminate"></div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!--MAIN STATS AND USER INPUT-->
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><strong>User Definition</strong></span>
+                    <p>{{ vocab.user_definition }}</p>
+                </div>
+            </div>
+            {% if vocab.difficulty != "" %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><strong>Difficulty</strong></span>
+                    <p>{{ vocab.difficulty }} / 100</p>
+                </div>
+            </div>
+            {% endif %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><strong>Source</strong></span>
+                    <p>{{ vocab.source.title() }}</p>
+    
+                </div>
+            </div>
+    
+            {% if vocab.context != "" %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><strong>Context</strong></span>
+                    <p>{{ vocab.context }}</p>
+                </div>
+            </div>
+            {% endif %} {% if vocab.ref != "" %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><strong>Reference</strong></span>
+                    <p>{{ vocab.ref }}</p>
+                </div>
+            </div>
+            {% endif %} {% if vocab.misc != "" %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><strong>Miscellaneous</strong></span>
+                    <p>{{ vocab.misc }}</p>
+                </div>
+            </div>
+            {% endif %} {% if vocab.tags != "" %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><strong>Tags</strong></span>
+                    <p>{{ vocab.tags }}</p>
+                </div>
+            </div>
+            {% endif %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><strong>Vocab stats</strong></span>
+                    <p>Added by<a href="{{ url_for('view_user', username=vocab.user) }}"> <strong> {{ vocab.user }} </strong> </a><br></p>
+                    <p>Likes: &nbsp;{{ vocab.likes }}</p>
+                    <p>Lookup count: &nbsp;{{ vocab.lookup_count }}</p>
+                    <p>Views: &nbsp;{{ vocab.views }}</p>
+                    <p>Published on: &nbsp;{{ vocab.pub_date }}</p>
+                    <p>Last lookup date: &nbsp;{{ vocab.last_lookup_date }}</p>
+                    <p>Last modified on: &nbsp;{{ vocab.mod_date }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="vocab_buttons">
+        {% if current_user.username == vocab.user or current_user.admin %}
+        <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small red darken-3">delete</a> 
+        <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
         {% endif %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title"><strong>Source</strong></span>
-                <p>{{ vocab.source.title() }}</p>
-
-            </div>
-        </div>
-
-        {% if vocab.context != "" %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title"><strong>Context</strong></span>
-                <p>{{ vocab.context }}</p>
-            </div>
-        </div>
-        {% endif %} {% if vocab.ref != "" %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title"><strong>Reference</strong></span>
-                <p>{{ vocab.ref }}</p>
-            </div>
-        </div>
-        {% endif %} {% if vocab.misc != "" %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title"><strong>Miscellaneous</strong></span>
-                <p>{{ vocab.misc }}</p>
-            </div>
-        </div>
-        {% endif %} {% if vocab.tags != "" %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title"><strong>Tags</strong></span>
-                <p>{{ vocab.tags }}</p>
-            </div>
-        </div>
-        {% endif %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title"><strong>Vocab stats</strong></span>
-                <p>Added by<a href="{{ url_for('view_user', username=vocab.user) }}"> <strong> {{ vocab.user }} </strong> </a><br></p>
-                <p>Likes: &nbsp;{{ vocab.likes }}</p>
-                <p>Lookup count: &nbsp;{{ vocab.lookup_count }}</p>
-                <p>Views: &nbsp;{{ vocab.views }}</p>
-                <p>Published on: &nbsp;{{ vocab.pub_date }}</p>
-                <p>Last lookup date: &nbsp;{{ vocab.last_lookup_date }}</p>
-                <p>Last modified on: &nbsp;{{ vocab.mod_date }}</p>
-            </div>
-        </div>
+        <a href="{{ url_for('dash') }}" class="waves-effect waves-light btn btn_small deep-orange">Back to dash</a>
     </div>
 </div>
 
-<div class="vocab_buttons">
-    {% if current_user.username == vocab.user or current_user.admin %}
-    <a href="{{ url_for('delete_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small red darken-3">delete</a> 
-    <a href="{{ url_for('edit_vocab', vocab_id=vocab._id) }}" class="waves-effect waves-light btn btn_small deep-orange">Edit</a>
-    {% endif %}
-    <a href="{{ url_for('dash') }}" class="waves-effect waves-light btn btn_small deep-orange">Back to dash</a>
-</div>
-
-{% block additional_scripts %}
+{% endblock %} {% block additional_scripts %}
 <script src="{{ url_for('static', filename='js/view_vocab.js') }}"></script>
 <script>
     /* global $ */
@@ -167,4 +169,4 @@
 
     });
 </script>
-{% endblock %} {% endblock %}
+{% endblock %}

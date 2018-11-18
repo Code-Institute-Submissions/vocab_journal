@@ -9,7 +9,16 @@ html, body {
     font-family: 'Roboto Mono', monospace;
 }
 
-#main-content {
+.container_minimal {
+    min-height: calc(100% - 350.297px);
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
     min-height: calc(100% - 350.297px);
     padding-bottom: 2rem;
 }

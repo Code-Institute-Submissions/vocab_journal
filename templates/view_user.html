@@ -1,22 +1,21 @@
 {% extends 'base.html'%} {% block title %} {{ user.username }} {% endblock %} {% block content %}
-
-<h3>{{ user.username }}</h3>
-
-<div class="card">
-    <div class="card-content">
-            <span><strong>Name:</strong> &nbsp;{{ user.name.title() }}</span><br>
-            <span><strong>Date of Birth:</strong> &nbsp;{{ user.dob }}</span><br>
-            {% if user.admin %}
-                <span><strong>Admin:</strong> &nbsp;Yes</span><br>
-            {% else %}
-                <span><strong>Admin:</strong> &nbsp;No</span><br>
-            {% endif %}
-                <span><strong>Vocab count:</strong> &nbsp;{{ user.vocab_count }}</span>
+<div class="container">
+    <h2>{{ user.username }}</h2>
+    
+    <div class="card">
+        <div class="card-content">
+                <span><strong>Name:</strong> &nbsp;{{ user.name.title() }}</span><br>
+                <span><strong>Date of Birth:</strong> &nbsp;{{ user.dob }}</span><br>
+                {% if user.admin %}
+                    <span><strong>Admin:</strong> &nbsp;Yes</span><br>
+                {% else %}
+                    <span><strong>Admin:</strong> &nbsp;No</span><br>
+                {% endif %}
+                    <span><strong>Vocab count:</strong> &nbsp;{{ user.vocab_count }}</span>
+        </div>
     </div>
-</div>
-
-
-<ul class="collapsible" data-collapsible="Expandable">
+    
+    <ul class="collapsible" data-collapsible="Expandable">
         <li>
             <div class="collapsible-header active"><strong>Vocabs liked by '{{ user.username }}'</strong>&nbsp;<i class="large material-icons red-text text-darken-4 collapsible-header-icons">favorite</i></div>
             <div class="collapsible-body">
@@ -43,10 +42,12 @@
                 {% endif %}
             </div>
         </li>
-</ul>
-<br>
-
-<div class="right-align">
-    <a href="{{ url_for('dash') }}" class="waves-effect waves-light btn btn_small deep-orange">Back to dash</a>
+    </ul>
+    <br>
+    
+    <div class="right-align">
+        <a href="{{ url_for('dash') }}" class="waves-effect waves-light btn btn_small deep-orange">Back to dash</a>
+    </div>
 </div>
+
 {% endblock %}
