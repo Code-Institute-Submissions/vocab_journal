@@ -6,7 +6,6 @@ $(document).ready(function() {
         today: false,
         setDefaultDate: true,
         format: 'yyyy/mm/dd',
-        // yearRange: [1940,2010],
         clear: 'Clear',
         close: 'Ok',
         closeOnSelect: false, // Close upon selecting a date,
@@ -18,15 +17,6 @@ $(document).ready(function() {
     var picker = $input.pickadate('picker')
     
     // Using JavaScript Date objects.
-    // picker.set('select', new Date(1990, 00, 01))
     picker.set('select', new Date(1990, 00, 01))
-    
 
-    
 });
-
-
-// function setDueDate(dateString) {
-//     var due_date = Date.parse(dateString);
-//     $('#due_date').pickadate('picker').set('select', due_date, { format: 'dd/mm/yyyy' }).trigger('change');
-// }

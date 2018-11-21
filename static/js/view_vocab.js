@@ -1,6 +1,6 @@
 /* global $ */
 $(document).ready(function() {
-        $('.tooltipped').tooltip({ delay: 20 });
+        $('.tooltipped').tooltip({ delay: 20 }); // materialize tooltips initialisation
 
         $('.dropdown-button').dropdown({
             inDuration: 600,

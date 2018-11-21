@@ -4,10 +4,6 @@ $(document).ready(function() {
     var d = new Date();
     $(".current_date").text(d);
 
-    // $('#user_definition').val('user definition of vocab...');
-    // $('#user_definition').trigger('autoresize');
-
-
     // ADD TAGS TO THE POOL
     $("#addTag").unbind('click').click(function() {
 
@@ -36,7 +32,6 @@ $(document).ready(function() {
         $("#tag").val("");
         $("#tag-pool").val("");
     })
-
 
     // disable enter on the form, this will stop incomplete form submissions,  
     $(document).on('keyup keypress', 'form input[type="text"]', function(event) {
