@@ -200,9 +200,9 @@ notes:
             - login screen ................................................................. DONE!
             - register ..................................................................... DONE!
             - check_vocab .................................................................. DONE!
-            - footer statement
-            - change font?
-            - add background pix to login and add_vocab?
+            - footer statement ............................................................. DONE!
+            - change font? ................................................................. DONE!
+            - add background pix to login and add_vocab? ................................... DONE!
         - logic (run.py) 
             - add search by last_lookup_date for filter .................................... DONE!
             - after updating vocab redirect to view_vocab instead of dash .................. DONE!
@@ -211,10 +211,11 @@ notes:
                 - only test the logic
                 - for templates, check to see if something exists! and then change a small item on the page
                     - for example: if there should be a banana on the page, then add freakin banana
-                    
+        - CLEAN UP SASS FILES! ............................................................. DONE!
+        
         - WRITE UP
             - readme.md
-
+            - wireframes
             - BUGS encountered:
                 - the persistent b' ' on heroku
                 - views count with every like or dislike, inc -1
@@ -248,4 +249,9 @@ notes:
                 - administration control
                     - delete users
                     - edit users
+                - search by text
+                    - vocabs
+                    - references
+                    - tags
+                    - context
                 

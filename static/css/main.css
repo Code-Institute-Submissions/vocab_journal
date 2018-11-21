@@ -8,6 +8,20 @@ html, body {
 .btn {
   font-family: 'Roboto Mono', monospace; }
 
+.btn_small {
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: smaller;
+  border-radius: 7px; }
+  @media screen and (min-width: 701px) {
+    .btn_small {
+      font-size: unset;
+      padding-left: 25px;
+      padding-right: 25px; } }
+
+.btn_large {
+  border-radius: 7px; }
+
 .container_minimal {
   min-height: calc(100% - 350.297px);
   padding: 2rem 0;
@@ -41,20 +55,6 @@ html, body {
   margin-top: 25px; }
   #new-vocab-count p {
     margin: 0px; }
-
-.btn_small {
-  padding-left: 15px;
-  padding-right: 15px;
-  font-size: smaller;
-  border-radius: 7px; }
-  @media screen and (min-width: 701px) {
-    .btn_small {
-      font-size: unset;
-      padding-left: 25px;
-      padding-right: 25px; } }
-
-.btn_large {
-  border-radius: 7px; }
 
 #api_container_defs, #api_container_syns, #api_container_exams {
   display: none; }
@@ -108,18 +108,14 @@ html, body {
   margin-left: auto; }
 
 @media screen and (max-width: 701px) {
-  .minimal_look {
-    margin-top: 70px; } }
-@media screen and (min-width: 702px) and (max-width: 1999px) {
-  .minimal_look {
-    margin-top: 150px; } }
-@media screen and (min-width: 2000px) {
-  .minimal_look {
-    margin-top: 300px; } }
-
-@media screen and (max-width: 701px) {
   .login_register_check_vocab {
     width: 80%; } }
+@media screen and (min-width: 702px) and (max-width: 1025px) {
+  .login_register_check_vocab {
+    width: 40%; } }
+@media screen and (min-width: 1226px) and (max-width: 1920px) {
+  .login_register_check_vocab {
+    width: 25%; } }
 
 #index_submit {
   margin-bottom: 10px; }

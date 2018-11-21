@@ -9,6 +9,26 @@ html, body {
     font-family: 'Roboto Mono', monospace;
 }
 
+
+.btn_small {
+    padding-left: 15px; 
+    padding-right: 15px; 
+    font-size: smaller;
+    border-radius: 7px;
+    // media query for large screens
+    @include mQ("minW", 701px) {
+        font-size: unset;
+        padding-left: 25px; 
+        padding-right: 25px; 
+    }
+}
+
+.btn_large {
+    border-radius: 7px;
+}
+
+
+// applies to three templates, login, register and check_vocab
 .container_minimal {
     min-height: calc(100% - 350.297px);
     padding: 2rem 0;
@@ -23,7 +43,10 @@ html, body {
  
 }
 
+// applies to everything but the three templates 
+// mentioned for container_minimal
 .container {
     min-height: calc(100% - 350.297px);
     padding-bottom: 2rem;
 }
+

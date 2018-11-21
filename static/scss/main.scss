@@ -20,7 +20,6 @@
     margin-right: 0;
 }
 
-// ~~~~ DASH ~~~~~~~~~~~~~~~~~~
 #new-vocab-count {
     display: flex;
     justify-content: space-between;
@@ -30,24 +29,6 @@
         margin: 0px;
     }
 }
-
-.btn_small {
-    padding-left: 15px; 
-    padding-right: 15px; 
-    font-size: smaller;
-    border-radius: 7px;
-    // media query for large screens
-    @include mQ("minW", 701px) {
-        font-size: unset;
-        padding-left: 25px; 
-        padding-right: 25px; 
-    }
-}
-
-.btn_large {
-    border-radius: 7px;
-}
-
 
 // vocab template
 #api_container_defs, #api_container_syns, #api_container_exams {
@@ -85,7 +66,7 @@
 }
 
 
-// DASH
+// vocabs pool (accordions)
 .collapsible {
     border-radius: 30px;
     .collapsible-header {
@@ -98,6 +79,7 @@
 
 }
 
+// targeting filter seciton
 .filter_buttons {
     display: flex;
     justify-content: flex-end;
@@ -119,45 +101,29 @@
             margin-left: 0px;
         }
     }
-    
-    
-    
-    
 }
-
-
 
 // set icons on collapsible-headers to stick to the right
 .collapsible-header-icons {
     margin-left: auto;
 }
 
-// index
-.minimal_look {
-    // media query for small screens
-    @include mQ("maxW", 701px) {
-        margin-top: 70px;
-    }
-    // media query for medium screens
-    @include mQ("w", 702px,1999px) {
-        margin-top: 150px;
-    }
-    // media query for large screens
-    @include mQ("minW", 2000px) {
-        margin-top: 300px;
-    }
-}
-
-
+// applies to three templates, login, register and check_vocab
 .login_register_check_vocab {
-    
-    // media query for small screens
+
+    // media query for xsmall screens
     @include mQ("maxW", 701px) {
         width: 80%;
     }
+    // media query for small screens
+    @include mQ("w", 702px, 1025px) {
+        width: 40%;
+    }
+    // media query for medium screens
+    @include mQ("w", 1226px, 1920px) {
+        width: 25%;
+    }
 }
-
-
 
 #index_submit {
     margin-bottom: 10px;
