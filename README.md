@@ -2,6 +2,7 @@ VOCABULARY JOURNAL
 ==================
 
 <p align="center"><img src="static/img/extras/intro.gif"/></p>
+
 Aim
 ---
 
