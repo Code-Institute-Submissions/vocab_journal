@@ -58,14 +58,14 @@ to “[Admin privileges](#future-features)” of the features section.
 How it works
 ------------
 
-\<\<\< image check_vocab.png \>\>\>
+<p align="center"><img src="static/img/extras/check_vocab.png"/></p>
 
 The user tries to add a vocab into the database. If the vocab isn’t already in
 the database, the user will be directed to a page where he/she can fully define
 the vocab in his/her words and store it in the database with the help of the
 built-in dictionary.
 
-\<\<\< image add_vocab.png \>\>\>
+<p align="center"><img src="static/img/extras/add_vocab.png"/></p>
 
 However, if the vocab already exists in the database, then it simply means that
 the user has indeed looked up that particular vocab in the past. At this stage
@@ -76,14 +76,14 @@ and when it was last looked up. Using the lookup details, the users can then
 track and study their vocabs, in the hopes of improving their vocabulary, while
 assessing their own performance and progress.
 
-\<\<\< image vocab_exists.png \>\>\>
+<p align="center"><img src="static/img/extras/vocab_exists.png"/></p>
 
 Wireframes
 ==========
 
 Wireframes created using [mockingbird](https://gomockingbird.com/home).
 
-\<\<\< image wireframes.png \>\>\>
+<p align="center"><img src="static/img/extras/wireframes.png"/></p>
 
 Features
 ========
@@ -163,7 +163,7 @@ documentation.
 Built-in Oxford Dictionary 
 ---------------------------
 
-\<\<\< image api_dedicated_button.png \>\>\>
+<p align="center"><img src="static/img/extras/api_dedicated_button.png"/></p>
 
 This feature was written using the [Oxford Dictionary
 API](https://developer.oxforddictionaries.com/documentation#!/The32Sentence32Dictionary/get_entries_source_language_word_id_sentences)
@@ -193,7 +193,7 @@ This section is part of the add vocab and edit vocab templates, allowing the
 user to fully define the vocab and add as much information as they can to be
 stored in the database.
 
-\<\<\< image user_input.png \>\>\>
+<p align="center"><img src="static/img/extras/user_input.png"/></p>
 
 ### User Definition
 
@@ -245,17 +245,17 @@ vocabs were liked by the user.
 The liked vocabs are shown in a much bigger form when its view full screen via
 the view vocab template. As opposed to the liked vocabs shown on the dash vocab.
 
-\<\< image like_full.png \>\>\>
+<p align="center"><img src="static/img/extras/like_full.png"/></p>
 
 The vocabs liked the currently logged in user are shown in the vocab pool as
 solid red heart on the dash template.
 
-\<\<\< image liked_dash.png \>\>\>
+<p align="center"><img src="static/img/extras/liked_dash.png"/></p>
 
 Tracking parameters
 -------------------
 
-\<\<\< image tracking_parameters.png \>\>\>
+<p align="center"><img src="static/img/extras/tracking_parameters.png"/></p>
 
 The following parameters are generated and modified automatically based on the
 user activities.
@@ -298,7 +298,7 @@ User profiles
 Shows user-specific information, vocabs added by the user (links to the actual
 vocabs) and vocabs liked by the user (links to the actual vocabs).
 
-\< \< image user_profile.png \>\>
+<p align="center"><img src="static/img/extras/user_profile.png"/></p>
 
 Vocab views
 -----------
@@ -311,7 +311,7 @@ Filter
 Allows the user filter the generated vocabs in dash to be filtered and sorted
 according to the user’s selections.
 
-\<\<\< image dash_filter.png \>\>\>
+<p align="center"><img src="static/img/extras/dash_filter.png"/></p>
 
 ### User vocabs only
 
@@ -372,11 +372,11 @@ By default, a user can only change or delete a vocab that was added by
 him/herself. However, Admins have the power to edit or delete the vocabs added
 by any user. Additionally, they can add and remove sources.
 
-\<\< image admin_sources.png \>\>
+<p align="center"><img src="static/img/extras/admin_sources.png"/></p>
 
 ### Dynamic Navbar
 
-\<\< image admin_navbar.png \>\>
+<p align="center"><img src="static/img/extras/admin_navbar.png"/></p>
 
 The image above shows how the navbar changes if a user is logged in.
 Furthermore, if an admin is logged in, an extra nav link is provided.
@@ -388,7 +388,7 @@ image below shows the difference between a user and an admin account on the dash
 template. The admin can edit/delete a vocab added by the user “beny1976”, but
 the user can’t make any of those changes as he/she did not add the vocab.
 
-\<\< image admin_addremove.png \>\>
+<p align="center"><img src="static/img/extras/admin_addremove.png"/></p>
 
 Future Features
 ===============
@@ -444,17 +444,17 @@ below.
 Vocabs
 ------
 
-\<\<\< image schema_vocabs.png \>\>
+<p align="center"><img src="static/img/extras/schema_vocabs.png"/></p>
 
 Users
 -----
 
-\<\<\< image schema_users.png \>\>
+<p align="center"><img src="static/img/extras/schema_users.png"/></p>
 
 Sources
 -------
 
-\<\<\< image schema_sources.png \>\>
+<p align="center"><img src="static/img/extras/schema_sources.png"/></p>
 
 Technologies Used
 =================
