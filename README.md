@@ -245,7 +245,7 @@ the view vocab template. As opposed to the liked vocabs shown on the dash vocab.
 
 <p align="center"><img src="static/img/extras/like_full.png"/></p>
 
-The vocabs liked the currently logged in user are shown in the vocab pool as
+The vocabs liked by the logged in user are shown in the vocab pool as
 solid red heart on the dash template.
 
 <p align="center"><img src="static/img/extras/liked_dash.png"/></p>
@@ -302,6 +302,26 @@ Vocab views
 -----------
 
 Showing all the vocab stats, in a single page
+
+Interface
+---------
+
+The covabs are each shown using an accodion element, the body of the accordion holds 
+the vocab content. The header of the accordion however, is used to show a brief 
+description of the vocab.
+
+
+<p align="center"><img src="static/img/extras/interface.png"/></p>
+
+Items on the accordion headings are listed below in order starting from the left.
+
+-   vocab
+-   user's username
+-   favourite icon (if liked by the logged in user, it will turn solid red)
+-   number of likes
+-   lookup count icon
+-   number of lookups
+
 
 Filter
 ------
