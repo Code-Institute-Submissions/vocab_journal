@@ -370,8 +370,6 @@ By default, a user can only change or delete a vocab that was added by
 him/herself. However, Admins have the power to edit or delete the vocabs added
 by any user. Additionally, they can add and remove sources.
 
-<p align="center"><img src="static/img/extras/admin_sources.png"/></p>
-
 ### Dynamic Navbar
 
 <p align="center"><img src="static/img/extras/admin_navbar.png"/></p>
