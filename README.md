@@ -1,8 +1,7 @@
 VOCABULARY JOURNAL
 ==================
 
-\<\<\< gif \>\>\>
-
+<p align="center"><img src="static/img/extras/intro.gif"/></p>
 Aim
 ---
 
@@ -41,7 +40,7 @@ Pre-registered testing accounts
 
 Please feel free to use the following accounts for testing purposes. For more
 information about the differences between normal and admin accounts please refer
-to “[Admin privileges](#future-features)” of the features section.
+to “[Admin privileges](#admin-privileges)” of the features section.
 
 -   Admin account:
 
@@ -58,14 +57,12 @@ to “[Admin privileges](#future-features)” of the features section.
 How it works
 ------------
 
-<p align="center"><img src="static/img/extras/check_vocab.png"/></p>
-
 The user tries to add a vocab into the database. If the vocab isn’t already in
 the database, the user will be directed to a page where he/she can fully define
 the vocab in his/her words and store it in the database with the help of the
 built-in dictionary.
 
-<p align="center"><img src="static/img/extras/add_vocab.png"/></p>
+<p align="center"><img src="static/img/extras/check_vocab.png"/></p>
 
 However, if the vocab already exists in the database, then it simply means that
 the user has indeed looked up that particular vocab in the past. At this stage
@@ -113,14 +110,14 @@ documentation.
 -   users to like/dislike vocabs
 
 -   edit existing vocabs – user defined vocabs only, refer to [Admin
-    privileges](#future-features)
+    privileges](#admin-privileges)
     ([edit_vocab.html](https://github.com/damianism/vocab_journal/blob/master/templates/edit_vocab.html))
 
 -   delete existing vocabs – user defined vocabs only, refer to [Admin
-    privileges](#future-features)
+    privileges](#admin-privileges)
 
 -   manage sources (admin only) – user defined vocabs only, refer to [Admin
-    privileges](#future-features)
+    privileges](#admin-privileges)
     ([manage_source.html](https://github.com/damianism/vocab_journal/blob/master/templates/manage_sources.html))
 
 -   add a new vocab
