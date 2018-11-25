@@ -809,4 +809,4 @@ def access_api(item, vocab_in):
 if __name__ == '__main__':
     port = int( os.getenv("PORT") )
     host = os.getenv("IP")
-    app.run(host=host, port=port, debug=True)
+    app.run(host=host, port=port)
