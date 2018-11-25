@@ -298,10 +298,11 @@ vocabs) and vocabs liked by the user (links to the actual vocabs).
 
 <p align="center"><img src="static/img/extras/user_profile.png"/></p>
 
-Vocab views
+View Vocab
 -----------
 
-Showing all the vocab stats, in a single page
+Shows the vocab contents along with its stats within in a single page using 
+the vocab template.
 
 Interface
 ---------
@@ -309,7 +310,6 @@ Interface
 The covabs are each shown using an accodion element, the body of the accordion holds 
 the vocab content. The header of the accordion however, is used to show a brief 
 description of the vocab.
-
 
 <p align="center"><img src="static/img/extras/interface.png"/></p>
 
@@ -337,7 +337,6 @@ Filters out all the vocabs added by other users to show only the vocabs added
 the logged in user. This feature is set to show all vocabs by default.
 
 -   Show all vocabs
-
 -   Show user vocabs only
 
 ### Sources
@@ -346,15 +345,10 @@ The following sources are added by default. Only admins can add or remove
 sources. Users have to use the existing provided list of sources.
 
 -   TV series (default)
-
 -   Movies
-
 -   News
-
 -   Articles
-
 -   Games
-
 -   Book
 
 ### Sort by
@@ -362,17 +356,11 @@ sources. Users have to use the existing provided list of sources.
 Sorts the resulting vocabs by the following parameters
 
 -   Lookup date (default) – link to lookup date
-
 -   Lookup count – link to lookup
-
 -   Views
-
 -   Likes
-
 -   Difficulty
-
 -   Publish date
-
 -   Modified date
 
 ### Order
@@ -380,7 +368,6 @@ Sorts the resulting vocabs by the following parameters
 Reorders the resulting vocabs by the following orders
 
 -   Ascending
-
 -   Descending
 
 Admin Privileges 
