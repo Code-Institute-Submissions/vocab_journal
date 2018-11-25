@@ -491,43 +491,29 @@ The list of technologies used for this project in no specific order.
 
     -   Non-relational database used for this project in conjunction with
         [mLab](https://mlab.com/welcome/).
-
     -   [flask_pymongo](https://flask-pymongo.readthedocs.io/en/latest/)
 
 8.  [Materialize front-end framework
     v0.100.2](http://archives.materializecss.com/0.100.2/)
 
     -   Responsive design
-
     -   Styling
-
         -   Cards, Buttons, accordions, animations, tooltips and so on.
-
         -   Text alignment.
-
         -   Colouring.
 
 9.  JavaScript and [jQuery](https://jquery.com/) v3.3.1
 
     -   Debugging
-
     -   Disabling the “ENTER” key on the index page form.
-
     -   Conversion of Flask template variables to JavaScript variables.
-
     -   User input “Tags” functionality
-
         -   Clear tags
-
         -   Add tags
-
         -   Duplication check
-
     -   Materialize
-
         -   Component initialisations such as datepicker, select, buttons,
             tooltips and accordions.
-
         -   API “check dictionary” dropdown button.
 
 10. AJAX
@@ -550,14 +536,12 @@ The list of technologies used for this project in no specific order.
 14. Flexbox
 
     -   Primary tool for centring item.
-
     -   Primary layout tool.
 
 15. [Google fonts](https://fonts.google.com/)
 
     -   [Roboto Mono](https://fonts.google.com/specimen/Roboto+Mono) – applied
         to the buttons (small and large)
-
     -   [Roboto](https://fonts.google.com/specimen/Roboto) – used as the main
         font for the project
 
@@ -565,7 +549,6 @@ The list of technologies used for this project in no specific order.
 
     -   Applied a filter to the selected background to better suit the theme of
         the project.
-
     -   Image format conversion, rescaling and touch ups.
 
 17. Microsoft Word
@@ -576,28 +559,19 @@ The list of technologies used for this project in no specific order.
 
     -   Used extensively for live-testing and running numerous different tasks.
         To name a few:
-
         -   Testing JavaScript functions.
-
         -   Individual elements loading times.
-
         -   Website/grid responsiveness.
-
         -   Element Colours, style, opacity and etc.
-
         -   Aligning and centring.
-
         -   Attribute value search.
-
         -   Fluidity and core functionality of the website.
 
 19. [Git/Github](https://github.com/damianism)
 
     -   Kept track of the project’s evolution with frequent commits and
         informative messages.
-
     -   Secondary platform for deployment.
-
     -   GitHub was also used to access bootstrap’s source code.
 
 20. [Heroku](https://www.heroku.com/)
@@ -623,13 +597,10 @@ Static
 
     -   [mixins.scss](https://github.com/damianism/vocab_journal/blob/master/static/scss/mixins.scss)
         – houses all the mixins and functions
-
     -   [base.scss](https://github.com/damianism/vocab_journal/blob/master/static/scss/base.scss)
         – targets the base elements that applies to all templates.
-
     -   [colors.scss](https://github.com/damianism/vocab_journal/blob/master/static/scss/colors.scss)
         – a collection of all colours to be used throughout the project.
-
     -   [main.scss](https://github.com/damianism/vocab_journal/blob/master/static/scss/main.scss)
         – complies all the scss files together, also addresses random odd
         styling issues such as applying media queries to handful of items.
@@ -640,7 +611,6 @@ Static
 
     -   extras – houses all the images to be used on the markdown file, such
         wireframe, logic basis and so on.
-
     -   Theming – includes all the images used to theme the website such as
         background images.
 
@@ -649,15 +619,12 @@ Static
     -   [main.js](https://github.com/damianism/vocab_journal/blob/master/static/js/main.js)
         – initialisations for elements applied to all the materialize element
         with all templates.
-
     -   [datepicker.js](https://github.com/damianism/vocab_journal/blob/master/static/js/datepicker.js)
         – datepicker element setup for the register template.
-
     -   [add_vocab.js](https://github.com/damianism/vocab_journal/blob/master/static/js/add_vocab.js)
         – logic to handle adding and clearing of tags, also includes logic for
         disabling “enter” on forms. Applies to edit_vocab and add_vocab
         templates.
-
     -   [view_vocab.js](https://github.com/damianism/vocab_journal/blob/master/static/js/view_vocab.js)
         – logic put in place to handle the built-in dictionary button upon
         user’s request.
@@ -668,25 +635,19 @@ Templates
 1.  [base.html](https://github.com/damianism/vocab_journal/blob/master/templates/base.html)
     – base template containing navbar and footer. All other templates are
     extension of this template.
-
 2.  [index.html](https://github.com/damianism/vocab_journal/blob/master/templates/index.html)
     – login template - if username doesn’t exist, will redirect to register
     template.
-
 3.  [register.html](https://github.com/damianism/vocab_journal/blob/master/templates/register.html)
     – register template – if username exists will redirect to index template.
-
 4.  [dash.html](https://github.com/damianism/vocab_journal/blob/master/templates/dash.html)
     – contains the vocab pool and the filtering panel – shows PARTIAL
     information about the vocabs in accordions.
-
 5.  [vocab.html](https://github.com/damianism/vocab_journal/blob/master/templates/vocab.html)
     – full screen view of the vocab’s stats and user input FULLY shown.
-
 6.  [view_user.html](https://github.com/damianism/vocab_journal/blob/master/templates/view_user.html)
     – shows user profile which contains user details (name, vocab count, …),
     vocabs added by user, vocabs favourited/liked by user.
-
 7.  [check_vocab.html](https://github.com/damianism/vocab_journal/blob/master/templates/check_vocab.html)
     – template on which the user can enter the vocab he/she wishes to add. User
     will be directed to either the
@@ -694,16 +655,13 @@ Templates
     or the
     “[add_vocab](https://github.com/damianism/vocab_journal/blob/master/templates/add_vocab.html)”
     template upon vocab entry..
-
 8.  [add_vocab.html](https://github.com/damianism/vocab_journal/blob/master/templates/add_vocab.html)
     – all the user input for a particular vocab is entered via this template.
-
 9.  [edit_vocab.html](https://github.com/damianism/vocab_journal/blob/master/templates/edit_vocab.html)
     – similar to
     “[add_vocab](https://github.com/damianism/vocab_journal/blob/master/templates/add_vocab.html)”
     template but grants the user the ability to modify data held for that
     particular vocab.
-
 10. [manage_source.html](https://github.com/damianism/vocab_journal/blob/master/templates/manage_sources.html)
     – ADMIN ONLY template, which allows an admin to delete or add a “source” to
     the database to be used by all the users.
@@ -713,17 +671,12 @@ Other
 
 -   [run.py](https://github.com/damianism/vocab_journal/blob/master/run.py) –
     houses most of the logic and template functions for the project.
-
 -   [test_app.py](https://github.com/damianism/vocab_journal/blob/master/test_app.py)
     – unittest module.
-
 -   [py_define.py](https://github.com/damianism/vocab_journal/blob/master/py_define.py)
     – contains all the logic for the oxford dictionary API.
-
 -   Procfile
-
 -   Readme.md
-
 -   Requirements.txt
 
 
@@ -817,17 +770,17 @@ Defensive design and challenges
 
 <p align="center"><img src="static/img/extras/defensive.PNG"/></p>
 
--   As mentioned in the previous bullet point, to restrict the user from doing
-    certain tasks on the website, I had to put a couple of fall backs in place,
-    However, I was repeatedly faced with a “KeyError” which was not expected at
-    that level. After a while I realised I was dealing with two different
-    situations at which the “KeyError” was occurring. This issue was later
-    resolved by introducing a try and except statements. Even though this worked
-    perfectly without any repercussions, I was still doubtful that it could run
-    at the pace as before, since it was making the check every time the page was
-    viewed. But having carried out tests extensively on different platforms, I
-    concluded that the loading time of the page was not affected by the extra
-    check in place and the solution has worked.
+    -   As mentioned in the previous bullet point, to restrict the user from doing
+        certain tasks on the website, I had to put a couple of fall backs in place,
+        However, I was repeatedly faced with a “KeyError” which was not expected at
+        that level. After a while I realised I was dealing with two different
+        situations at which the “KeyError” was occurring. This issue was later
+        resolved by introducing a try and except statements. Even though this worked
+        perfectly without any repercussions, I was still doubtful that it could run
+        at the pace as before, since it was making the check every time the page was
+        viewed. But having carried out tests extensively on different platforms, I
+        concluded that the loading time of the page was not affected by the extra
+        check in place and the solution has worked.
 
 -   Tags
 
