@@ -46,13 +46,11 @@ to “[Admin privileges](#admin-privileges)” of the features section.
 -   Admin account:
 
     -   skullphish
-
     -   admin
 
 -   Normal accounts:
 
     -   beny1976
-
     -   user
 
 How it works
@@ -128,16 +126,13 @@ documentation.
 
         -   vocab already exists (CORE FEATURE) –
             ([vocab.html](https://github.com/damianism/vocab_journal/blob/master/templates/vocab.html))
-
         -   new vocab may be added –
             ([add_vocab.html](https://github.com/damianism/vocab_journal/blob/master/templates/add_vocab.html))
 
     -   define vocab – using [built-in dictionary](#built-in-oxford-dictionary)
 
         -   generate definitions
-
         -   generate synonyms
-
         -   generate example sentences
 
     -   add [user inputs](#user-input)
@@ -145,17 +140,11 @@ documentation.
     -   initialise tracking parameters
 
         -   publish date
-
         -   user – the user whom the vocab was added by
-
         -   lookup count
-
         -   views
-
         -   modified date
-
         -   last lookup date
-
         -   likes
 
 Built-in Oxford Dictionary 
@@ -169,9 +158,7 @@ which will generate the following either automatically or on demand by the user
 depending on which template it is being accessed from.
 
 -   Vocab definitions
-
 -   Vocab synonyms
-
 -   Vocab example sentences (context)
 
 The built-in dictionary will automatically generate definitions, synonyms and
@@ -408,19 +395,14 @@ course is completed to be presented as a portfolio.
 3.  Enhanced administration tools
 
     1.  delete users
-
     2.  edit user info
 
 4.  Global search box to search keywords in
 
     1.  vocabs
-
     2.  tags
-
     3.  reference text
-
     4.  miscellaneous text
-
     5.  context text
 
 5.  Adding vocab pronunciations (audio)
