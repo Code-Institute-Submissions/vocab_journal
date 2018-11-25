@@ -772,11 +772,11 @@ Defensive design and challenges
 -   Detecting change
 
     -   Since all the vocabs are equipped with a “[last modified
-        date](#_Last_modified_date)” key, that tracks the exact date on which
+        date](#last-lookup-date)” key, that tracks the exact date on which
         the vocab was changed, it is essential not trigger that functionality if
         there are no changes made to the contents of that particular vocab. if a
         user attempt to update a specific vocab, but the logic detects no
-        changes, “[last modified date](#_Last_modified_date)” key will remain
+        changes, “[last modified date](#last-lookup-date)” key will remain
         unchanged and an appropriate custom flash message will be displayed to
         let the user know that nothing was changed.
 
@@ -815,7 +815,7 @@ Defensive design and challenges
 
 -   Session “KeyError”
 
-<p align="center"><img src="static/img/extras/defensive.png"/></p>
+<p align="center"><img src="static/img/extras/defensive.PNG"/></p>
 
 -   As mentioned in the previous bullet point, to restrict the user from doing
     certain tasks on the website, I had to put a couple of fall backs in place,
@@ -969,7 +969,7 @@ servers for faster response time.
 
 <p align="center"><img src="static/img/extras/heroku.png"/></p>
 
-In addition to the usual IP, PORT and FLASK environment variables, I also had to
+In addition to the usual IP, PORT, MongoDB and FLASK environment variables, I also had to
 include other credentials for the Oxford dictionary API into the config vars.
 
 <p align="center"><img src="static/img/extras/heroku2.png"/></p>
