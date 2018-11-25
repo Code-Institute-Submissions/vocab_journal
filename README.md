@@ -307,8 +307,8 @@ the vocab template.
 Interface
 ---------
 
-The covabs are each shown using an accodion element, the body of the accordion holds 
-the vocab content. The header of the accordion however, is used to show a brief 
+The covabs are each shown using an accodion element, the body of the accordions holds 
+a summary of the vocab's content. The header of the accordion however, is used to show a brief 
 description of the vocab.
 
 <p align="center"><img src="static/img/extras/interface.png"/></p>
@@ -725,3 +725,256 @@ Other
 -   Readme.md
 
 -   Requirements.txt
+
+
+Testing and challenges
+======================
+
+Logic Debugging
+---------------
+
+Whichever function that I felt needs debugging due to its complexity within
+“run.py” and “py_define.py” is equipped with a debugging mechanism that is
+either enabled from within the function itself or by passing an argument into
+the function which by default is disabled, which can be observed in the image
+below. This method of debugging is fast, efficient and prevents spams of prints.
+
+<p align="center"><img src="static/img/extras/debug.png"/></p>
+
+Test Driven development 
+------------------------
+
+The practicality of some of the helper functions within the run.py file was
+tested via the Python “unittest” module. This module came in very handy in
+resolving a very annoying problem with one of the helper functions which made
+the whole process debugging a lot faster since I didn’t need to run the whole
+app every time, but overall “unittest” module wasn’t heavily used, as I didn’t
+feel the need for it. These automated tests can be found in the
+[test_app.py](https://github.com/damianism/vocab_journal/blob/master/test_app.py)
+file.
+
+Defensive design and challenges
+-------------------------------
+
+-   Registration and login
+
+    -   The logic had to be smart enough to figure out that the same username
+        can’t be registered again. If the username is found to be registered,
+        appropriate flash messages will direct the user to the index template
+        where he/she can log in.
+
+    -   If login username doesn’t exist, prompt register and redirect
+
+    -   If a user attempts to log in with a username that doesn’t exit within
+        the database, custom flash messages will redirect the user to the
+        “register” template where an account can be registered.
+
+-   Detecting change
+
+    -   Since all the vocabs are equipped with a “[last modified
+        date](#_Last_modified_date)” key, that tracks the exact date on which
+        the vocab was changed, it is essential not trigger that functionality if
+        there are no changes made to the contents of that particular vocab. if a
+        user attempt to update a specific vocab, but the logic detects no
+        changes, “[last modified date](#_Last_modified_date)” key will remain
+        unchanged and an appropriate custom flash message will be displayed to
+        let the user know that nothing was changed.
+
+-   “ENTER” key on forms
+
+    -   The user input section of the
+        “[add_vocab](https://github.com/damianism/vocab_journal/blob/master/templates/add_vocab.html)”
+        and
+        “[edit_vocab](https://github.com/damianism/vocab_journal/blob/master/templates/edit_vocab.html)”
+        templates allow the user to add as much data as they desire, how on the
+        normal text inputs, the ENTER key was trigger form submission. The enter
+        button was then disabled using JavaScript
+        [(add_vocab.js](https://github.com/damianism/vocab_journal/blob/master/static/js/add_vocab.js)).
+
+    -   Enter key remains active on the rest of the templates.
+
+-   Conversion of the Flask template variables to JavaScript variables
+
+    -   In order to get the built-in dictionary to work properly, I had to look
+        for a way to pass jinja2 variables (vocab: string) within the flask
+        templates into a script section then use AJAX to change the content of
+        the designated dictionary divs within the template. This issue was
+        eventually resolved and can be viewed at the end of the
+        “[add_vocab](https://github.com/damianism/vocab_journal/blob/master/templates/add_vocab.html)”
+        and
+        “[edit_vocab](https://github.com/damianism/vocab_journal/blob/master/templates/edit_vocab.html)”
+        templates.
+
+-   Session fall backs
+
+    -   Upon user login, the user’s username will be stored in the session, in
+        the case of the session expiring the user will be redirected to the
+        index template with a customised flash message, letting them know that
+        their session expired. This also restricts the users to access the
+        templates when not logged in.
+
+-   Session “KeyError”
+
+<p align="center"><img src="static/img/extras/defensive.png"/></p>
+
+-   As mentioned in the previous bullet point, to restrict the user from doing
+    certain tasks on the website, I had to put a couple of fall backs in place,
+    However, I was repeatedly faced with a “KeyError” which was not expected at
+    that level. After a while I realised I was dealing with two different
+    situations at which the “KeyError” was occurring. This issue was later
+    resolved by introducing a try and except statements. Even though this worked
+    perfectly without any repercussions, I was still doubtful that it could run
+    at the pace as before, since it was making the check every time the page was
+    viewed. But having carried out tests extensively on different platforms, I
+    concluded that the loading time of the page was not affected by the extra
+    check in place and the solution has worked.
+
+-   Tags
+
+    -   Initially the tags were being handled by the materialize front-end
+        frame’s chips. However, it was so buggy and unpredictable that I decided
+        to write the logic myself in JavaScript, and doing so forced me to add
+        another input element to the form, one input field would enter the tags
+        and other input field would store it. I also needed some sort of
+        functionality that cleared the storing input field if the user for any
+        reason wanted to clear it. Additionally, I had to put in some sort of
+        logic in place to avoid duplicate tags being entered. For the logic
+        please refer to the
+        “[add_vocab.js](https://github.com/damianism/vocab_journal/blob/master/static/js/add_vocab.js)”
+        file.
+
+    -   User had to be able to clear them, check to see if the tag was already
+        added to avoid duplication.
+
+-   Dynamic navbar
+
+    -   Same previously mentioned in the features section of this document, the
+        navbar had to dynamically change to cater for the following events:
+
+        -   Differentiate between users and admins
+            -   User logged in
+            -   Admin logged in
+                -   Manage sources item would appear on the navbar
+                
+        -   Welcome note (user’s first name)
+
+-   Difficulty was triggering a change in data on
+    [edit_vocab](https://github.com/damianism/vocab_journal/blob/master/templates/edit_vocab.html)
+    template.
+
+    -   This was an unnoticed bug that went on for a while before I could find
+        the problem with it. I first noticed it as something was being updated
+        upon pressing the update vocab button on the
+        [edit_vocab](https://github.com/damianism/vocab_journal/blob/master/templates/edit_vocab.html)
+        template even though nothing was changed. The difficulty key had
+        originally been defined as an integer, which was being replaced with a
+        string value of the number upon updating, hence prompting a change in
+        the database. Issue was resolved by putting a int() conversion upon
+        retrieving the item from the form.
+
+-   Admin and user differentiation
+
+    -   Normal users may only change or delete the vocabs that have been added
+        by them. Additionally, they’re restricted to using the existing list of
+        sources.
+    -   Admins may edit or delete ANY vocabs in the database regardless. Admins
+        may also delete the existing sources or add a new source. (a source
+        cannot be removed if it’s being used by any vocabs within the database)
+
+-   Heroku Deployment issue
+
+    -   While working with the oxford dictionary API, I noticed that the
+        returned string could contain unicodes with certain definitions returned
+        from the API. Stripping the unicodes initially worked fine when it was
+        tested in the locally deployed. However, once deployed to Heroku, all
+        strings were shown as bytes after encoding the string to remove
+        unicodes. All the strings were starting with a letter “b” that I simply
+        could not remove. the issue was resolved by ignoring all the “ascii
+        characters” and then decoding “"utf-8"”.
+
+<p align="center"><img src="static/img/extras/unicode.png"/></p>
+
+-   Hiding API and Flask sensitive information was a challenge as I was having
+    problems with handling environment variables at first. So all the sensitive
+    information were moved into a dedicated py file “setup_config.py” and the
+    following approach was taken to import it into the
+    “[run.py](https://github.com/damianism/vocab_journal/blob/master/run.py)”
+    file.
+
+<p align="center"><img src="static/img/extras/setup_config.png"/></p>
+
+-   Tags and sources
+
+    -   Users can’t add sources for the reason that it the database could end up
+        being spammed by the users, the source’s drop-down item would then
+        unnecessarily expand.
+
+    -   Tags pretty much grant the same ability to users without spamming the
+        database.
+
+Responsiveness/Aesthetics/Functionality Testing
+-----------------------------------------------
+
+The responsiveness, functionality, fluidity of each page was extensively and
+virtually tested on all the Chrome/Firefox responsive tool’s available devices,
+ranging from Amazon fire tablets to iPhone x. Additionally, every page was
+numerously loaded on the following devices by various users in order to identify
+possible malfunctions and misbehaving elements.
+
+-   Galaxy S5 (width less than 370px)
+-   iPhone x
+-   Google Pixel 2
+-   iPhone 7 Plus
+-   Nexus 6P
+-   22inch Full HD 1080p monitor
+-   25inch Quad HD 1440p screen
+-   13inch Full HD screen of a Dell XPS Ultrabook
+-   15inch HD screen of a Dell Precision M4600
+
+Browsers
+--------
+
+The following browsers were used to test the final version of the website with.
+
+-   Opera Version 56.0.3051.104
+-   Firefox Version 63.0.3 (64-bit)
+-   Version 70.0.3538.110 (Official Build) (64-bit)
+-   Chrome Mobile on Android Pie
+-   Chrome Mobile on Android Oreo
+-   Firefox Mobile on Android Pie
+-   Safari Mobile iOS 12
+
+Deployment
+==========
+
+[Heroku](https://id.heroku.com/login) was used as the PRIMARY deployment
+platform for this project. Throughout the project, git was used to seamlessly
+and safely back up the code locally and pushed to Github frequently.
+
+For testing purposes, the project was first deployed locally on the Cloud9
+environment and most of the testing was done through Cloud9. However, later on I
+realised that it is not fully reliable and it can’t be trusted as the actual
+deployment platform might not behave the same way as mentioned above in the
+“Heroku Deployment issue” section of the “[Testing and
+challenges](#defensive-design-and-challenges)”.
+
+The project was pushed to Heroku at its early stages and was repeatedly done so
+with the addition or alteration of any feature, incremental or major. However,
+on the previous project, the Heroku app was created using bash within the cloud9
+environment, unfortunately doing so would create the app on the American serves,
+since causing the website to take a lot longer than it needs to once deployed.
+This time I took the precaution of creating the app within the Heroku’s very own
+control panel and made sure that the app is indeed sitting on the European
+servers for faster response time.
+
+<p align="center"><img src="static/img/extras/heroku.png"/></p>
+
+In addition to the usual IP, PORT and FLASK environment variables, I also had to
+include other credentials for the Oxford dictionary API into the config vars.
+
+<p align="center"><img src="static/img/extras/heroku2.png"/></p>
+
+There are no differences between the deployed version of the project found
+[here](http://vocabulary-journal.herokuapp.com/) and its development version.
+Since the project was deployed at such an early stage, no major problems were
+encountered. The whole process was completely hassle free.
