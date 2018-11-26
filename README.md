@@ -668,11 +668,12 @@ Testing and challenges
 Logic Debugging
 ---------------
 
-Whichever function that I felt needs debugging due to its complexity within
-“run.py” and “py_define.py” is equipped with a debugging mechanism that is
+All the functions that required debugging due to their complexity within the
+“run.py” and “py_define.py” file are equipped with a debugging mechanism that is
 either enabled from within the function itself or by passing an argument into
-the function which by default is disabled, which can be observed in the image
-below. This method of debugging is fast, efficient and prevents spams of prints.
+the function, which is fast, efficient and prevents the console from being spammed
+by prints. It is also set to off by default which can be observed in the image
+below. 
 
 <p align="center"><img src="static/img/extras/debug.png"/></p>
 
@@ -750,8 +751,6 @@ Defensive design and challenges
 
 -   Session “KeyError”
 
-<p align="center"><img src="static/img/extras/defensive.PNG"/></p>
-
     -   As mentioned in the previous bullet point, to restrict the user from doing
         certain tasks on the website, I had to put a couple of fall backs in place,
         However, I was repeatedly faced with a “KeyError” which was not expected at
@@ -763,6 +762,8 @@ Defensive design and challenges
         viewed. But having carried out tests extensively on different platforms, I
         concluded that the loading time of the page was not affected by the extra
         check in place and the solution has worked.
+        
+    <p align="center"><img src="static/img/extras/defensive.PNG"/></p>
 
 -   Tags
 
