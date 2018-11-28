@@ -36,23 +36,6 @@ when it was last modified (last modified date) and how many times it was viewed
 
 Well, this project does exactly that!
 
-Pre-registered testing accounts
--------------------------------
-
-Please feel free to use the following accounts for testing purposes. For more
-information about the differences between normal and admin accounts please refer
-to “[Admin privileges](#admin-privileges)” of the features section.
-
--   Admin account:
-
-    -   skullphish
-    -   admin
-
--   Normal accounts:
-
-    -   beny1976
-    -   user
-
 How it works
 ------------
 
@@ -74,12 +57,22 @@ assessing their own performance and progress.
 
 <p align="center"><img src="static/img/extras/vocab_exists.png"/></p>
 
-Wireframes
-==========
+Pre-registered testing accounts
+-------------------------------
 
-Wireframes created using [mockingbird](https://gomockingbird.com/home).
+Please feel free to use the following accounts for testing purposes. For more
+information about the differences between normal and admin accounts please refer
+to “[Admin privileges](#admin-privileges)” of the features section.
 
-<p align="center"><img src="static/img/extras/wireframes.png"/></p>
+-   Admin account:
+
+    -   skullphish
+    -   admin
+
+-   Normal accounts:
+
+    -   beny1976
+    -   user
 
 Interface
 =========
@@ -98,6 +91,13 @@ Items on the accordion headings are listed below in order starting from the left
 4.  number of likes
 5.  lookup count icon
 6.  number of lookups
+
+Wireframes
+==========
+
+Wireframes created using [mockingbird](https://gomockingbird.com/home).
+
+<p align="center"><img src="static/img/extras/wireframes.png"/></p>
 
 Features
 ========
