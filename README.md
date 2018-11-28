@@ -81,6 +81,24 @@ Wireframes created using [mockingbird](https://gomockingbird.com/home).
 
 <p align="center"><img src="static/img/extras/wireframes.png"/></p>
 
+Interface
+=========
+
+The vocabs are each shown using an accodion element, the body of the accordions holds 
+a summary of the vocab's content. The header of the accordion however, is used to show a brief 
+description of the vocab.
+
+<p align="center"><img src="static/img/extras/interface.png"/></p>
+
+Items on the accordion headings are listed below in order starting from the left.
+
+1.  vocab
+2.  user's username
+3.  favourite icon (if liked by the logged in user, it will turn solid red)
+4.  number of likes
+5.  lookup count icon
+6.  number of lookups
+
 Features
 ========
 
@@ -290,25 +308,6 @@ View Vocab
 
 Shows the vocab contents along with its stats within in a single page using 
 the vocab template.
-
-Interface
----------
-
-The covabs are each shown using an accodion element, the body of the accordions holds 
-a summary of the vocab's content. The header of the accordion however, is used to show a brief 
-description of the vocab.
-
-<p align="center"><img src="static/img/extras/interface.png"/></p>
-
-Items on the accordion headings are listed below in order starting from the left.
-
--   vocab
--   user's username
--   favourite icon (if liked by the logged in user, it will turn solid red)
--   number of likes
--   lookup count icon
--   number of lookups
-
 
 Filter
 ------
@@ -683,7 +682,7 @@ Test Driven development
 The practicality of some of the helper functions within the run.py file was
 tested via the Python “unittest” module. This module came in very handy in
 resolving a very annoying problem with one of the helper functions which made
-the whole process debugging a lot faster since I didn’t need to run the whole
+the whole process of debugging a lot faster since I didn’t need to run the whole
 app every time, but overall “unittest” module wasn’t heavily used, as I didn’t
 feel the need for it. These automated tests can be found in the
 [test_app.py](https://github.com/damianism/vocab_journal/blob/master/test_app.py)
@@ -746,7 +745,7 @@ Defensive design and challenges
     -   Upon user login, the user’s username will be stored in the session, in
         the case of the session expiring the user will be redirected to the
         index template with a customised flash message, letting them know that
-        their session expired. This also restricts the users to access the
+        their session has expired. This also restricts the users to access the
         templates when not logged in.
 
 -   Session “KeyError”
